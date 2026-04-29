@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import CardAvocat from '../components/CardAvocat.astro';
+
+const avocats = [
+  {
+    nom: 'Maître [Prénom Nom]',
+    specialite: 'Droit des Mineurs',
+    description: 'Spécialisé dans la défense des mineurs, l\'assistance éducative et les procédures devant le juge des enfants.',
+    expertiseHref: '/custos-avocats/expertises/droit-des-mineurs',
+  },
+  {
+    nom: 'Maître [Prénom Nom]',
+    specialite: 'Droit des Étrangers',
+    description: 'Expert en droit des étrangers : recours OQTF, titres de séjour, régularisation et contentieux préfectoral.',
+    expertiseHref: '/custos-avocats/expertises/droit-des-etrangers',
+  },
+  {
+    nom: 'Maître [Prénom Nom]',
+    specialite: 'Droit de la Famille',
+    description: 'Intervient sur les divorces conflictuels, les violences intrafamiliales et les litiges relatifs à l\'autorité parentale.',
+    expertiseHref: '/custos-avocats/expertises/droit-de-la-famille',
+  },
+  {
+    nom: 'Maître [Prénom Nom]',
+    specialite: 'Droit Pénal des Affaires',
+    description: 'Défense des dirigeants et entreprises : compliance, abus de biens sociaux, enquêtes financières.',
+    expertiseHref: '/custos-avocats/expertises/droit-penal-des-affaires',
+  },
+  {
+    nom: 'Maître [Prénom Nom]',
+    specialite: 'Dommages Corporels',
+    description: 'Accompagne les victimes d\'accidents dans l\'obtention d\'une indemnisation juste, de l\'expertise médicale au jugement.',
+    expertiseHref: '/custos-avocats/expertises/dommages-corporels',
+  },
+];
+---
+
+<Base title="Notre équipe" description="Cinq avocats associés réunis autour d'un socle pénal commun et de spécialités complémentaires.">
+  <section aria-label="Présentation de l'équipe">
+    <h1>Nos Avocats Associés</h1>
+    <p>L'expertise du droit pénal renforcée par des compétences spécialisées.</p>
+  </section>
+
+  <section aria-label="Les avocats du cabinet">
+    {avocats.map((avocat) => (
+      <CardAvocat
+        nom={avocat.nom}
+        specialite={avocat.specialite}
+        description={avocat.description}
+        expertiseHref={avocat.expertiseHref}
+      />
+    ))}
+  </section>
+</Base>

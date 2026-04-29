@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Contact" description="Contactez le cabinet Custos Avocats — Disponible 24h/24 pour les urgences garde à vue.">
+  <section aria-label="Contacts d'urgence">
+    <h1>Contact</h1>
+    <p>Pour une urgence garde à vue, appelez-nous immédiatement.</p>
+    <address>
+      <p>
+        <strong>Urgence 24h/24 :</strong>
+        <a href="tel:+33XXXXXXXXX">+33 X XX XX XX XX</a>
+      </p>
+      <p>
+        <strong>Email :</strong>
+        <a href="mailto:contact@custos-avocats.fr">contact@custos-avocats.fr</a>
+      </p>
+      <p>
+        <strong>Adresse :</strong>
+        [Adresse du cabinet], [Ville]
+      </p>
+    </address>
+  </section>
+
+  <section aria-label="Formulaire de contact">
+    <h2>Nous écrire</h2>
+    <form method="POST" action="#" novalidate>
+      <div>
+        <label for="nom">Nom complet</label>
+        <input
+          type="text"
+          id="nom"
+          name="nom"
+          autocomplete="name"
+          required
+          aria-required="true"
+        />
+      </div>
+
+      <div>
+        <label for="email">Adresse email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          required
+          aria-required="true"
+        />
+      </div>
+
+      <div>
+        <label for="telephone">Téléphone</label>
+        <input
+          type="tel"
+          id="telephone"
+          name="telephone"
+          autocomplete="tel"
+        />
+      </div>
+
+      <div>
+        <label for="sujet">Objet de votre demande</label>
+        <select id="sujet" name="sujet" required aria-required="true">
+          <option value="">Sélectionner</option>
+          <option value="garde-a-vue">Garde à vue</option>
+          <option value="droit-des-mineurs">Droit des Mineurs</option>
+          <option value="droit-des-etrangers">Droit des Étrangers</option>
+          <option value="droit-de-la-famille">Droit de la Famille</option>
+          <option value="droit-penal-des-affaires">Droit Pénal des Affaires</option>
+          <option value="dommages-corporels">Dommages Corporels</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="message">Votre message</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="6"
+          required
+          aria-required="true"
+        ></textarea>
+      </div>
+
+      <button type="submit">Envoyer le message</button>
+    </form>
+  </section>
+
+  <section aria-label="Localisation">
+    <h2>Nous trouver</h2>
+    <p>[Carte Google Maps à intégrer]</p>
+  </section>
+</Base>

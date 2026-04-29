@@ -1,0 +1,42 @@
+---
+const expertises = [
+  { label: 'Droit Pénal', href: '/custos-avocats/expertises/droit-penal' },
+  { label: 'Droit des Mineurs', href: '/custos-avocats/expertises/droit-des-mineurs' },
+  { label: 'Droit des Étrangers', href: '/custos-avocats/expertises/droit-des-etrangers' },
+  { label: 'Droit de la Famille', href: '/custos-avocats/expertises/droit-de-la-famille' },
+  { label: 'Droit Pénal des Affaires', href: '/custos-avocats/expertises/droit-penal-des-affaires' },
+  { label: 'Dommages Corporels', href: '/custos-avocats/expertises/dommages-corporels' },
+];
+---
+
+<footer>
+  <section aria-label="Custos Avocats">
+    <strong>Custos Avocats</strong>
+    <p>Cabinet d'avocats spécialisé en droit pénal. Disponible 24h/24 pour vous défendre.</p>
+  </section>
+
+  <nav aria-label="Plan du site — Expertises">
+    <h3>Expertises</h3>
+    <ul>
+      {expertises.map(({ label, href }) => (
+        <li><a href={href}>{label}</a></li>
+      ))}
+    </ul>
+  </nav>
+
+  <nav aria-label="Plan du site — Cabinet">
+    <h3>Cabinet</h3>
+    <ul>
+      <li><a href="/custos-avocats/equipe">Notre équipe</a></li>
+      <li><a href="/custos-avocats/honoraires">Honoraires</a></li>
+      <li><a href="/custos-avocats/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section aria-label="Informations légales">
+    <p>
+      <a href="/custos-avocats/mentions-legales">Mentions légales</a>
+    </p>
+    <p>&copy; {new Date().getFullYear()} Custos Avocats — Tous droits réservés</p>
+  </section>
+</footer>

@@ -1,17 +1,47 @@
 ---
+import Base from '../layouts/Base.astro';
 
+const poles = [
+  { label: 'Droit des Mineurs', href: '/custos-avocats/expertises/droit-des-mineurs' },
+  { label: 'Droit des Étrangers', href: '/custos-avocats/expertises/droit-des-etrangers' },
+  { label: 'Droit de la Famille', href: '/custos-avocats/expertises/droit-de-la-famille' },
+  { label: 'Droit Pénal des Affaires', href: '/custos-avocats/expertises/droit-penal-des-affaires' },
+  { label: 'Dommages Corporels', href: '/custos-avocats/expertises/dommages-corporels' },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title="Accueil" description="Cabinet d'avocats spécialisé en droit pénal — Garde à vue, comparution immédiate, assises. Disponible 24h/24.">
+  <section aria-label="Urgence garde à vue">
+    <h1>Garde à vue — Nous sommes disponibles maintenant.</h1>
+    <p>Le cabinet Custos intervient 24h/24 pour vous assister dès la première heure.</p>
+    <a href="/custos-avocats/contact">Appeler en urgence</a>
+  </section>
+
+  <section aria-label="Présentation du cabinet">
+    <h2>Un cabinet, cinq expertises.</h2>
+    <p>
+      Custos Avocats réunit cinq avocats associés partageant un socle commun en droit pénal,
+      chacun portant une spécialité complémentaire pour couvrir l'ensemble de vos besoins juridiques.
+    </p>
+    <a href="/custos-avocats/equipe">Découvrir l'équipe</a>
+  </section>
+
+  <section aria-label="Accès aux pôles d'expertise">
+    <h2>Nos pôles d'expertise</h2>
+    <ul>
+      <li>
+        <a href="/custos-avocats/expertises/droit-penal">
+          <h3>Droit Pénal</h3>
+          <p>Tronc commun — Garde à vue, comparution immédiate, assises.</p>
+        </a>
+      </li>
+      {poles.map(({ label, href }) => (
+        <li>
+          <a href={href}>
+            <h3>{label}</h3>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

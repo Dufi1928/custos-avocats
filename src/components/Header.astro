@@ -1,0 +1,29 @@
+---
+const nav = [
+  { label: 'Accueil', href: '/custos-avocats/' },
+  { label: 'Équipe', href: '/custos-avocats/equipe' },
+  { label: 'Expertises', href: '/custos-avocats/expertises/droit-penal' },
+  { label: 'Honoraires', href: '/custos-avocats/honoraires' },
+  { label: 'Contact', href: '/custos-avocats/contact' },
+];
+---
+
+<header>
+  <a href="/custos-avocats/" aria-label="Custos Avocats — Accueil">
+    <strong>Custos Avocats</strong>
+  </a>
+
+  <nav aria-label="Navigation principale">
+    <ul>
+      {nav.map(({ label, href }) => (
+        <li>
+          <a href={href}>{label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <a href="/custos-avocats/contact" aria-label="Urgence — Nous contacter maintenant">
+    Urgence 24h/24
+  </a>
+</header>
