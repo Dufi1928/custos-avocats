@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+
+const engagements = [
+  {
+    titre: 'Disponibilité absolue',
+    texte: 'Une urgence n\'a pas d\'heure. Nos avocats sont joignables 24h/24 et 7j/7 pour intervenir dès la première heure de garde à vue, sans exception.',
+  },
+  {
+    titre: 'Transparence totale',
+    texte: 'Honoraires clairs, stratégie expliquée, décisions partagées. Vous n\'êtes jamais spectateur de votre propre défense.',
+  },
+  {
+    titre: 'Confidentialité absolue',
+    texte: 'Le secret professionnel est le fondement de notre relation. Chaque information que vous nous confiez est protégée sans réserve ni limite dans le temps.',
+  },
+  {
+    titre: 'Excellence sans compromis',
+    texte: 'Chaque dossier est traité avec la même rigueur, qu\'il s\'agisse d\'une garde à vue ou d\'une affaire criminelle complexe. Il n\'existe pas de "petit dossier".',
+  },
+];
+
+const valeurs = [
+  {
+    titre: 'Indépendance',
+    texte: 'Nous ne défendons que vos intérêts. Aucune pression extérieure, aucune complaisance ne guide nos actes — seulement l\'analyse juridique et votre défense.',
+  },
+  {
+    titre: 'Solidarité',
+    texte: 'Cinq avocats associés, un seul cabinet. Chaque dossier bénéficie de l\'expertise collective du cabinet, quelle que soit la spécialité mobilisée.',
+  },
+  {
+    titre: 'Humanité',
+    texte: 'Derrière chaque dossier, il y a une personne. Nous prenons le temps d\'écouter, de comprendre et d\'accompagner au-delà du strict cadre juridique.',
+  },
+  {
+    titre: 'Combativité',
+    texte: 'Nous plaidons avec conviction. Dans une salle d\'audience, la nuance ne suffit pas — nous défendons chaque dossier avec la détermination qu\'il mérite.',
+  },
+];
+---
+
+<Base title="Le Cabinet" description="Découvrez la mission, les engagements et les valeurs du cabinet Custos Avocats.">
+  <section aria-label="Mission du cabinet">
+    <h1>Le Cabinet</h1>
+    <p>
+      Custos Avocats a été fondé sur une conviction : la défense pénale exige à la fois une expertise
+      technique irréprochable et un engagement humain sans faille. Nous ne traitons pas des affaires —
+      nous défendons des personnes.
+    </p>
+  </section>
+
+  <section aria-label="Nos engagements">
+    <h2>Nos engagements</h2>
+    <ul>
+      {engagements.map(({ titre, texte }) => (
+        <li>
+          <h3>{titre}</h3>
+          <p>{texte}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section aria-label="Nos valeurs">
+    <h2>Nos valeurs</h2>
+    <ul>
+      {valeurs.map(({ titre, texte }) => (
+        <li>
+          <h3>{titre}</h3>
+          <p>{texte}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section aria-label="Appel à l'action">
+    <h2>Prendre contact</h2>
+    <p>Une question, une urgence, un premier rendez-vous. Nous sommes disponibles maintenant.</p>
+    <a href="/custos-avocats/contact">Nous contacter</a>
+  </section>
+</Base>
