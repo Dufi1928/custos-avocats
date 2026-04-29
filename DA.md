@@ -1,71 +1,94 @@
 # DIRECTION ARTISTIQUE — CUSTOS AVOCATS
-## Palette : Noir / Blanc / Gris / Vert
+## Philosophie : Classe & Apaisante
 
-> **Philosophie DA :** Haut de gamme, sobre, autoritaire. Le site doit inspirer confiance et compétence au premier regard. Aucun effet décoratif gratuit — chaque choix visuel est fonctionnel.
+Ce document définit l'orientation visuelle et conceptuelle du projet **Custos Avocats**, spécialisé en droit pénal.
 
 ---
 
-## 1 — PALETTE DE COULEURS
+## 1 — PHILOSOPHIE DU DESIGN
+
+L'objectif est de s'éloigner des codes traditionnels du droit pénal (souvent trop froids ou agressifs) pour proposer une expérience **"Classe et Apaisante"**. On veut que le client, souvent dans une situation de stress intense, se sente dans un environnement sécurisant et professionnel.
+
+---
+
+## 2 — PALETTE DE COULEURS
+
+Le design repose sur un équilibre entre la rigueur institutionnelle et la sérénité organique.
+
+### Autorité (Base)
 
 | Token | Valeur | Usage |
 |---|---|---|
-| `--noir` | `#0a0b0a` | Fond principal, arrière-plans |
-| `--blanc` | `#f4f5f2` | Texte principal, titres |
-| `--gris` | `#7a7d78` | Texte secondaire, métadonnées |
-| `--gris-clair` | `#c8cac4` | Corps de texte, labels, sous-titres |
-| `--vert` | `#2d6a4a` | Accent principal, CTA, bordures actives |
-| `--vert-vif` | `#3a8a60` | Hover states, surbrillance |
+| `--texte` | `#1A1A1A` | Texte principal, titres, structures |
+| `--anthracite` | `#3D3D3D` | Texte secondaire, corps long |
+| `--gris` | `#888888` | Labels, métadonnées, placeholders |
+| `--gris-clair` | `#DDDDD8` | Bordures fines, séparateurs |
+| `--fond` | `#F5F5F5` | Fond principal (évite le blanc pur trop agressif) |
+| `--blanc` | `#FFFFFF` | Surfaces de cartes, zones de saisie |
 
-### Rationale
-- **Noir profond** (#0a0b0a) : légèrement teinté vert pour une cohérence chromatique avec l'accent.
-- **Blanc cassé** (#f4f5f2) : évite la fatigue visuelle du blanc pur sur fond noir.
-- **Vert forêt** (#2d6a4a) : évoque la justice, la rigueur, la nature. Sobre et distinctif — loin des verts criards.
-
----
-
-## 2 — TYPOGRAPHIE
-
-> À définir. Pistes recommandées :
-> - **Titres :** Police à empattement (serif) pour l'autorité — ex. *Playfair Display*, *Cormorant Garamond*.
-> - **Corps :** Sans-serif neutre et lisible — ex. *Inter*, *DM Sans*.
-> - **Provisoire :** `system-ui, -apple-system, sans-serif`
-
----
-
-## 3 — ESPACEMENTS & GÉOMÉTRIE
+### Apaisement (Accent)
 
 | Token | Valeur | Usage |
 |---|---|---|
-| `--max-width` | `1100px` | Largeur maximale du contenu |
-| `--gap` | `1.5rem` | Espacement de référence |
-| `--radius` | `3px` | Rayon des coins — volontairement minimal (sobriété) |
+| `--vert` | `#4A5D4E` | Accent principal : bordures actives, icônes, CTA hover |
+| `--vert-vif` | `#5A7060` | Hover states |
+| `--vert-pale` | `rgba(74, 93, 78, 0.10)` | Fonds doux sur tags et badges |
+
+> **Usage du vert :** Présent mais subtil. Iconographie, bordures fines, boutons (hover), séparations graphiques.
 
 ---
 
-## 4 — PRINCIPES VISUELS
+## 3 — ÉLÉMENTS VISUELS
 
-- **Densité maîtrisée :** Beaucoup d'espace vide. Le contenu respire.
-- **Hiérarchie stricte :** H1 imposant, corps discret, accents verts rares et précis.
-- **Pas de gradients** : les surfaces sont monochrones. La profondeur vient des contrastes et opacités.
-- **Bordures fines** : `1px solid rgba(255,255,255,0.08)` pour les séparations — presque invisibles.
-- **Hover discret** : transitions `0.2s ease`, jamais de changement brutal.
+- **Végétal :** Intégration de visuels de plantes (type Monstera, Ficus) pour casser le côté "froid" du cabinet.
+- **Matériaux :** Rappel de textures nobles (bois sombre, papier texturé, cuir) dans les fonds et images.
+- **Minimalisme :** Aucune fioriture, aucune couleur flashy. Haut de gamme.
 
 ---
 
-## 5 — CONTRASTES WCAG AA (à valider)
+## 4 — TYPOGRAPHIE
+
+| Usage | Police | Variantes |
+|---|---|---|
+| **Titres** | *Playfair Display* (serif) | 400, 700 — évoque l'histoire, la loi, la confiance |
+| **Corps de texte** | *Inter* (sans-serif) | 400, 600 — aéré, moderne, lisible |
+
+```css
+--font-serif: 'Playfair Display', Georgia, serif;
+--font-sans:  'Inter', system-ui, sans-serif;
+```
+
+> Hébergées via `@fontsource` (npm), importées dans `Base.astro` — pas de dépendance Google Fonts.
+
+---
+
+## 5 — PRINCIPES VISUELS
+
+1. **Crédibilité :** Professionnalisme visible dès le premier regard.
+2. **Sérénité :** Interface calme, espacement généreux, typographie sobre.
+3. **Action :** Contact facilité, sans être intrusif.
+
+- **Fond crème** (#F5F5F5) : plus doux que le blanc pur, moins agressif que le noir.
+- **Rayon de coin minimal** (3px) : sobriété, pas de style "app mobile".
+- **Transitions lentes** (0.25s ease) : tout changement d'état est fluide, jamais brutal.
+- **Vert en retenue** : jamais en aplat de fond, toujours en accent ou bordure.
+
+---
+
+## 6 — CONTRASTES WCAG AA (à valider définitivement)
 
 | Texte | Fond | Ratio cible |
 |---|---|---|
-| `--blanc` sur `--noir` | — | ≥ 4.5:1 |
-| `--gris-clair` sur `--noir` | — | ≥ 4.5:1 |
-| `--vert-vif` sur `--noir` | — | ≥ 3:1 (grand texte) |
+| `--texte` (#1A1A1A) sur `--fond` (#F5F5F5) | — | ≥ 4.5:1 ✓ |
+| `--anthracite` (#3D3D3D) sur `--fond` (#F5F5F5) | — | ≥ 4.5:1 ✓ |
+| `--vert` (#4A5D4E) sur `--fond` (#F5F5F5) | — | À vérifier |
 
 ---
 
-## 6 — À DÉFINIR
+## 7 — À DÉFINIR
 
-- [ ] Choix typographique définitif (titres + corps)
-- [ ] Valeurs exactes de `--vert` et `--vert-vif` après validation contraste WCAG
-- [ ] Comportement des animations d'entrée (GSAP scroll-triggered)
-- [ ] Traitement visuel du Hero (full-screen ? demi-hauteur ?)
-- [ ] Iconographie (SVG custom ou système d'icônes ?)
+- [ ] Visuels végétaux (photos ou illustrations SVG ?)
+- [ ] Traitement Hero (image de fond ? split layout ?)
+- [ ] Mode sombre éventuel
+- [ ] Iconographie (SVG custom ?)
+- [ ] Animations GSAP scroll-triggered (after above-fold CSS-only)

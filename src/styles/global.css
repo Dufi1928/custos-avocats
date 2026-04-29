@@ -1,16 +1,26 @@
-/* --- Tokens — palette Noir / Blanc / Gris / Vert (DA.md) --- */
+/* --- Tokens — DA.md Custos Avocats --- */
 :root {
-  --noir:       #0a0b0a;
-  --blanc:      #f4f5f2;
-  --gris:       #7a7d78;
-  --gris-clair: #c8cac4;
-  --vert:       #2d6a4a;
-  --vert-vif:   #3a8a60;
+  /* Autorité */
+  --texte:       #1A1A1A;
+  --anthracite:  #3D3D3D;
+  --gris:        #888888;
+  --gris-clair:  #DDDDD8;
+  --fond:        #F5F5F5;
+  --blanc:       #FFFFFF;
 
-  --font-sans: system-ui, -apple-system, sans-serif;
+  /* Apaisement */
+  --vert:        #4A5D4E;
+  --vert-vif:    #5A7060;
+  --vert-pale:   rgba(74, 93, 78, 0.10);
+
+  /* Typo */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans:  'Inter', system-ui, sans-serif;
+
+  /* Layout */
   --max-width: 1100px;
-  --gap: 1.5rem;
-  --radius: 3px;
+  --gap:       1.5rem;
+  --radius:    3px;
 }
 
 /* --- Reset minimal --- */
@@ -21,8 +31,8 @@ html { font-size: 16px; scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-sans);
-  background: var(--noir);
-  color: var(--blanc);
+  background: var(--fond);
+  color: var(--texte);
   line-height: 1.65;
   min-height: 100dvh;
   display: flex;
@@ -32,35 +42,35 @@ body {
 main { flex: 1; }
 
 /* --- Typographie --- */
-h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 700; }
-h2 { font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.2; font-weight: 600; }
-h3 { font-size: 1.15rem; font-weight: 600; }
-p  { color: var(--gris-clair); max-width: 65ch; }
+h1, h2 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--texte);
+}
 
-a  { color: var(--vert); text-underline-offset: 3px; }
-a:hover { opacity: 0.8; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; }
+h2 { font-size: clamp(1.4rem, 3vw, 2rem);  line-height: 1.2; }
+h3 { font-size: 1.1rem; font-weight: 600; color: var(--texte); }
+
+p  { color: var(--anthracite); max-width: 65ch; line-height: 1.75; }
+
+a  { color: var(--vert); text-underline-offset: 3px; transition: color 0.25s; }
+a:hover { color: var(--vert-vif); }
 
 ul { list-style: none; }
 
 address { font-style: normal; }
 
-/* --- Layout utilitaire --- */
-.container {
-  width: 100%;
-  max-width: var(--max-width);
-  margin-inline: auto;
-  padding-inline: var(--gap);
-}
-
 /* --- Banner --- */
 aside[role="note"] {
   background: var(--vert);
-  color: var(--noir);
+  color: var(--blanc);
   text-align: center;
   padding: 0.5rem var(--gap);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 aside[role="note"] p { color: inherit; max-width: none; }
@@ -71,13 +81,20 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: var(--gap);
-  padding: 1.25rem var(--gap);
+  padding: 1.5rem var(--gap);
   max-width: var(--max-width);
   margin-inline: auto;
   width: 100%;
+  border-bottom: 1px solid var(--gris-clair);
 }
 
-header strong { font-size: 1.2rem; color: var(--blanc); letter-spacing: 0.05em; }
+header strong {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--texte);
+  letter-spacing: 0.02em;
+}
+
 header a { text-decoration: none; }
 
 header nav ul {
@@ -87,81 +104,91 @@ header nav ul {
 }
 
 header nav a {
-  color: var(--gris-clair);
-  font-size: 0.9rem;
+  color: var(--gris);
+  font-size: 0.875rem;
   letter-spacing: 0.03em;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.25s;
 }
 
-header nav a:hover { color: var(--blanc); }
+header nav a:hover { color: var(--texte); }
 
 header > a:last-child {
   background: var(--vert);
   color: var(--blanc);
-  padding: 0.55rem 1.1rem;
+  padding: 0.55rem 1.2rem;
   border-radius: var(--radius);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   white-space: nowrap;
   text-decoration: none;
-  transition: opacity 0.2s;
+  transition: background 0.25s;
 }
+
+header > a:last-child:hover { background: var(--vert-vif); color: var(--blanc); }
 
 /* --- Main sections --- */
 main section {
   max-width: var(--max-width);
   margin-inline: auto;
-  padding: 4rem var(--gap);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 5rem var(--gap);
+  border-bottom: 1px solid var(--gris-clair);
 }
 
 main section h1,
-main section h2,
-main section h3 { margin-bottom: 1rem; }
+main section h2 { margin-bottom: 1.25rem; }
+
+main section h3 { margin-bottom: 0.5rem; }
 
 main section p { margin-bottom: 1.5rem; }
 
-main section ul { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+main section ul { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem; }
 
 /* --- Boutons / CTA --- */
 main a[href] {
   display: inline-block;
   border: 1px solid var(--vert);
   color: var(--vert);
-  padding: 0.6rem 1.4rem;
+  padding: 0.65rem 1.5rem;
   border-radius: var(--radius);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
+  letter-spacing: 0.03em;
   text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.25s, color 0.25s;
 }
 
 main a[href]:hover {
   background: var(--vert);
-  color: var(--noir);
+  color: var(--blanc);
 }
 
 /* --- CardAvocat --- */
 .card {
-  border: 1px solid rgba(255,255,255,0.1);
+  background: var(--blanc);
+  border: 1px solid var(--gris-clair);
   border-radius: var(--radius);
-  padding: 1.75rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  transition: border-color 0.25s;
 }
+
+.card:hover { border-color: var(--vert); }
 
 .card header {
   padding: 0;
   max-width: none;
+  border: none;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.25rem;
 }
 
-.card header p { color: var(--gris-clair); font-size: 0.9rem; margin: 0; }
+.card header p  { color: var(--gris); font-size: 0.875rem; margin: 0; }
 .card header strong { color: var(--vert); }
 
 /* --- Page Équipe : grille --- */
@@ -171,22 +198,24 @@ section[aria-label="Les avocats du cabinet"] {
   gap: 1.5rem;
 }
 
-/* --- Expertises : liste focus --- */
+/* --- Expertises : tags focus --- */
 ul[aria-label="Points clés"] {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin: 1rem 0 2rem;
+  margin: 1rem 0 2.5rem;
 }
 
 ul[aria-label="Points clés"] li {
-  background: rgba(45, 106, 74, 0.15);
+  background: var(--vert-pale);
   border: 1px solid var(--vert);
   color: var(--vert);
-  padding: 0.3rem 0.75rem;
+  padding: 0.3rem 0.85rem;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 /* --- Formulaire contact --- */
@@ -200,17 +229,17 @@ form {
 
 form div { display: flex; flex-direction: column; gap: 0.4rem; }
 
-label { font-size: 0.85rem; color: var(--gris-clair); font-weight: 500; }
+label { font-size: 0.825rem; color: var(--gris); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
 
 input, select, textarea {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: var(--blanc);
-  padding: 0.65rem 0.9rem;
+  background: var(--blanc);
+  border: 1px solid var(--gris-clair);
+  color: var(--texte);
+  padding: 0.7rem 1rem;
   border-radius: var(--radius);
-  font-family: inherit;
+  font-family: var(--font-sans);
   font-size: 0.95rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.25s;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -218,22 +247,25 @@ input:focus, select:focus, textarea:focus {
   border-color: var(--vert);
 }
 
-select option { background: var(--noir); }
+select option { background: var(--blanc); color: var(--texte); }
 
 button[type="submit"] {
   align-self: flex-start;
   background: var(--vert);
-  color: var(--noir);
+  color: var(--blanc);
   border: none;
-  padding: 0.7rem 1.6rem;
+  padding: 0.75rem 1.75rem;
   border-radius: var(--radius);
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.25s;
 }
 
-button[type="submit"]:hover { opacity: 0.85; }
+button[type="submit"]:hover { background: var(--vert-vif); }
 
 /* --- Footer --- */
 footer {
@@ -242,24 +274,38 @@ footer {
   gap: 2.5rem;
   max-width: var(--max-width);
   margin-inline: auto;
-  padding: 3rem var(--gap) 2rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 3.5rem var(--gap) 2.5rem;
+  border-top: 1px solid var(--gris-clair);
   width: 100%;
 }
 
-footer h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gris-clair); margin-bottom: 1rem; }
-footer p, footer a { font-size: 0.85rem; color: rgba(200,200,190,0.6); text-decoration: none; }
+footer h3 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--texte);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+footer p, footer a {
+  font-size: 0.875rem;
+  color: var(--gris);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
 footer ul { gap: 0.6rem; }
-footer a:hover { color: var(--blanc); }
+footer a:hover { color: var(--texte); }
 
 /* --- Contenu Markdown (expertises) --- */
-.prose h2 { margin: 2rem 0 0.75rem; }
-.prose h3 { margin: 1.5rem 0 0.5rem; color: var(--vert); }
-.prose p  { margin-bottom: 1rem; }
+.prose h2 { margin: 2.5rem 0 0.75rem; }
+.prose h3 { margin: 2rem 0 0.5rem; color: var(--vert); }
+.prose p  { margin-bottom: 1.25rem; }
 
 /* --- Responsive --- */
 @media (max-width: 640px) {
-  header { flex-wrap: wrap; }
+  header { flex-wrap: wrap; border-bottom: 1px solid var(--gris-clair); }
   header nav { display: none; }
-  main section { padding: 2.5rem var(--gap); }
+  main section { padding: 3rem var(--gap); }
 }
