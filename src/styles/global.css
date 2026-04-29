@@ -1,15 +1,16 @@
-/* --- Tokens provisoires (seront remplacés par DA.md) --- */
+/* --- Tokens — palette Noir / Blanc / Gris / Vert (DA.md) --- */
 :root {
-  --noir: #0a0a0a;
-  --blanc: #f5f5f0;
-  --beton: #c8c8be;
-  --ambre: #c8961e;
-  --urgence: #b03a2e;
+  --noir:       #0a0b0a;
+  --blanc:      #f4f5f2;
+  --gris:       #7a7d78;
+  --gris-clair: #c8cac4;
+  --vert:       #2d6a4a;
+  --vert-vif:   #3a8a60;
 
   --font-sans: system-ui, -apple-system, sans-serif;
   --max-width: 1100px;
   --gap: 1.5rem;
-  --radius: 4px;
+  --radius: 3px;
 }
 
 /* --- Reset minimal --- */
@@ -34,9 +35,9 @@ main { flex: 1; }
 h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 700; }
 h2 { font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.2; font-weight: 600; }
 h3 { font-size: 1.15rem; font-weight: 600; }
-p  { color: var(--beton); max-width: 65ch; }
+p  { color: var(--gris-clair); max-width: 65ch; }
 
-a  { color: var(--ambre); text-underline-offset: 3px; }
+a  { color: var(--vert); text-underline-offset: 3px; }
 a:hover { opacity: 0.8; }
 
 ul { list-style: none; }
@@ -53,7 +54,7 @@ address { font-style: normal; }
 
 /* --- Banner --- */
 aside[role="note"] {
-  background: var(--ambre);
+  background: var(--vert);
   color: var(--noir);
   text-align: center;
   padding: 0.5rem var(--gap);
@@ -86,7 +87,7 @@ header nav ul {
 }
 
 header nav a {
-  color: var(--beton);
+  color: var(--gris-clair);
   font-size: 0.9rem;
   letter-spacing: 0.03em;
   text-decoration: none;
@@ -96,7 +97,7 @@ header nav a {
 header nav a:hover { color: var(--blanc); }
 
 header > a:last-child {
-  background: var(--urgence);
+  background: var(--vert);
   color: var(--blanc);
   padding: 0.55rem 1.1rem;
   border-radius: var(--radius);
@@ -127,8 +128,8 @@ main section ul { display: flex; flex-direction: column; gap: 1rem; margin-top: 
 /* --- Boutons / CTA --- */
 main a[href] {
   display: inline-block;
-  border: 1px solid var(--ambre);
-  color: var(--ambre);
+  border: 1px solid var(--vert);
+  color: var(--vert);
   padding: 0.6rem 1.4rem;
   border-radius: var(--radius);
   font-size: 0.9rem;
@@ -138,7 +139,7 @@ main a[href] {
 }
 
 main a[href]:hover {
-  background: var(--ambre);
+  background: var(--vert);
   color: var(--noir);
 }
 
@@ -160,8 +161,8 @@ main a[href]:hover {
   gap: 0.25rem;
 }
 
-.card header p { color: var(--beton); font-size: 0.9rem; margin: 0; }
-.card header strong { color: var(--ambre); }
+.card header p { color: var(--gris-clair); font-size: 0.9rem; margin: 0; }
+.card header strong { color: var(--vert); }
 
 /* --- Page Équipe : grille --- */
 section[aria-label="Les avocats du cabinet"] {
@@ -179,9 +180,9 @@ ul[aria-label="Points clés"] {
 }
 
 ul[aria-label="Points clés"] li {
-  background: rgba(200, 150, 30, 0.15);
-  border: 1px solid var(--ambre);
-  color: var(--ambre);
+  background: rgba(45, 106, 74, 0.15);
+  border: 1px solid var(--vert);
+  color: var(--vert);
   padding: 0.3rem 0.75rem;
   border-radius: 999px;
   font-size: 0.8rem;
@@ -199,7 +200,7 @@ form {
 
 form div { display: flex; flex-direction: column; gap: 0.4rem; }
 
-label { font-size: 0.85rem; color: var(--beton); font-weight: 500; }
+label { font-size: 0.85rem; color: var(--gris-clair); font-weight: 500; }
 
 input, select, textarea {
   background: rgba(255,255,255,0.05);
@@ -214,14 +215,14 @@ input, select, textarea {
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--ambre);
+  border-color: var(--vert);
 }
 
 select option { background: var(--noir); }
 
 button[type="submit"] {
   align-self: flex-start;
-  background: var(--ambre);
+  background: var(--vert);
   color: var(--noir);
   border: none;
   padding: 0.7rem 1.6rem;
@@ -246,14 +247,14 @@ footer {
   width: 100%;
 }
 
-footer h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--beton); margin-bottom: 1rem; }
+footer h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gris-clair); margin-bottom: 1rem; }
 footer p, footer a { font-size: 0.85rem; color: rgba(200,200,190,0.6); text-decoration: none; }
 footer ul { gap: 0.6rem; }
 footer a:hover { color: var(--blanc); }
 
 /* --- Contenu Markdown (expertises) --- */
 .prose h2 { margin: 2rem 0 0.75rem; }
-.prose h3 { margin: 1.5rem 0 0.5rem; color: var(--ambre); }
+.prose h3 { margin: 1.5rem 0 0.5rem; color: var(--vert); }
 .prose p  { margin-bottom: 1rem; }
 
 /* --- Responsive --- */
