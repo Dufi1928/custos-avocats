@@ -143,7 +143,7 @@ main a[href]:hover {
 }
 
 /* --- CardAvocat --- */
-article {
+.card {
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: var(--radius);
   padding: 1.75rem;
@@ -152,7 +152,7 @@ article {
   gap: 0.75rem;
 }
 
-article header {
+.card header {
   padding: 0;
   max-width: none;
   flex-direction: column;
@@ -160,8 +160,8 @@ article header {
   gap: 0.25rem;
 }
 
-article header p { color: var(--beton); font-size: 0.9rem; margin: 0; }
-article header strong { color: var(--ambre); }
+.card header p { color: var(--beton); font-size: 0.9rem; margin: 0; }
+.card header strong { color: var(--ambre); }
 
 /* --- Page Équipe : grille --- */
 section[aria-label="Les avocats du cabinet"] {

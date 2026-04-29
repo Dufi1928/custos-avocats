@@ -20,7 +20,7 @@ const { Content } = await render(entry);
 ---
 
 <Base title={entry.data.title} description={`Expertise en ${entry.data.title} — Cabinet Custos Avocats.`}>
-  <article>
+  <section aria-label={entry.data.title}>
     <header>
       <h1>{entry.data.title}</h1>
       <ul aria-label="Points clés">
@@ -39,5 +39,5 @@ const { Content } = await render(entry);
         <a href="/custos-avocats/contact">{entry.data.cta}</a>
       </aside>
     )}
-  </article>
+  </section>
 </Base>
