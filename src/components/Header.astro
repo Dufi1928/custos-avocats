@@ -12,14 +12,12 @@ const nav = [
 <header>
   <a href="/custos-avocats/" class="logo-link" aria-label="Custos Avocats — Accueil">
     <img
-      src="/custos-avocats/logo-emblem.png"
-      alt=""
-      class="logo-emblem"
-      width="48"
-      height="56"
-      aria-hidden="true"
+      src="/custos-avocats/logo-header.png"
+      alt="Custos Avocats"
+      class="logo"
+      width="113"
+      height="64"
     />
-    <span class="logo-nom">Custos Avocats</span>
   </a>
 
   <nav aria-label="Navigation principale">
@@ -41,28 +39,16 @@ const nav = [
   .logo-link {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
     text-decoration: none;
   }
 
-  .logo-emblem {
-    height: 52px;
+  .logo {
+    height: 64px;
     width: auto;
     display: block;
-    flex-shrink: 0;
-  }
-
-  .logo-nom {
-    font-family: var(--font-serif);
-    font-size: 1.45rem;
-    font-weight: 700;
-    color: var(--texte);
-    letter-spacing: 0.01em;
-    white-space: nowrap;
   }
 
   @media (max-width: 640px) {
-    .logo-emblem { height: 40px; }
-    .logo-nom { font-size: 1.15rem; }
+    .logo { height: 48px; }
   }
 </style>
