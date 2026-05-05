@@ -12,7 +12,7 @@ const { nom, specialite, description, expertiseHref } = Astro.props;
 <article class="card" aria-label={`Profil de ${nom}`}>
   <header>
     <h3>{nom}</h3>
-    <p>Droit Pénal — <strong>{specialite}</strong></p>
+    <p><strong>Droit Pénal</strong> — {specialite}</p>
   </header>
   <p>{description}</p>
   <a href={expertiseHref}>Voir l'expertise</a>
