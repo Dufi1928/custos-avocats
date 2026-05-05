@@ -3,10 +3,6 @@ import Base from '../layouts/Base.astro';
 
 const engagements = [
   {
-    titre: 'Disponibilité absolue',
-    texte: 'Une urgence n\'a pas d\'heure. Nos avocats sont joignables 24h/24 et 7j/7 pour intervenir dès la première heure de garde à vue, sans exception.',
-  },
-  {
     titre: 'Transparence totale',
     texte: 'Honoraires clairs, stratégie expliquée, décisions partagées. Vous n\'êtes jamais spectateur de votre propre défense.',
   },
@@ -17,6 +13,10 @@ const engagements = [
   {
     titre: 'Excellence sans compromis',
     texte: 'Chaque dossier est traité avec la même rigueur, qu\'il s\'agisse d\'une garde à vue ou d\'une affaire criminelle complexe. Il n\'existe pas de "petit dossier".',
+  },
+  {
+    titre: 'Présence à chaque étape',
+    texte: 'De la phase d\'enquête jusqu\'au jugement, nous sommes à vos côtés. Chaque décision de procédure est prise avec vous, en toute connaissance de cause.',
   },
 ];
 
@@ -38,11 +38,31 @@ const valeurs = [
     texte: 'Nous plaidons avec conviction. Dans une salle d\'audience, la nuance ne suffit pas — nous défendons chaque dossier avec la détermination qu\'il mérite.',
   },
 ];
+
+const engagementsMission = [
+  {
+    titre: 'Accessibilité de la défense',
+    texte: 'Nous acceptons l\'aide juridictionnelle totale ou partielle et proposons des paiements échelonnés. La qualité de la défense ne doit pas dépendre des seules ressources financières.',
+  },
+  {
+    titre: 'Accompagnement global',
+    texte: 'Chaque associé cumule une double compétence — droit pénal et une spécialité complémentaire. Nous accompagnons nos clients dans tous les pans de leur vie, pas seulement dans la procédure pénale.',
+  },
+  {
+    titre: 'Attention portée à la personne',
+    texte: 'Nous mesurons l\'impact humain de chaque décision judiciaire. La peine ou la mesure prononcée n\'est pas une abstraction — elle engage un destin. Nous en tenons compte à chaque étape.',
+  },
+  {
+    titre: 'Éthique professionnelle',
+    texte: 'Nous exerçons dans le strict respect des règles déontologiques du Barreau de Lille et de l\'Ordre des avocats. L\'indépendance et l\'intégrité ne sont pas négociables.',
+  },
+];
 ---
 
-<Base title="Les valeurs du cabinet" description="Découvrez la mission, les engagements et les valeurs du cabinet Custos Avocats.">
+<Base title="Valeurs du cabinet" description="Cabinet à mission spécialisé en droit pénal — mission, engagements et valeurs de Custos Avocats.">
+
   <section aria-label="Mission du cabinet">
-    <h1>Les valeurs du cabinet</h1>
+    <h1>Valeurs du cabinet</h1>
     <p>
       Custos Avocats a été fondé sur une conviction : la défense pénale exige à la fois une expertise
       technique irréprochable et un engagement humain sans faille. Nous ne traitons pas des affaires —
@@ -50,6 +70,35 @@ const valeurs = [
     </p>
   </section>
 
+  <!-- ══ CABINET À MISSION ══ -->
+  <section aria-label="Cabinet à mission">
+    <h2>Un cabinet à mission</h2>
+    <p>
+      Custos Avocats est un cabinet à mission. Cela signifie que notre activité professionnelle
+      est guidée par une raison d'être qui dépasse la seule dimension économique.
+      Nous nous fixons des objectifs sociaux, humains et éthiques auxquels nous nous tenons.
+    </p>
+
+    <div class="raison-etre">
+      <p class="raison-label">Notre raison d'être</p>
+      <blockquote>
+        Garantir à toute personne confrontée à la justice pénale — qu'elle soit victime
+        ou mise en cause — une défense exigeante, accessible et profondément humaine,
+        en l'accompagnant dans toutes les dimensions de sa vie.
+      </blockquote>
+    </div>
+
+    <ul class="mission-engagements">
+      {engagementsMission.map(({ titre, texte }) => (
+        <li class="mission-engagement">
+          <h3>{titre}</h3>
+          <p>{texte}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ══ ENGAGEMENTS ══ -->
   <section aria-label="Nos engagements">
     <h2>Nos engagements</h2>
     <ul>
@@ -62,6 +111,7 @@ const valeurs = [
     </ul>
   </section>
 
+  <!-- ══ VALEURS ══ -->
   <section aria-label="Nos valeurs">
     <h2>Nos valeurs</h2>
     <ul>
@@ -76,7 +126,72 @@ const valeurs = [
 
   <section aria-label="Appel à l'action">
     <h2>Prendre contact</h2>
-    <p>Une question, une urgence, un premier rendez-vous. Nous sommes disponibles maintenant.</p>
+    <p>Une question, un premier rendez-vous, une situation à analyser. Nous sommes là.</p>
     <a href="/custos-avocats/contact">Nous contacter</a>
   </section>
+
 </Base>
+
+<style>
+  /* ── Encart raison d'être ── */
+  .raison-etre {
+    border-left: 3px solid var(--vert);
+    background: var(--blanc);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1.75rem 2rem;
+    margin: 2rem 0 2.5rem;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  }
+
+  .raison-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--vert);
+    font-weight: 700;
+    margin-bottom: 0.75rem !important;
+    max-width: none;
+  }
+
+  .raison-etre blockquote {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--anthracite);
+    line-height: 1.75;
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  /* ── Engagements mission (grille) ── */
+  .mission-engagements {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem !important;
+    margin-top: 0 !important;
+    flex-direction: unset !important;
+  }
+
+  .mission-engagement {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-top: 3px solid var(--vert);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .mission-engagement h3 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--texte);
+    margin-bottom: 0.6rem;
+  }
+
+  .mission-engagement p {
+    font-size: 0.875rem;
+    color: var(--anthracite);
+    line-height: 1.7;
+    margin: 0;
+    max-width: none;
+  }
+</style>
