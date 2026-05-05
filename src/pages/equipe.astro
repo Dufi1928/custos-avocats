@@ -106,7 +106,8 @@ const secretaires = [
   /* Photo de groupe */
   .photo-groupe {
     width: 100%;
-    aspect-ratio: 16 / 7;
+    max-height: 240px;
+    aspect-ratio: 16 / 6;
     background: var(--fond);
     border: 2px dashed var(--gris-clair);
     border-radius: var(--radius);
@@ -116,11 +117,11 @@ const secretaires = [
     justify-content: center;
     gap: 0.75rem;
     color: var(--gris-clair);
-    margin-top: 2.5rem;
+    margin-top: 2rem;
   }
 
   .photo-groupe svg {
-    width: 140px;
+    width: 110px;
     height: auto;
   }
 
@@ -131,13 +132,43 @@ const secretaires = [
     font-weight: 600;
   }
 
-  /* Grille des avocats */
+  /* Grille des avocats : 3 puis 2 centrés */
   .avocats-grid-section {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+    grid-template-columns: repeat(6, 1fr) !important;
     gap: 1.5rem !important;
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
+  }
+
+  .avocats-grid-section > :global(*) {
+    grid-column: span 2;
+  }
+
+  /* 4e et 5e cartes centrées sur la 2e ligne */
+  .avocats-grid-section > :global(*:nth-child(4)) {
+    grid-column: 2 / 4;
+  }
+
+  .avocats-grid-section > :global(*:nth-child(5)) {
+    grid-column: 4 / 6;
+  }
+
+  @media (max-width: 860px) {
+    .avocats-grid-section {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .avocats-grid-section > :global(*),
+    .avocats-grid-section > :global(*:nth-child(4)),
+    .avocats-grid-section > :global(*:nth-child(5)) {
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .avocats-grid-section {
+      grid-template-columns: 1fr !important;
+    }
   }
 
   .secretaires-grid {

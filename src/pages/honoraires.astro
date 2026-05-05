@@ -1,11 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+const expertises = await getCollection('expertises');
+const sorted = expertises.sort(
+  (a: CollectionEntry<'expertises'>, b: CollectionEntry<'expertises'>) =>
+    (a.data.ordre ?? 99) - (b.data.ordre ?? 99)
+);
 ---
 
-<Base title="Honoraires" description="Grille tarifaire du cabinet Custos Avocats — Droit pénal, TTC, Barreau de Lille.">
+<Base title="Domaines & Honoraires" description="Domaines d'intervention et grille tarifaire du cabinet Custos Avocats — Droit pénal, Barreau de Lille.">
 
+  <!-- ══ DOMAINES D'INTERVENTION ══ -->
+  <section aria-label="Domaines d'intervention">
+    <h1>Domaines &amp; Honoraires</h1>
+    <p>
+      Custos Avocats est un cabinet spécialisé en droit pénal. Chacun de nos associés
+      cumule cette expertise de base avec un second domaine d'intervention, pour vous
+      accompagner dans toutes les dimensions de votre vie.
+    </p>
+    <ul class="domaines-grid">
+      {sorted.map((e: CollectionEntry<'expertises'>) => (
+        <li>
+          <a href={`/custos-avocats/expertises/${e.data.slug}`} class="domaine-card">
+            <span class="domaine-num">{String(e.data.ordre ?? 0).padStart(2, '0')}</span>
+            <h3>{e.data.title}</h3>
+            <p>{e.data.focus.slice(0, 2).join(' · ')}</p>
+            <span class="domaine-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ══ HONORAIRES ══ -->
   <section aria-label="Introduction honoraires">
-    <h1>Honoraires</h1>
+    <h2>Honoraires</h2>
     <p>
       Le cabinet Custos s'engage à une totale transparence sur ses honoraires.
       Une convention d'honoraires écrite est systématiquement établie avant toute intervention,
@@ -375,6 +406,71 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
+  /* ── Grille domaines ── */
+  .domaines-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background: var(--gris-clair);
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 2rem !important;
+    flex-direction: unset !important;
+  }
+
+  .domaine-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.75rem 1.5rem;
+    background: var(--fond);
+    text-decoration: none;
+    color: var(--texte);
+    transition: background 0.25s;
+    border: none;
+    border-radius: 0;
+  }
+  .domaine-card:hover { background: var(--blanc); color: var(--texte); opacity: 1; }
+
+  .domaine-num {
+    font-size: 0.62rem;
+    color: var(--gris);
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .domaine-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 0;
+  }
+
+  .domaine-card p {
+    font-size: 0.75rem;
+    color: var(--gris);
+    margin: 0;
+    max-width: none;
+    line-height: 1.4;
+  }
+
+  .domaine-arrow {
+    display: block;
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--vert);
+    transition: transform 0.25s;
+  }
+  .domaine-card:hover .domaine-arrow { transform: translateX(4px); }
+
+  @media (max-width: 640px) {
+    .domaines-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
   /* ── Groupes tarifaires ── */
   .tarif-groupe {
     margin-top: 2rem;
