@@ -10,12 +10,6 @@ const avocats = [
     expertiseHref: '/custos-avocats/expertises/droit-des-mineurs',
   },
   {
-    nom: 'Maître Chloé JAULIN-DENISSELLE',
-    specialite: 'Droit des Étrangers',
-    description: 'Accompagne les personnes étrangères face aux procédures d\'éloignement, recours OQTF, titres de séjour et régularisation.',
-    expertiseHref: '/custos-avocats/expertises/droit-des-etrangers',
-  },
-  {
     nom: 'Maître Lauriana DAVRILLON',
     specialite: 'Droit de la Famille',
     description: 'Défend les clients dans les procédures de divorce conflictuel, les violences intrafamiliales et les litiges relatifs à l\'autorité parentale.',
@@ -32,6 +26,23 @@ const avocats = [
     specialite: 'Dommages Corporels',
     description: 'Défend les victimes d\'accidents corporels et les accompagne de l\'expertise médicale jusqu\'à l\'obtention d\'une indemnisation juste.',
     expertiseHref: '/custos-avocats/expertises/dommages-corporels',
+  },
+  {
+    nom: 'Maître Chloé JAULIN-DENISSELLE',
+    specialite: 'Droit des Étrangers',
+    description: 'Accompagne les personnes étrangères face aux procédures d\'éloignement, recours OQTF, titres de séjour et régularisation.',
+    expertiseHref: '/custos-avocats/expertises/droit-des-etrangers',
+  },
+];
+
+const secretaires = [
+  {
+    nom: '[Prénom NOM]',
+    description: 'Secrétaire juridique — Gestion des dossiers, accueil et coordination administrative du cabinet.',
+  },
+  {
+    nom: '[Prénom NOM]',
+    description: 'Secrétaire juridique — Gestion des dossiers, accueil et coordination administrative du cabinet.',
   },
 ];
 ---
@@ -56,4 +67,35 @@ const avocats = [
       />
     ))}
   </section>
+
+  <section aria-label="Secrétariat juridique">
+    <h2>Secrétariat juridique</h2>
+    <p>Notre équipe administrative assure l'accueil, le suivi des dossiers et la coordination du cabinet.</p>
+    <ul class="secretaires-grid">
+      {secretaires.map(({ nom, description }) => (
+        <li class="card secretaire-card">
+          <header>
+            <h3>{nom}</h3>
+            <p>Secrétaire juridique</p>
+          </header>
+          <p>{description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
 </Base>
+
+<style>
+  .secretaires-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    flex-direction: unset !important;
+    margin-top: 1.5rem !important;
+  }
+
+  .secretaire-card header p {
+    color: var(--gris);
+    font-size: 0.875rem;
+  }
+</style>
