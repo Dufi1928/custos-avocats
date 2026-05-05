@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 200" role="img" aria-label="Custos Avocats — emblème">
+
+  <!-- SWORD -->
+  <ellipse cx="90" cy="7" rx="8" ry="6" fill="#1A1A1A"/>
+  <rect x="86.5" y="12" width="7" height="28" rx="1" fill="#1A1A1A"/>
+  <path d="M 60,40 C 62,37 68,36 75,37 L 90,36 L 105,37 C 112,36 118,37 120,40 L 120,50 C 118,53 112,54 105,53 L 90,54 L 75,53 C 68,54 62,53 60,50 Z" fill="#1A1A1A"/>
+  <path d="M 87.5,54 L 92.5,54 L 91,190 L 90,197 L 89,190 Z" fill="#1A1A1A"/>
+
+  <!-- SHIELD -->
+  <path d="M 47,43 Q 47,35 55,35 L 125,35 Q 133,35 133,43 L 133,118 Q 133,155 90,174 Q 47,155 47,118 Z"
+        fill="#FFFFFF" stroke="#1A1A1A" stroke-width="3"/>
+  <path d="M 53,47 Q 53,41 59,41 L 121,41 Q 127,41 127,47 L 127,118 Q 127,150 90,167 Q 53,150 53,118 Z"
+        fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+
+  <!-- SCALES -->
+  <rect x="88.5" y="58" width="3" height="48" fill="#4A5D4E"/>
+  <polygon points="90,54 87,60 93,60" fill="#4A5D4E"/>
+  <rect x="64" y="69" width="52" height="3" rx="1.5" fill="#4A5D4E"/>
+  <line x1="68" y1="70" x2="68" y2="90" stroke="#4A5D4E" stroke-width="1.8"/>
+  <line x1="112" y1="70" x2="112" y2="90" stroke="#4A5D4E" stroke-width="1.8"/>
+  <path d="M 58,92 Q 68,84 78,92" stroke="#4A5D4E" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M 102,92 Q 112,84 122,92" stroke="#4A5D4E" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <rect x="83" y="103" width="14" height="3" rx="1" fill="#4A5D4E"/>
+  <rect x="85" y="103" width="2" height="7" fill="#4A5D4E"/>
+  <rect x="93" y="103" width="2" height="7" fill="#4A5D4E"/>
+
+  <!-- LAUREL STEMS -->
+  <path d="M 90,46 Q 62,68 38,115 Q 45,148 68,164" stroke="#4A5D4E" stroke-width="1.5" fill="none"/>
+  <path d="M 90,46 Q 118,68 142,115 Q 135,148 112,164" stroke="#4A5D4E" stroke-width="1.5" fill="none"/>
+
+  <!-- Left leaves -->
+  <g fill="#4A5D4E">
+    <ellipse cx="75" cy="53" rx="11" ry="4.5" transform="rotate(-25 75 53)"/>
+    <ellipse cx="62" cy="63" rx="11" ry="4.5" transform="rotate(-45 62 63)"/>
+    <ellipse cx="51" cy="77" rx="11" ry="4.5" transform="rotate(-60 51 77)"/>
+    <ellipse cx="43" cy="93" rx="11" ry="4.5" transform="rotate(-72 43 93)"/>
+    <ellipse cx="39" cy="110" rx="11" ry="4.5" transform="rotate(-80 39 110)"/>
+    <ellipse cx="40" cy="127" rx="11" ry="4.5" transform="rotate(-75 40 127)"/>
+    <ellipse cx="46" cy="143" rx="11" ry="4.5" transform="rotate(-60 46 143)"/>
+    <ellipse cx="57" cy="156" rx="11" ry="4.5" transform="rotate(-40 57 156)"/>
+  </g>
+
+  <!-- Right leaves -->
+  <g fill="#4A5D4E">
+    <ellipse cx="105" cy="53" rx="11" ry="4.5" transform="rotate(25 105 53)"/>
+    <ellipse cx="118" cy="63" rx="11" ry="4.5" transform="rotate(45 118 63)"/>
+    <ellipse cx="129" cy="77" rx="11" ry="4.5" transform="rotate(60 129 77)"/>
+    <ellipse cx="137" cy="93" rx="11" ry="4.5" transform="rotate(72 137 93)"/>
+    <ellipse cx="141" cy="110" rx="11" ry="4.5" transform="rotate(80 141 110)"/>
+    <ellipse cx="140" cy="127" rx="11" ry="4.5" transform="rotate(75 140 127)"/>
+    <ellipse cx="134" cy="143" rx="11" ry="4.5" transform="rotate(60 134 143)"/>
+    <ellipse cx="123" cy="156" rx="11" ry="4.5" transform="rotate(40 123 156)"/>
+  </g>
+
+</svg>

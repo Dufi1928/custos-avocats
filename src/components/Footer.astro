@@ -11,7 +11,16 @@ const expertises = [
 
 <footer>
   <section aria-label="Custos Avocats">
-    <strong>Custos Avocats</strong>
+    <a href="/custos-avocats/" class="footer-logo-link" aria-label="Custos Avocats — Accueil">
+      <img
+        src="/custos-avocats/logo-emblem.svg"
+        alt="Emblème Custos Avocats"
+        class="footer-emblem"
+        width="52"
+        height="58"
+      />
+      <strong>Custos Avocats</strong>
+    </a>
     <p>Cabinet d'avocats spécialisé en droit pénal. Disponible 24h/24 pour vous défendre.</p>
   </section>
 
@@ -40,3 +49,19 @@ const expertises = [
     <p>&copy; {new Date().getFullYear()} Custos Avocats — Tous droits réservés</p>
   </section>
 </footer>
+
+<style>
+  .footer-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-emblem {
+    height: 48px;
+    width: auto;
+    flex-shrink: 0;
+  }
+</style>
