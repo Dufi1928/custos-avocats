@@ -113,7 +113,7 @@ header nav a {
 
 header nav a:hover { color: var(--texte); }
 
-header > a:last-child {
+header > a.cta {
   background: var(--vert);
   color: var(--blanc);
   padding: 0.55rem 1.2rem;
@@ -127,7 +127,7 @@ header > a:last-child {
   transition: background 0.25s;
 }
 
-header > a:last-child:hover { background: var(--vert-vif); color: var(--blanc); }
+header > a.cta:hover { background: var(--vert-vif); color: var(--blanc); }
 
 /* --- Main sections --- */
 main section {

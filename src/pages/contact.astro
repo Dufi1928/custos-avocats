@@ -2,24 +2,37 @@
 import Base from '../layouts/Base.astro';
 ---
 
-<Base title="Contact" description="Contactez le cabinet Custos Avocats — Disponible 24h/24 pour les urgences garde à vue.">
-  <section aria-label="Contacts d'urgence">
+<Base title="Contact" description="Contactez le cabinet Custos Avocats — Barreau de Lille.">
+  <section aria-label="Coordonnées du cabinet">
     <h1>Contact</h1>
-    <p>Pour une urgence garde à vue, appelez-nous immédiatement.</p>
     <address>
       <p>
-        <strong>Urgence 24h/24 :</strong>
+        <strong>Téléphone :</strong>
         <a href="tel:+33XXXXXXXXX">+33 X XX XX XX XX</a>
       </p>
       <p>
         <strong>Email :</strong>
         <a href="mailto:contact@custos-avocats.fr">contact@custos-avocats.fr</a>
       </p>
-      <p>
-        <strong>Adresse :</strong>
-        [Adresse du cabinet], [Ville]
-      </p>
     </address>
+
+    <div class="reseaux">
+      <strong>Retrouvez-nous</strong>
+      <ul class="reseaux-list">
+        <li>
+          <a href="https://www.linkedin.com/company/custos-avocats" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Custos Avocats">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zm13.5 11.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-10h2.88v1.36h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.59v5.61z"/></svg>
+            LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/custos.avocats" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Custos Avocats">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.52.069-2.948.41-4.024 1.486-1.076 1.076-1.417 2.504-1.486 4.024-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.069 1.52.41 2.948 1.486 4.024 1.076 1.076 2.504 1.417 4.024 1.486 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.52-.069 2.948-.41 4.024-1.486 1.076-1.076 1.417-2.504 1.486-4.024.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.069-1.52-.41-2.948-1.486-4.024-1.076-1.076-2.504-1.417-4.024-1.486-1.28-.058-1.688-.072-4.947-.072zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            Instagram
+          </a>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <section aria-label="Formulaire de contact">
@@ -27,38 +40,16 @@ import Base from '../layouts/Base.astro';
     <form method="POST" action="#" novalidate>
       <div>
         <label for="nom">Nom complet</label>
-        <input
-          type="text"
-          id="nom"
-          name="nom"
-          autocomplete="name"
-          required
-          aria-required="true"
-        />
+        <input type="text" id="nom" name="nom" autocomplete="name" required aria-required="true" />
       </div>
-
       <div>
         <label for="email">Adresse email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          autocomplete="email"
-          required
-          aria-required="true"
-        />
+        <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" />
       </div>
-
       <div>
         <label for="telephone">Téléphone</label>
-        <input
-          type="tel"
-          id="telephone"
-          name="telephone"
-          autocomplete="tel"
-        />
+        <input type="tel" id="telephone" name="telephone" autocomplete="tel" />
       </div>
-
       <div>
         <label for="sujet">Objet de votre demande</label>
         <select id="sujet" name="sujet" required aria-required="true">
@@ -72,24 +63,89 @@ import Base from '../layouts/Base.astro';
           <option value="autre">Autre</option>
         </select>
       </div>
-
       <div>
         <label for="message">Votre message</label>
-        <textarea
-          id="message"
-          name="message"
-          rows="6"
-          required
-          aria-required="true"
-        ></textarea>
+        <textarea id="message" name="message" rows="6" required aria-required="true"></textarea>
       </div>
-
       <button type="submit">Envoyer le message</button>
     </form>
   </section>
 
   <section aria-label="Localisation">
     <h2>Nous trouver</h2>
+    <div class="adresse-bloc">
+      <strong>Custos Avocats</strong>
+      <address>
+        [Numéro et nom de rue]<br />
+        59100 Roubaix<br />
+        France
+      </address>
+    </div>
     <p>[Carte Google Maps à intégrer]</p>
   </section>
 </Base>
+
+<style>
+  .reseaux {
+    margin-top: 1.5rem;
+  }
+
+  .reseaux strong {
+    display: block;
+    font-size: 0.825rem;
+    color: var(--gris);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .reseaux-list {
+    display: flex;
+    flex-direction: row !important;
+    gap: 1rem !important;
+    margin-top: 0 !important;
+  }
+
+  .reseaux-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.875rem;
+    color: var(--vert);
+    text-decoration: none;
+    font-weight: 500;
+    border: none;
+    padding: 0;
+    transition: color 0.25s;
+  }
+
+  .reseaux-list a:hover {
+    color: var(--vert-vif);
+    background: none;
+  }
+
+  .adresse-bloc {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-left: 3px solid var(--vert);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+  }
+
+  .adresse-bloc strong {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--texte);
+    margin-bottom: 0.5rem;
+  }
+
+  .adresse-bloc address {
+    font-size: 0.95rem;
+    color: var(--anthracite);
+    line-height: 1.8;
+  }
+</style>
