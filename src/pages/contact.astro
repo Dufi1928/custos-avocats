@@ -40,38 +40,40 @@ import Base from '../layouts/Base.astro';
 
   <section aria-label="Formulaire de contact">
     <h2>Nous écrire</h2>
-    <form method="POST" action="#" novalidate>
-      <div>
-        <label for="nom">Nom complet</label>
-        <input type="text" id="nom" name="nom" autocomplete="name" required aria-required="true" />
-      </div>
-      <div>
-        <label for="email">Adresse email</label>
-        <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" />
-      </div>
-      <div>
-        <label for="telephone">Téléphone</label>
-        <input type="tel" id="telephone" name="telephone" autocomplete="tel" />
-      </div>
-      <div>
-        <label for="sujet">Objet de votre demande</label>
-        <select id="sujet" name="sujet" required aria-required="true">
-          <option value="">Sélectionner</option>
-          <option value="garde-a-vue">Garde à vue</option>
-          <option value="droit-des-mineurs">Droit des Mineurs</option>
-          <option value="droit-des-etrangers">Droit des Étrangers</option>
-          <option value="droit-de-la-famille">Droit de la Famille</option>
-          <option value="droit-penal-des-affaires">Droit Pénal des Affaires</option>
-          <option value="dommages-corporels">Dommages Corporels</option>
-          <option value="autre">Autre</option>
-        </select>
-      </div>
-      <div>
-        <label for="message">Votre message</label>
-        <textarea id="message" name="message" rows="6" required aria-required="true"></textarea>
-      </div>
-      <button type="submit">Envoyer le message</button>
-    </form>
+    <div class="form-cadre">
+      <form method="POST" action="#" novalidate>
+        <div>
+          <label for="nom">Nom complet</label>
+          <input type="text" id="nom" name="nom" autocomplete="name" required aria-required="true" />
+        </div>
+        <div>
+          <label for="email">Adresse email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" />
+        </div>
+        <div>
+          <label for="telephone">Téléphone</label>
+          <input type="tel" id="telephone" name="telephone" autocomplete="tel" />
+        </div>
+        <div>
+          <label for="sujet">Objet de votre demande</label>
+          <select id="sujet" name="sujet" required aria-required="true">
+            <option value="">Sélectionner</option>
+            <option value="garde-a-vue">Garde à vue</option>
+            <option value="droit-des-mineurs">Droit des Mineurs</option>
+            <option value="droit-des-etrangers">Droit des Étrangers</option>
+            <option value="droit-de-la-famille">Droit de la Famille</option>
+            <option value="droit-penal-des-affaires">Droit Pénal des Affaires</option>
+            <option value="dommages-corporels">Dommages Corporels</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div>
+          <label for="message">Votre message</label>
+          <textarea id="message" name="message" rows="6" required aria-required="true"></textarea>
+        </div>
+        <button type="submit">Envoyer le message</button>
+      </form>
+    </div>
   </section>
 
   <section aria-label="Localisation">
@@ -108,6 +110,42 @@ import Base from '../layouts/Base.astro';
     pointer-events: none;
     user-select: none;
     z-index: 0;
+  }
+
+  /* ── Cadre formulaire ── */
+  .form-cadre {
+    position: relative;
+    border: 1px solid var(--gris-clair);
+    border-left: 3px solid var(--vert);
+    border-radius: var(--radius);
+    padding: 2rem 2rem 2rem 2.25rem;
+    background: var(--blanc);
+    max-width: 600px;
+  }
+
+  .form-cadre::before,
+  .form-cadre::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    width: 3px;
+    background: var(--vert);
+    opacity: 0.25;
+  }
+
+  .form-cadre::before {
+    top: 0;
+    height: 30%;
+  }
+
+  .form-cadre::after {
+    bottom: 0;
+    height: 30%;
+  }
+
+  .form-cadre form {
+    max-width: 100%;
+    margin-top: 0;
   }
 
   .reseaux {
