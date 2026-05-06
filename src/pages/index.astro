@@ -8,6 +8,8 @@ const sorted = expertises.sort(
   (a: CollectionEntry<'expertises'>, b: CollectionEntry<'expertises'>) =>
     (a.data.ordre ?? 99) - (b.data.ordre ?? 99)
 );
+const droitPenal = sorted.find((e: CollectionEntry<'expertises'>) => e.data.slug === 'droit-penal');
+const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.data.slug !== 'droit-penal');
 
 const piliers = [
   {
@@ -64,9 +66,9 @@ const piliers = [
   <section class="stats-strip" aria-label="Chiffres clés">
     <ul class="stats-grid">
       <li class="stat"><strong>5</strong><span>Avocats pénalistes</span></li>
-      <li class="stat"><strong>100%</strong><span>Spécialisés en droit pénal</span></li>
+      <li class="stat"><strong>Spécialisés</strong><span>en droit pénal</span></li>
       <li class="stat"><strong>6</strong><span>Domaines d'intervention</span></li>
-      <li class="stat"><strong>Lille</strong><span>Barreau</span></li>
+      <li class="stat"><strong>Barreau</strong><span>de Lille</span></li>
     </ul>
   </section>
 
@@ -76,8 +78,23 @@ const piliers = [
       <p class="eyebrow">Ce que nous défendons</p>
       <h2>Nos domaines d'expertise</h2>
     </header>
+
+    {droitPenal && (
+      <a
+        href={`/custos-avocats/expertises/${droitPenal.data.slug}`}
+        class="expertise-card-principal"
+      >
+        <div>
+          <p class="eyebrow expertise-socle">Socle commun du cabinet</p>
+          <h3>{droitPenal.data.title}</h3>
+        </div>
+        <span class="expertise-arrow" aria-hidden="true">→</span>
+      </a>
+    )}
+
+    <p class="expertise-complementaires-label">Domaines complémentaires</p>
     <ul class="expertise-grid">
-      {sorted.map((e: CollectionEntry<'expertises'>) => (
+      {complementaires.map((e: CollectionEntry<'expertises'>) => (
         <li>
           <a
             href={`/custos-avocats/expertises/${e.data.slug}`}
@@ -87,7 +104,6 @@ const piliers = [
               {String(e.data.ordre ?? 0).padStart(2, '0')}
             </span>
             <h3>{e.data.title}</h3>
-            <p>{e.data.focus.slice(0, 2).join(' · ')}</p>
             <span class="expertise-arrow" aria-hidden="true">→</span>
           </a>
         </li>
@@ -112,10 +128,9 @@ const piliers = [
       <div class="mission-deco">
         <blockquote class="mission-quote">
           <p>
-            "La justice sans la force est impuissante ;
-            la force sans la justice est tyrannique."
+            « La justice ne peut être juste que si la défense est libre. »
           </p>
-          <cite>Blaise Pascal — Pensées</cite>
+          <cite>Robert Badinter</cite>
         </blockquote>
 
       </div>
@@ -369,6 +384,40 @@ const piliers = [
 
 .section-header { margin-bottom: 3rem; }
 .section-header h2 { margin-bottom: 0; }
+
+.expertise-card-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.75rem 2rem;
+  background: var(--vert);
+  border-radius: var(--radius);
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+  transition: background 0.25s;
+}
+.expertise-card-principal:hover { background: #3a4a3e; opacity: 1; }
+.expertise-card-principal h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #F4F5F2;
+  margin: 0;
+}
+.expertise-socle { color: rgba(244,245,242,0.65) !important; margin-bottom: 0.3rem !important; }
+.expertise-card-principal .expertise-arrow { color: rgba(244,245,242,0.7); font-size: 1.1rem; }
+.expertise-card-principal:hover .expertise-arrow { transform: translateX(5px); }
+
+.expertise-complementaires-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gris);
+  font-weight: 600;
+  margin-bottom: 0.75rem !important;
+  margin-top: 1.75rem !important;
+  max-width: none;
+}
 
 .eyebrow {
   display: block;

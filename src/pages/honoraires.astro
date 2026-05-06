@@ -29,7 +29,6 @@ const sorted = expertises.sort(
           <a href={`/custos-avocats/expertises/${e.data.slug}`} class="domaine-card">
             <span class="domaine-num">{String(e.data.ordre ?? 0).padStart(2, '0')}</span>
             <h3>{e.data.title}</h3>
-            <p>{e.data.focus.slice(0, 2).join(' · ')}</p>
             <span class="domaine-arrow" aria-hidden="true">→</span>
           </a>
         </li>

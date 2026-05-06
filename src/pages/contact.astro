@@ -80,7 +80,7 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <section aria-label="Localisation">
+  <section aria-label="Localisation" class="localisation-section">
     <h2>Nous trouver</h2>
     <div class="adresse-bloc">
       <strong>Custos Avocats</strong>
@@ -223,6 +223,13 @@ import Base from '../layouts/Base.astro';
   .reseaux-list a:hover {
     color: var(--vert-vif);
     background: none;
+  }
+
+  .localisation-section {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .adresse-bloc {
