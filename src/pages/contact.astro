@@ -82,15 +82,21 @@ import Base from '../layouts/Base.astro';
 
   <section aria-label="Localisation" class="localisation-section">
     <h2>Nous trouver</h2>
-    <div class="adresse-bloc">
-      <strong>Custos Avocats</strong>
-      <address>
-        [Numéro et nom de rue]<br />
-        59100 Roubaix<br />
-        France
-      </address>
+    <div class="localisation-grid">
+      <div>
+        <div class="adresse-bloc">
+          <strong>Custos Avocats</strong>
+          <address>
+            [Numéro et nom de rue]<br />
+            59100 Roubaix<br />
+            France
+          </address>
+        </div>
+      </div>
+      <div class="maps-placeholder">
+        <span>Carte Google Maps à intégrer</span>
+      </div>
     </div>
-    <p>[Carte Google Maps à intégrer]</p>
   </section>
 </Base>
 
@@ -127,15 +133,17 @@ import Base from '../layouts/Base.astro';
 
   .form-avec-plantes {
     display: grid;
-    grid-template-columns: 180px 1fr 180px;
-    align-items: center;
+    grid-template-columns: 200px 1fr 200px;
+    align-items: stretch;
     gap: 2rem;
   }
 
   .form-plant {
     width: 100%;
-    height: auto;
-    opacity: 0.55;
+    height: 100%;
+    object-fit: contain;
+    object-position: top center;
+    opacity: 0.75;
     pointer-events: none;
     user-select: none;
   }
@@ -225,11 +233,30 @@ import Base from '../layouts/Base.astro';
     background: none;
   }
 
-  .localisation-section {
-    text-align: center;
+  .localisation-section h2 { margin-bottom: 1.5rem; }
+
+  .localisation-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .maps-placeholder {
+    min-height: 280px;
+    background: var(--fond);
+    border: 1px dashed var(--gris-clair);
+    border-radius: var(--radius);
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    color: var(--gris);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 640px) {
+    .localisation-grid { grid-template-columns: 1fr; }
   }
 
   .adresse-bloc {
