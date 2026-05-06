@@ -94,7 +94,16 @@ import Base from '../layouts/Base.astro';
         </div>
       </div>
       <div class="maps-placeholder">
-        <span>Carte Google Maps à intégrer</span>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40970.94!2d3.1221!3d50.6928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d48de51a3889%3A0x40af13e8162bf10!2sRoubaix%2C%2059100!5e0!3m2!1sfr!2sfr!4v1699999999"
+          width="100%"
+          height="100%"
+          style="border:0; border-radius: var(--radius);"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation Custos Avocats — Roubaix"
+        ></iframe>
       </div>
     </div>
   </section>
@@ -244,15 +253,9 @@ import Base from '../layouts/Base.astro';
 
   .maps-placeholder {
     min-height: 280px;
-    background: var(--fond);
-    border: 1px dashed var(--gris-clair);
     border-radius: var(--radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gris);
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
+    overflow: hidden;
+    border: 1px solid var(--gris-clair);
   }
 
   @media (max-width: 640px) {
