@@ -56,74 +56,6 @@ const piliers = [
           </a>
         </div>
       </div>
-
-      <div class="hero-deco" aria-hidden="true">
-        <svg viewBox="0 0 320 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-          <!-- ══ MONSTERA (arrière-plan, très discret) ══ -->
-          <path d="M 160,355 C 152,328 136,302 114,282 C 86,255 58,238 48,208
-                   C 34,168 50,128 78,113 C 96,103 118,108 130,123
-                   C 125,144 120,166 126,184 C 132,200 146,208 155,203
-                   L 160,196 L 165,203
-                   C 174,208 188,200 194,184 C 200,166 195,144 190,123
-                   C 202,108 224,103 242,113 C 270,128 286,168 272,208
-                   C 262,238 234,255 206,282 C 184,302 168,328 160,355 Z"
-                fill="currentColor" opacity="0.07"/>
-          <!-- Nervure centrale -->
-          <path d="M 160,355 C 160,320 160,265 160,196" stroke="currentColor" stroke-width="1" opacity="0.1" fill="none"/>
-          <!-- Découpes gauche -->
-          <path d="M 114,282 C 92,290 72,284 60,272" stroke="currentColor" stroke-width="1" opacity="0.12" fill="none" stroke-linecap="round"/>
-          <path d="M 76,242 C 57,248 40,242 32,230" stroke="currentColor" stroke-width="1" opacity="0.12" fill="none" stroke-linecap="round"/>
-          <!-- Découpes droite -->
-          <path d="M 206,282 C 228,290 248,284 260,272" stroke="currentColor" stroke-width="1" opacity="0.12" fill="none" stroke-linecap="round"/>
-          <path d="M 244,242 C 263,248 280,242 288,230" stroke="currentColor" stroke-width="1" opacity="0.12" fill="none" stroke-linecap="round"/>
-
-          <!-- ══ BRANCHE FOUGÈRE (bas gauche) ══ -->
-          <g opacity="0.2">
-            <path d="M 50,390 C 54,360 62,325 72,295 C 82,265 96,240 108,220" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-            <path d="M 53,370 C 38,360 26,353 22,355" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <path d="M 57,348 C 42,337 30,330 26,332" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <path d="M 62,326 C 47,314 36,307 32,309" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <path d="M 67,304 C 53,291 43,284 40,286" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <path d="M 54,370 C 68,360 78,353 82,355" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <path d="M 58,348 C 72,337 82,330 86,332" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-            <path d="M 63,326 C 77,314 87,307 91,309" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          </g>
-
-          <!-- ══ PETITE FEUILLE (haut gauche) ══ -->
-          <path d="M 38,72 C 44,54 60,44 74,46 C 88,48 96,62 90,76
-                   C 84,90 68,94 55,88 C 42,82 36,80 38,72 Z"
-                fill="currentColor" opacity="0.09"/>
-          <path d="M 66,62 L 38,72" stroke="currentColor" stroke-width="0.8" opacity="0.12" stroke-linecap="round"/>
-
-          <!-- ══ PETITE FEUILLE (haut droite) ══ -->
-          <path d="M 282,78 C 276,60 260,52 246,56 C 232,60 226,74 234,86
-                   C 242,98 258,100 270,93 C 282,86 286,84 282,78 Z"
-                fill="currentColor" opacity="0.09"/>
-          <path d="M 254,68 L 282,78" stroke="currentColor" stroke-width="0.8" opacity="0.12" stroke-linecap="round"/>
-
-          <!-- ══ BALANCE DE LA JUSTICE (premier plan) ══ -->
-          <!-- Poteau central -->
-          <rect x="159" y="50" width="2" height="210" fill="currentColor" opacity="0.22"/>
-          <!-- Fleuron -->
-          <circle cx="160" cy="54" r="14" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.28"/>
-          <circle cx="160" cy="54" r="4" fill="currentColor" opacity="0.22"/>
-          <!-- Fléau -->
-          <rect x="74" y="110" width="172" height="2.5" rx="1" fill="currentColor" opacity="0.22"/>
-          <!-- Chaîne gauche -->
-          <line x1="102" y1="112" x2="88" y2="178" stroke="currentColor" stroke-width="1.5" opacity="0.22" stroke-dasharray="4 3"/>
-          <!-- Chaîne droite -->
-          <line x1="218" y1="112" x2="232" y2="178" stroke="currentColor" stroke-width="1.5" opacity="0.22" stroke-dasharray="4 3"/>
-          <!-- Plateau gauche -->
-          <ellipse cx="88" cy="190" rx="30" ry="10" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.06" opacity="0.45"/>
-          <!-- Plateau droit -->
-          <ellipse cx="232" cy="190" rx="30" ry="10" stroke="currentColor" stroke-width="1.5" fill="currentColor" fill-opacity="0.06" opacity="0.45"/>
-          <!-- Socle -->
-          <rect x="126" y="260" width="68" height="2" fill="currentColor" opacity="0.16"/>
-          <rect x="136" y="262" width="48" height="18" rx="2" fill="currentColor" opacity="0.07"/>
-
-        </svg>
-      </div>
     </div>
   </section>
 
@@ -291,14 +223,13 @@ const piliers = [
 .hero-inner {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 4rem;
   max-width: var(--max-width);
   margin-inline: auto;
   padding: 7rem var(--gap) 6rem;
-  min-height: 90vh;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-eyebrow {
@@ -381,15 +312,6 @@ const piliers = [
   opacity: 1;
 }
 
-
-.hero-deco {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  color: var(--vert-vif);
-  animation: heroFadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-}
-.hero-deco svg { width: 85%; max-width: 300px; height: auto; }
 
 @keyframes heroFadeUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -725,11 +647,9 @@ const piliers = [
    ====================================== */
 @media (max-width: 900px) {
   .hero-inner {
-    grid-template-columns: 1fr;
     min-height: auto;
     padding: 5rem var(--gap) 4rem;
   }
-  .hero-deco { display: none; }
   .expertise-grid { grid-template-columns: repeat(2, 1fr); }
   .mission-inner { grid-template-columns: 1fr; gap: 3rem; padding: 5rem var(--gap); }
   .piliers-grid { grid-template-columns: 1fr; gap: 2rem; }
