@@ -1,143 +1,154 @@
 ---
 import Base from '../layouts/Base.astro';
 
-const engagements = [
+const axes = [
   {
-    titre: 'Transparence totale',
-    texte: 'Honoraires clairs, stratégie expliquée, décisions partagées. Vous n\'êtes jamais spectateur de votre propre défense.',
+    num: '01',
+    titre: 'Préserver et protéger les droits de la défense',
+    couleur: 'axe--defense',
+    items: [
+      {
+        titre: 'Intervention en garde à vue',
+        texte: 'Disponibles 24h/24 pour intervenir dès la première heure de garde à vue. Le droit à l\'assistance d\'un avocat est immédiat — nous y répondons.',
+        tag: 'Urgence : +33 X XX XX XX XX',
+        urgent: true,
+      },
+      {
+        titre: 'Assistance à tous les stades de la procédure',
+        texte: 'De l\'enquête préliminaire jusqu\'à la cour d\'assises, en passant par l\'instruction et le tribunal correctionnel, le cabinet est présent à chaque audience.',
+        urgent: false,
+      },
+      {
+        titre: 'Stratégie de défense sur-mesure',
+        texte: 'Chaque dossier est analysé dans sa singularité. La défense que nous construisons est pensée pour votre situation — jamais standardisée.',
+        urgent: false,
+      },
+      {
+        titre: 'Contradictoire et accès au dossier',
+        texte: 'Nous veillons au respect du principe du contradictoire à chaque étape. Vous êtes informé, consulté, et au cœur de chaque décision stratégique.',
+        urgent: false,
+      },
+    ],
   },
   {
-    titre: 'Confidentialité absolue',
-    texte: 'Le secret professionnel est le fondement de notre relation. Chaque information que vous nous confiez est protégée sans réserve ni limite dans le temps.',
+    num: '02',
+    titre: 'Accompagner les victimes d\'infractions pénales',
+    couleur: 'axe--victimes',
+    items: [
+      {
+        titre: 'Constitution de partie civile',
+        texte: 'Nous vous assistons pour faire valoir vos droits en tant que victime : dépôt de plainte, constitution de partie civile, suivi de l\'information judiciaire.',
+        urgent: false,
+      },
+      {
+        titre: 'Évaluation et chiffrage des préjudices',
+        texte: 'L\'indemnisation juste exige une expertise fine. Nous évaluons l\'ensemble de vos préjudices — corporels, moraux, matériels — pour en obtenir la réparation intégrale.',
+        urgent: false,
+      },
+      {
+        titre: 'Accompagnement dans le parcours judiciaire',
+        texte: 'La justice pénale est complexe et longue. Nous vous guidons à chaque étape du processus : enquête, instruction, audience — avec clarté et bienveillance.',
+        urgent: false,
+      },
+      {
+        titre: 'Présence aux audiences',
+        texte: 'Nous plaidons vos intérêts devant toutes les juridictions pénales. Votre parole est portée avec force, votre souffrance reconnue.',
+        urgent: false,
+      },
+    ],
   },
   {
-    titre: 'Excellence sans compromis',
-    texte: 'Chaque dossier est traité avec la même rigueur, qu\'il s\'agisse d\'une garde à vue ou d\'une affaire criminelle complexe. Il n\'existe pas de "petit dossier".',
-  },
-  {
-    titre: 'Présence à chaque étape',
-    texte: 'De la phase d\'enquête jusqu\'au jugement, nous sommes à vos côtés. Chaque décision de procédure est prise avec vous, en toute connaissance de cause.',
-  },
-];
-
-const valeurs = [
-  {
-    titre: 'Indépendance',
-    texte: 'Nous ne défendons que vos intérêts. Aucune pression extérieure, aucune complaisance ne guide nos actes — seulement l\'analyse juridique et votre défense.',
-  },
-  {
-    titre: 'Solidarité',
-    texte: 'Cinq avocats associés, un seul cabinet. Chaque dossier bénéficie de l\'expertise collective du cabinet, quelle que soit la spécialité mobilisée.',
-  },
-  {
-    titre: 'Humanité',
-    texte: 'Derrière chaque dossier, il y a une personne. Nous prenons le temps d\'écouter, de comprendre et d\'accompagner au-delà du strict cadre juridique.',
-  },
-  {
-    titre: 'Combativité',
-    texte: 'Nous plaidons avec conviction. Dans une salle d\'audience, la nuance ne suffit pas — nous défendons chaque dossier avec la détermination qu\'il mérite.',
-  },
-];
-
-const engagementsMission = [
-  {
-    titre: 'Accessibilité de la défense',
-    texte: 'Nous acceptons l\'aide juridictionnelle totale ou partielle et proposons des paiements échelonnés. La qualité de la défense ne doit pas dépendre des seules ressources financières.',
-  },
-  {
-    titre: 'Accompagnement global',
-    texte: 'Chaque associé cumule une double compétence — droit pénal et une spécialité complémentaire. Nous accompagnons nos clients dans tous les pans de leur vie, pas seulement dans la procédure pénale.',
-  },
-  {
-    titre: 'Attention portée à la personne',
-    texte: 'Nous mesurons l\'impact humain de chaque décision judiciaire. La peine ou la mesure prononcée n\'est pas une abstraction — elle engage un destin. Nous en tenons compte à chaque étape.',
-  },
-  {
-    titre: 'Éthique professionnelle',
-    texte: 'Nous exerçons dans le strict respect des règles déontologiques du Barreau de Lille et de l\'Ordre des avocats. L\'indépendance et l\'intégrité ne sont pas négociables.',
+    num: '03',
+    titre: 'Garantir l\'accès au droit pour tous',
+    couleur: 'axe--acces',
+    items: [
+      {
+        titre: 'Aide juridictionnelle acceptée',
+        texte: 'Nous acceptons l\'aide juridictionnelle totale ou partielle. La qualité de la défense ne doit pas être conditionnée aux seules ressources financières.',
+        urgent: false,
+      },
+      {
+        titre: 'Paiement échelonné',
+        texte: 'En cas de difficultés financières, un paiement en plusieurs fois peut être convenu. Nous trouverons ensemble une solution adaptée à votre situation.',
+        urgent: false,
+      },
+      {
+        titre: 'Convention d\'honoraires transparente',
+        texte: 'Conformément à la loi du 6 août 2015, une convention d\'honoraires écrite est établie avant toute intervention. Le coût de la défense est clair dès le départ.',
+        urgent: false,
+      },
+      {
+        titre: 'Consultation accessible',
+        texte: 'Un premier rendez-vous pour comprendre votre situation, poser vos questions, évaluer les options. Sans engagement, sans jargon.',
+        urgent: false,
+      },
+    ],
   },
 ];
 ---
 
-<Base title="Valeurs du cabinet" description="Cabinet à mission spécialisé en droit pénal — mission, engagements et valeurs de Custos Avocats.">
+<Base title="Valeurs du cabinet" description="Mission, engagements et raison d'être du cabinet Custos Avocats — spécialisé en droit pénal au Barreau de Lille.">
 
+  <!-- ══ INTRO ══ -->
   <section aria-label="Mission du cabinet" class="valeurs-intro">
-    <img src="/custos-avocats/plant-cascade.png" alt="" aria-hidden="true" class="plant-left" />
-    <img src="/custos-avocats/justice-balance.png" alt="" aria-hidden="true" class="justice-balance" />
+    <img src="/custos-avocats/plant-cascade.png" alt="" aria-hidden="true" class="plant-deco plant-right" />
+    <img src="/custos-avocats/justice-balance.png" alt="" aria-hidden="true" class="plant-deco justice-balance" />
     <div class="valeurs-intro-content">
+      <p class="eyebrow">Le cabinet</p>
       <h1>Valeurs du cabinet</h1>
-      <p>
-        Custos Avocats a été fondé sur une conviction : la défense pénale exige à la fois une expertise
-        technique irréprochable et un engagement humain sans faille. Nous ne traitons pas des affaires —
-        nous défendons des personnes.
+      <p class="intro-lead">
+        Custos Avocats est un cabinet à mission. Notre activité professionnelle est guidée
+        par une raison d'être qui dépasse la seule défense technique : accompagner la personne,
+        dans toutes les dimensions de l'épreuve qu'elle traverse.
       </p>
     </div>
   </section>
 
-  <!-- ══ CABINET À MISSION ══ -->
-  <section aria-label="Cabinet à mission" class="mission-section">
-    <h2>Un cabinet à mission</h2>
+  <!-- ══ RAISON D'ÊTRE ══ -->
+  <section aria-label="Raison d'être" class="raison-section">
+    <p class="raison-label">Notre raison d'être</p>
+    <blockquote class="raison-quote">
+      Accompagner durablement le justiciable dans le contentieux pénal et les épreuves
+      juridiques et humaines complémentaires qu'il traverse — au-delà de la seule
+      procédure pénale.
+    </blockquote>
+  </section>
+
+  <!-- ══ LES 3 AXES ══ -->
+  {axes.map((axe) => (
+    <section aria-label={axe.titre} class={`axe-section ${axe.couleur}`}>
+      <header class="axe-header">
+        <span class="axe-num">{axe.num}</span>
+        <h2>{axe.titre}</h2>
+      </header>
+      <ul class="axe-grid">
+        {axe.items.map(({ titre, texte, tag, urgent }) => (
+          <li class={`axe-item${urgent ? ' axe-item--urgent' : ''}`}>
+            <h3>{titre}</h3>
+            <p>{texte}</p>
+            {urgent && tag && (
+              <span class="axe-tag">{tag}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <!-- ══ CTA ══ -->
+  <section aria-label="Prendre contact" class="cta-section">
+    <h2>Une situation à analyser ?</h2>
     <p>
-      Custos Avocats est un cabinet à mission. Cela signifie que notre activité professionnelle
-      est guidée par une raison d'être qui dépasse la seule dimension économique.
-      Nous nous fixons des objectifs sociaux, humains et éthiques auxquels nous nous tenons.
+      Un premier rendez-vous pour faire le point — sans engagement, sans jargon.
+      Nous sommes là pour répondre à vos questions et définir ensemble la meilleure approche.
     </p>
-
-    <div class="raison-etre">
-      <p class="raison-label">Notre raison d'être</p>
-      <blockquote>
-        Garantir à toute personne confrontée à la justice pénale — qu'elle soit victime
-        ou mise en cause — une défense exigeante, accessible et profondément humaine,
-        en l'accompagnant dans toutes les dimensions de sa vie.
-      </blockquote>
-    </div>
-
-    <ul class="mission-engagements">
-      {engagementsMission.map(({ titre, texte }) => (
-        <li class="mission-engagement">
-          <h3>{titre}</h3>
-          <p>{texte}</p>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <!-- ══ ENGAGEMENTS ══ -->
-  <section aria-label="Nos engagements">
-    <h2>Nos engagements</h2>
-    <ul>
-      {engagements.map(({ titre, texte }) => (
-        <li>
-          <h3>{titre}</h3>
-          <p>{texte}</p>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <!-- ══ VALEURS ══ -->
-  <section aria-label="Nos valeurs">
-    <h2>Nos valeurs</h2>
-    <ul>
-      {valeurs.map(({ titre, texte }) => (
-        <li>
-          <h3>{titre}</h3>
-          <p>{texte}</p>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <section aria-label="Appel à l'action">
-    <h2>Prendre contact</h2>
-    <p>Une question, un premier rendez-vous, une situation à analyser. Nous sommes là.</p>
-    <a href="/custos-avocats/contact">Nous contacter</a>
+    <a href="/custos-avocats/contact" class="cta-btn">Nous contacter</a>
   </section>
 
 </Base>
 
 <style>
-  /* ── Plant decorations ── */
+  /* ── Décorations intro ── */
   .valeurs-intro {
     position: relative;
     overflow: hidden;
@@ -148,46 +159,54 @@ const engagementsMission = [
     z-index: 1;
   }
 
-  .justice-balance {
+  .plant-deco {
     position: absolute;
-    bottom: -10px;
-    left: -10px;
-    width: 260px;
-    opacity: 0.2;
     pointer-events: none;
     user-select: none;
     z-index: 0;
   }
 
-  .plant-left {
-    position: absolute;
+  .plant-right {
     top: -20px;
     right: -10px;
     width: 200px;
     opacity: 0.22;
-    pointer-events: none;
-    user-select: none;
-    z-index: 0;
   }
 
-  .mission-section {
-    position: relative;
-    overflow: hidden;
+  .justice-balance {
+    bottom: -10px;
+    left: -10px;
+    width: 260px;
+    opacity: 0.2;
   }
 
-  .mission-section > * {
-    position: relative;
-    z-index: 1;
+  .eyebrow {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--vert);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
   }
 
-  /* ── Encart raison d'être ── */
-  .raison-etre {
-    border-left: 3px solid var(--vert);
+  .intro-lead {
+    max-width: 62ch;
+    color: var(--anthracite);
+    line-height: 1.75;
+  }
+
+  @media (max-width: 640px) {
+    .plant-right, .justice-balance { display: none; }
+  }
+
+  /* ── Raison d'être ── */
+  .raison-section {
     background: var(--blanc);
+    border-left: 4px solid var(--vert);
     border-radius: 0 var(--radius) var(--radius) 0;
-    padding: 1.75rem 2rem;
-    margin: 2rem 0 2.5rem;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    padding: 2rem 2.5rem;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
   }
 
   .raison-label {
@@ -196,49 +215,128 @@ const engagementsMission = [
     letter-spacing: 0.14em;
     color: var(--vert);
     font-weight: 700;
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0.85rem !important;
     max-width: none;
   }
 
-  .raison-etre blockquote {
+  .raison-quote {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-style: italic;
     color: var(--anthracite);
     line-height: 1.75;
     margin: 0;
-    max-width: 60ch;
+    max-width: 64ch;
   }
 
-  /* ── Engagements mission (grille) ── */
-  .mission-engagements {
+  /* ── Sections axes ── */
+  .axe-section {
+    padding-top: 0.5rem;
+  }
+
+  .axe-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .axe-num {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--vert);
+    opacity: 0.18;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .axe-header h2 {
+    margin: 0;
+  }
+
+  .axe-grid {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem !important;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem !important;
     margin-top: 0 !important;
     flex-direction: unset !important;
+    background: none !important;
+    border: none !important;
+    overflow: visible !important;
   }
 
-  .mission-engagement {
+  .axe-item {
     background: var(--blanc);
     border: 1px solid var(--gris-clair);
     border-top: 3px solid var(--vert);
     border-radius: var(--radius);
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
   }
 
-  .mission-engagement h3 {
+  .axe-item--urgent {
+    border-top-color: #c0392b;
+  }
+
+  .axe-item h3 {
     font-family: var(--font-serif);
     font-size: 1rem;
+    font-weight: 700;
     color: var(--texte);
-    margin-bottom: 0.6rem;
+    margin: 0;
   }
 
-  .mission-engagement p {
+  .axe-item p {
     font-size: 0.875rem;
     color: var(--anthracite);
     line-height: 1.7;
     margin: 0;
     max-width: none;
+  }
+
+  .axe-tag {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #c0392b;
+    background: rgba(192, 57, 43, 0.08);
+    border: 1px solid rgba(192, 57, 43, 0.2);
+    border-radius: 4px;
+    padding: 0.25rem 0.6rem;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+  }
+
+  .cta-section p {
+    max-width: 50ch;
+    margin-inline: auto;
+    color: var(--anthracite);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.85rem 2rem;
+    background: var(--vert);
+    color: #F4F5F2;
+    text-decoration: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.25s;
+  }
+
+  .cta-btn:hover {
+    background: #3a4a3e;
+    color: #F4F5F2;
+    opacity: 1;
   }
 </style>

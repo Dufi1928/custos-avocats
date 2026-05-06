@@ -41,7 +41,6 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
       {complementaires.map((e: CollectionEntry<'expertises'>) => (
         <li>
           <a href={`/custos-avocats/expertises/${e.data.slug}`} class="domaine-card">
-            <span class="domaine-num">{String(e.data.ordre ?? 0).padStart(2, '0')}</span>
             <h3>{e.data.title}</h3>
             <span class="domaine-arrow" aria-hidden="true">→</span>
           </a>
@@ -162,23 +161,33 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     border: 1px solid rgba(74, 93, 78, 0.14);
     text-decoration: none;
     color: var(--texte);
-    transition: background 0.25s, border-color 0.25s;
+    transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
     border-radius: 1rem;
     height: 100%;
+    animation: bubbleIn 0.5s ease both;
   }
   .domaine-card:hover {
     background: rgba(74, 93, 78, 0.14);
     border-color: rgba(74, 93, 78, 0.25);
     color: var(--texte);
     opacity: 1;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74, 93, 78, 0.15);
   }
 
-  .domaine-num {
-    font-size: 0.62rem;
-    color: var(--gris);
-    letter-spacing: 0.08em;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
+  .domaines-grid > li:nth-child(1) .domaine-card { animation-delay: 0.05s; }
+  .domaines-grid > li:nth-child(2) .domaine-card { animation-delay: 0.12s; }
+  .domaines-grid > li:nth-child(3) .domaine-card { animation-delay: 0.19s; }
+  .domaines-grid > li:nth-child(4) .domaine-card { animation-delay: 0.26s; }
+  .domaines-grid > li:nth-child(5) .domaine-card { animation-delay: 0.33s; }
+
+  .domaine-card-principal {
+    animation: bubbleIn 0.4s ease both;
+  }
+
+  @keyframes bubbleIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .domaine-card h3 {

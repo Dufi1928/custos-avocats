@@ -66,9 +66,9 @@ const piliers = [
   <section class="stats-strip" aria-label="Chiffres clés">
     <ul class="stats-grid">
       <li class="stat"><strong>5</strong><span>Avocats pénalistes</span></li>
-      <li class="stat"><strong>Spécialisés</strong><span>en droit pénal</span></li>
+      <li class="stat stat--sm"><strong>Spécialisés</strong><span>en droit pénal</span></li>
       <li class="stat"><strong>6</strong><span>Domaines d'intervention</span></li>
-      <li class="stat"><strong>Barreau</strong><span>de Lille</span></li>
+      <li class="stat stat--sm"><strong>Barreau</strong><span>de Lille</span></li>
     </ul>
   </section>
 
@@ -100,9 +100,6 @@ const piliers = [
             href={`/custos-avocats/expertises/${e.data.slug}`}
             class="expertise-card"
           >
-            <span class="expertise-num">
-              {String(e.data.ordre ?? 0).padStart(2, '0')}
-            </span>
             <h3>{e.data.title}</h3>
             <span class="expertise-arrow" aria-hidden="true">→</span>
           </a>
@@ -369,6 +366,10 @@ const piliers = [
   line-height: 1;
 }
 
+.stat--sm strong {
+  font-size: 1.5rem;
+}
+
 .stat span {
   font-size: 0.7rem;
   color: var(--gris);
@@ -453,25 +454,34 @@ const piliers = [
   background: rgba(74, 93, 78, 0.08);
   border: 1px solid rgba(74, 93, 78, 0.14);
   text-decoration: none;
-  transition: background 0.25s, border-color 0.25s;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
   border-radius: 1rem;
   color: var(--texte);
   height: 100%;
+  animation: bubbleIn 0.5s ease both;
 }
 .expertise-card:hover {
   background: rgba(74, 93, 78, 0.14);
   border-color: rgba(74, 93, 78, 0.25);
   color: var(--texte);
   opacity: 1;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(74, 93, 78, 0.15);
 }
 
-.expertise-num {
-  display: block;
-  font-size: 0.65rem;
-  color: var(--gris);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
+.expertise-grid > li:nth-child(1) .expertise-card { animation-delay: 0.05s; }
+.expertise-grid > li:nth-child(2) .expertise-card { animation-delay: 0.12s; }
+.expertise-grid > li:nth-child(3) .expertise-card { animation-delay: 0.19s; }
+.expertise-grid > li:nth-child(4) .expertise-card { animation-delay: 0.26s; }
+.expertise-grid > li:nth-child(5) .expertise-card { animation-delay: 0.33s; }
+
+.expertise-card-principal {
+  animation: bubbleIn 0.4s ease both;
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .expertise-card h3 {
