@@ -41,7 +41,7 @@ import Base from '../layouts/Base.astro';
   <section aria-label="Formulaire de contact" class="form-section">
     <h2 class="form-titre">Nous écrire</h2>
     <div class="form-avec-plantes">
-      <img src="/custos-avocats/plant-lierre.png" alt="" aria-hidden="true" class="form-plant form-plant-gauche" />
+      <img src="/custos-avocats/plant-lierre2.png" alt="" aria-hidden="true" class="form-plant form-plant-gauche" />
       <div class="form-cadre">
       <form method="POST" action="#" novalidate>
         <div>
@@ -76,7 +76,7 @@ import Base from '../layouts/Base.astro';
         <button type="submit">Envoyer le message</button>
       </form>
     </div>
-      <img src="/custos-avocats/plant-lierre.png" alt="" aria-hidden="true" class="form-plant form-plant-droite" />
+      <img src="/custos-avocats/plant-lierre2.png" alt="" aria-hidden="true" class="form-plant form-plant-droite" />
     </div>
   </section>
 
@@ -215,22 +215,27 @@ import Base from '../layouts/Base.astro';
   .form-avec-plantes {
     display: grid;
     grid-template-columns: 200px 1fr 200px;
-    align-items: stretch;
-    gap: 2rem;
+    align-items: start;
+    gap: 0;
   }
 
   .form-plant {
     width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: top center;
-    opacity: 0.75;
+    height: auto;
+    opacity: 0.85;
     pointer-events: none;
     user-select: none;
+    display: block;
+    margin-top: -1rem;
+  }
+
+  .form-plant-gauche {
+    transform-origin: top left;
   }
 
   .form-plant-droite {
     transform: scaleX(-1);
+    transform-origin: top right;
   }
 
   @media (max-width: 760px) {
