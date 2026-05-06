@@ -7,10 +7,9 @@ const axes = [
     titre: 'Préserver et protéger les droits de la défense',
     items: [
       {
-        titre: 'Permanence de défense',
-        texte: 'Instaurer une permanence de défense pour les auteurs dès que le cabinet est fermé — soir, nuit et week-end.',
-        urgent: true,
-        tag: 'Disponible 24h/24',
+        titre: 'Disponibilité 24h/24',
+        texte: 'Instaurer une disponibilité de défense pour les auteurs dès que le cabinet est fermé — soir, nuit et week-end.',
+        urgent: false,
       },
       {
         titre: 'Formation continue ciblée',
@@ -232,34 +231,42 @@ const axes = [
 
   .axe-header {
     display: flex;
-    align-items: baseline;
-    gap: 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
     margin-bottom: 2rem;
+    text-align: left;
   }
 
   .axe-num {
-    font-family: var(--font-serif);
-    font-size: 2.5rem;
+    font-size: 0.68rem;
     font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: var(--vert);
-    opacity: 0.18;
-    line-height: 1;
-    flex-shrink: 0;
+    opacity: 0.5;
   }
 
   .axe-header h2 {
     margin: 0;
+    text-align: left;
   }
 
   .axe-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
     gap: 1.25rem !important;
     margin-top: 0 !important;
-    flex-direction: unset !important;
     background: none !important;
     border: none !important;
     overflow: visible !important;
+  }
+
+  .axe-grid > li {
+    flex: 0 1 260px;
+    min-width: 220px;
+    max-width: 320px;
   }
 
   .axe-item {
