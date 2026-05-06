@@ -38,9 +38,11 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <section aria-label="Formulaire de contact">
-    <h2>Nous écrire</h2>
-    <div class="form-cadre">
+  <section aria-label="Formulaire de contact" class="form-section">
+    <h2 class="form-titre">Nous écrire</h2>
+    <div class="form-avec-plantes">
+      <img src="/custos-avocats/plant-cascade.png" alt="" aria-hidden="true" class="form-plant form-plant-gauche" />
+      <div class="form-cadre">
       <form method="POST" action="#" novalidate>
         <div>
           <label for="nom">Nom complet</label>
@@ -73,6 +75,8 @@ import Base from '../layouts/Base.astro';
         </div>
         <button type="submit">Envoyer le message</button>
       </form>
+    </div>
+      <img src="/custos-avocats/plant-cascade.png" alt="" aria-hidden="true" class="form-plant form-plant-droite" />
     </div>
   </section>
 
@@ -112,6 +116,41 @@ import Base from '../layouts/Base.astro';
     z-index: 0;
   }
 
+  /* ── Section formulaire ── */
+  .form-section {
+    overflow: visible;
+  }
+
+  .form-titre {
+    text-align: center;
+  }
+
+  .form-avec-plantes {
+    display: grid;
+    grid-template-columns: 180px 1fr 180px;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .form-plant {
+    width: 100%;
+    height: auto;
+    opacity: 0.55;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .form-plant-droite {
+    transform: scaleX(-1);
+  }
+
+  @media (max-width: 760px) {
+    .form-avec-plantes {
+      grid-template-columns: 1fr;
+    }
+    .form-plant { display: none; }
+  }
+
   /* ── Cadre formulaire ── */
   .form-cadre {
     position: relative;
@@ -120,8 +159,6 @@ import Base from '../layouts/Base.astro';
     border-radius: var(--radius);
     padding: 2rem 2rem 2rem 2.25rem;
     background: var(--blanc);
-    max-width: 640px;
-    margin-inline: auto;
   }
 
   .form-cadre::before,
