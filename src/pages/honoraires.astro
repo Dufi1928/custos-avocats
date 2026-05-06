@@ -8,6 +8,8 @@ const sorted = expertises.sort(
   (a: CollectionEntry<'expertises'>, b: CollectionEntry<'expertises'>) =>
     (a.data.ordre ?? 99) - (b.data.ordre ?? 99)
 );
+const droitPenal = sorted.find((e: CollectionEntry<'expertises'>) => e.data.slug === 'droit-penal');
+const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.data.slug !== 'droit-penal');
 ---
 
 <Base title="Domaines & Honoraires" description="Domaines d'intervention et honoraires du cabinet Custos Avocats — Droit pénal, Barreau de Lille.">
@@ -23,8 +25,20 @@ const sorted = expertises.sort(
         accompagner dans toutes les dimensions de votre vie.
       </p>
     </div>
+    {droitPenal && (
+      <a href={`/custos-avocats/expertises/${droitPenal.data.slug}`} class="domaine-card-principal">
+        <div>
+          <p class="domaine-socle">Socle commun du cabinet</p>
+          <h3>{droitPenal.data.title}</h3>
+        </div>
+        <span class="domaine-arrow-principal" aria-hidden="true">→</span>
+      </a>
+    )}
+
+    <p class="domaine-complementaires-label">Domaines complémentaires</p>
+
     <ul class="domaines-grid">
-      {sorted.map((e: CollectionEntry<'expertises'>) => (
+      {complementaires.map((e: CollectionEntry<'expertises'>) => (
         <li>
           <a href={`/custos-avocats/expertises/${e.data.slug}`} class="domaine-card">
             <span class="domaine-num">{String(e.data.ordre ?? 0).padStart(2, '0')}</span>
@@ -77,32 +91,87 @@ const sorted = expertises.sort(
     z-index: 0;
   }
 
-  /* ── Grille domaines ── */
+  /* ── Carte droit pénal principale ── */
+  .domaine-card-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.75rem 2rem;
+    background: var(--vert);
+    border-radius: 1rem;
+    text-decoration: none;
+    margin-top: 2rem;
+    transition: background 0.25s;
+  }
+  .domaine-card-principal:hover { background: #3a4a3e; opacity: 1; }
+  .domaine-card-principal h3 {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #F4F5F2;
+    margin: 0;
+  }
+  .domaine-socle {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(244,245,242,0.65);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .domaine-arrow-principal {
+    color: rgba(244,245,242,0.7);
+    font-size: 1.1rem;
+    transition: transform 0.25s;
+  }
+  .domaine-card-principal:hover .domaine-arrow-principal { transform: translateX(5px); }
+
+  .domaine-complementaires-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gris);
+    font-weight: 600;
+    margin-top: 1.75rem !important;
+    margin-bottom: 0.75rem !important;
+    max-width: none;
+  }
+
+  /* ── Grille domaines complémentaires ── */
   .domaines-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    background: var(--gris-clair);
-    border: 1px solid var(--gris-clair);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-top: 2rem !important;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+    background: none;
+    border: none;
+    overflow: visible;
+    margin-top: 0 !important;
     flex-direction: unset !important;
   }
+
+  .domaines-grid > li { grid-column: span 2; }
+  .domaines-grid > li:nth-child(4) { grid-column: 2 / 4; }
+  .domaines-grid > li:nth-child(5) { grid-column: 4 / 6; }
 
   .domaine-card {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
     padding: 1.75rem 1.5rem;
-    background: var(--fond);
+    background: rgba(74, 93, 78, 0.08);
+    border: 1px solid rgba(74, 93, 78, 0.14);
     text-decoration: none;
     color: var(--texte);
-    transition: background 0.25s;
-    border: none;
-    border-radius: 0;
+    transition: background 0.25s, border-color 0.25s;
+    border-radius: 1rem;
+    height: 100%;
   }
-  .domaine-card:hover { background: var(--blanc); color: var(--texte); opacity: 1; }
+  .domaine-card:hover {
+    background: rgba(74, 93, 78, 0.14);
+    border-color: rgba(74, 93, 78, 0.25);
+    color: var(--texte);
+    opacity: 1;
+  }
 
   .domaine-num {
     font-size: 0.62rem;
@@ -120,14 +189,6 @@ const sorted = expertises.sort(
     margin: 0;
   }
 
-  .domaine-card p {
-    font-size: 0.75rem;
-    color: var(--gris);
-    margin: 0;
-    max-width: none;
-    line-height: 1.4;
-  }
-
   .domaine-arrow {
     display: block;
     margin-top: auto;
@@ -138,7 +199,16 @@ const sorted = expertises.sort(
   }
   .domaine-card:hover .domaine-arrow { transform: translateX(4px); }
 
-  @media (max-width: 640px) {
-    .domaines-grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 760px) {
+    .domaines-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .domaines-grid > li,
+    .domaines-grid > li:nth-child(4),
+    .domaines-grid > li:nth-child(5) { grid-column: span 1 !important; }
+  }
+
+  @media (max-width: 480px) {
+    .domaines-grid { grid-template-columns: 1fr !important; }
   }
 </style>
