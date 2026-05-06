@@ -39,10 +39,10 @@ import Base from '../layouts/Base.astro';
   </section>
 
   <section aria-label="Formulaire de contact" class="form-section">
+    <img src="/custos-avocats/plant-lierre2.png" alt="" aria-hidden="true" class="form-plant form-plant-gauche" />
+    <img src="/custos-avocats/plant-lierre2.png" alt="" aria-hidden="true" class="form-plant form-plant-droite" />
     <h2 class="form-titre">Nous écrire</h2>
-    <div class="form-avec-plantes">
-      <img src="/custos-avocats/plant-lierre2.png" alt="" aria-hidden="true" class="form-plant form-plant-gauche" />
-      <div class="form-cadre">
+    <div class="form-cadre">
       <form method="POST" action="#" novalidate>
         <div>
           <label for="nom">Nom complet</label>
@@ -75,8 +75,6 @@ import Base from '../layouts/Base.astro';
         </div>
         <button type="submit">Envoyer le message</button>
       </form>
-    </div>
-      <img src="/custos-avocats/plant-lierre2.png" alt="" aria-hidden="true" class="form-plant form-plant-droite" />
     </div>
   </section>
 
@@ -205,49 +203,46 @@ import Base from '../layouts/Base.astro';
 
   /* ── Section formulaire ── */
   .form-section {
-    overflow: visible;
+    position: relative;
+    overflow: hidden;
   }
 
   .form-titre {
     text-align: center;
-  }
-
-  .form-avec-plantes {
-    display: grid;
-    grid-template-columns: 200px 1fr 200px;
-    align-items: start;
-    gap: 0;
+    position: relative;
+    z-index: 1;
   }
 
   .form-plant {
-    width: 100%;
+    position: absolute;
+    top: 0;
+    width: 220px;
     height: auto;
     opacity: 0.85;
     pointer-events: none;
     user-select: none;
-    display: block;
-    margin-top: -1rem;
+    z-index: 0;
   }
 
   .form-plant-gauche {
-    transform-origin: top left;
+    left: 0;
   }
 
   .form-plant-droite {
+    right: 0;
     transform: scaleX(-1);
-    transform-origin: top right;
   }
 
   @media (max-width: 760px) {
-    .form-avec-plantes {
-      grid-template-columns: 1fr;
-    }
     .form-plant { display: none; }
   }
 
   /* ── Cadre formulaire ── */
   .form-cadre {
     position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin-inline: auto;
     border: 1px solid var(--gris-clair);
     border-left: 3px solid var(--vert);
     border-radius: var(--radius);
