@@ -26,13 +26,13 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
       </p>
     </div>
     {droitPenal && (
-      <a href={`/custos-avocats/expertises/${droitPenal.data.slug}`} class="domaine-card-principal">
-        <div>
-          <p class="domaine-socle">Socle commun du cabinet</p>
+      <>
+        <p class="domaine-socle-label">Socle commun du cabinet</p>
+        <a href={`/custos-avocats/expertises/${droitPenal.data.slug}`} class="domaine-card-principal">
           <h3>{droitPenal.data.title}</h3>
-        </div>
-        <span class="domaine-arrow-principal" aria-hidden="true">→</span>
-      </a>
+          <span class="domaine-card-cta">Découvrir</span>
+        </a>
+      </>
     )}
 
     <p class="domaine-complementaires-label">Domaines complémentaires</p>
@@ -42,7 +42,7 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
         <li>
           <a href={`/custos-avocats/expertises/${e.data.slug}`} class="domaine-card">
             <h3>{e.data.title}</h3>
-            <span class="domaine-arrow" aria-hidden="true">→</span>
+            <span class="domaine-card-cta">Découvrir</span>
           </a>
         </li>
       ))}
@@ -90,40 +90,45 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     z-index: 0;
   }
 
+  /* ── Label socle ── */
+  .domaine-socle-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--vert);
+    font-weight: 700;
+    margin-top: 2rem !important;
+    margin-bottom: 0.6rem !important;
+    max-width: none;
+  }
+
   /* ── Carte droit pénal principale ── */
   .domaine-card-principal {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    padding: 1.75rem 2rem;
+    gap: 0.75rem;
+    padding: 1.5rem 2.5rem;
     background: var(--vert);
     border-radius: 1rem;
     text-decoration: none;
-    margin-top: 2rem;
-    transition: background 0.25s;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    animation: bubbleIn 0.4s ease both;
   }
-  .domaine-card-principal:hover { background: #3a4a3e; opacity: 1; }
+  .domaine-card-principal:hover {
+    background: #3a4a3e;
+    opacity: 1;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74, 93, 78, 0.3);
+  }
   .domaine-card-principal h3 {
     font-family: var(--font-serif);
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #F4F5F2;
     margin: 0;
+    text-align: center;
   }
-  .domaine-socle {
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgba(244,245,242,0.65);
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-  }
-  .domaine-arrow-principal {
-    color: rgba(244,245,242,0.7);
-    font-size: 1.1rem;
-    transition: transform 0.25s;
-  }
-  .domaine-card-principal:hover .domaine-arrow-principal { transform: translateX(5px); }
 
   .domaine-complementaires-label {
     font-size: 0.68rem;
@@ -155,6 +160,8 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
   .domaine-card {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 0.35rem;
     padding: 1.75rem 1.5rem;
     background: rgba(74, 93, 78, 0.08);
@@ -181,10 +188,6 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
   .domaines-grid > li:nth-child(4) .domaine-card { animation-delay: 0.26s; }
   .domaines-grid > li:nth-child(5) .domaine-card { animation-delay: 0.33s; }
 
-  .domaine-card-principal {
-    animation: bubbleIn 0.4s ease both;
-  }
-
   @keyframes bubbleIn {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -198,15 +201,20 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     margin: 0;
   }
 
-  .domaine-arrow {
-    display: block;
+  .domaine-card-cta {
+    display: inline-block;
     margin-top: auto;
     padding-top: 1rem;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--vert);
-    transition: transform 0.25s;
   }
-  .domaine-card:hover .domaine-arrow { transform: translateX(4px); }
+  .domaine-card-principal .domaine-card-cta {
+    color: rgba(244,245,242,0.75);
+    padding-top: 0;
+  }
 
   @media (max-width: 760px) {
     .domaines-grid {

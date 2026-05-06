@@ -80,16 +80,16 @@ const piliers = [
     </header>
 
     {droitPenal && (
-      <a
-        href={`/custos-avocats/expertises/${droitPenal.data.slug}`}
-        class="expertise-card-principal"
-      >
-        <div>
-          <p class="eyebrow expertise-socle">Socle commun du cabinet</p>
+      <>
+        <p class="expertise-socle-label">Socle commun du cabinet</p>
+        <a
+          href={`/custos-avocats/expertises/${droitPenal.data.slug}`}
+          class="expertise-card-principal"
+        >
           <h3>{droitPenal.data.title}</h3>
-        </div>
-        <span class="expertise-arrow" aria-hidden="true">→</span>
-      </a>
+          <span class="expertise-card-cta">Découvrir</span>
+        </a>
+      </>
     )}
 
     <p class="expertise-complementaires-label">Domaines complémentaires</p>
@@ -101,7 +101,7 @@ const piliers = [
             class="expertise-card"
           >
             <h3>{e.data.title}</h3>
-            <span class="expertise-arrow" aria-hidden="true">→</span>
+            <span class="expertise-card-cta">Découvrir</span>
           </a>
         </li>
       ))}
@@ -386,28 +386,43 @@ const piliers = [
 .section-header { margin-bottom: 3rem; }
 .section-header h2 { margin-bottom: 0; }
 
+.expertise-socle-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--vert);
+  font-weight: 700;
+  margin-bottom: 0.6rem !important;
+  max-width: none;
+}
+
 .expertise-card-principal {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  padding: 1.75rem 2rem;
+  gap: 0.75rem;
+  padding: 1.5rem 2.5rem;
   background: var(--vert);
   border-radius: 1rem;
   text-decoration: none;
   margin-bottom: 0.75rem;
-  transition: background 0.25s;
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+  animation: bubbleIn 0.4s ease both;
 }
-.expertise-card-principal:hover { background: #3a4a3e; opacity: 1; }
+.expertise-card-principal:hover {
+  background: #3a4a3e;
+  opacity: 1;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(74, 93, 78, 0.3);
+}
 .expertise-card-principal h3 {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #F4F5F2;
   margin: 0;
+  text-align: center;
 }
-.expertise-socle { color: rgba(244,245,242,0.65) !important; margin-bottom: 0.3rem !important; }
-.expertise-card-principal .expertise-arrow { color: rgba(244,245,242,0.7); font-size: 1.1rem; }
-.expertise-card-principal:hover .expertise-arrow { transform: translateX(5px); }
 
 .expertise-complementaires-label {
   font-size: 0.68rem;
@@ -449,6 +464,8 @@ const piliers = [
 .expertise-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 0.4rem;
   padding: 1.75rem 1.5rem;
   background: rgba(74, 93, 78, 0.08);
@@ -475,10 +492,6 @@ const piliers = [
 .expertise-grid > li:nth-child(4) .expertise-card { animation-delay: 0.26s; }
 .expertise-grid > li:nth-child(5) .expertise-card { animation-delay: 0.33s; }
 
-.expertise-card-principal {
-  animation: bubbleIn 0.4s ease both;
-}
-
 @keyframes bubbleIn {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -492,23 +505,20 @@ const piliers = [
   margin-bottom: 0.2rem;
 }
 
-.expertise-card p {
-  font-size: 0.78rem;
-  color: var(--gris);
-  max-width: none;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.expertise-arrow {
-  display: block;
+.expertise-card-cta {
+  display: inline-block;
   margin-top: auto;
-  padding-top: 1.5rem;
-  font-size: 0.9rem;
+  padding-top: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--vert);
-  transition: transform 0.25s;
 }
-.expertise-card:hover .expertise-arrow { transform: translateX(5px); }
+.expertise-card-principal .expertise-card-cta {
+  color: rgba(244,245,242,0.75);
+  padding-top: 0;
+}
 
 /* ======================================
    MISSION
