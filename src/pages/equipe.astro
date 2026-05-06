@@ -92,6 +92,13 @@ const secretaires = [
     <ul class="secretaires-grid">
       {secretaires.map(({ nom, description }) => (
         <li class="card secretaire-card">
+          <div class="secretaire-photo" aria-label={`Photo de ${nom}`}>
+            <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
+              <circle cx="40" cy="30" r="16" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+              <path d="M 10,72 C 10,52 70,52 70,72" stroke="currentColor" stroke-width="1.5" opacity="0.4" fill="none" stroke-linecap="round"/>
+            </svg>
+            <span>Photo à venir</span>
+          </div>
           <header>
             <h3>{nom}</h3>
             <p>Secrétaire juridique</p>
@@ -126,10 +133,40 @@ const secretaires = [
   }
 
   /* Photo de groupe */
+  .secretaire-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--fond);
+    border: 1.5px dashed var(--gris-clair);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--gris);
+    margin-bottom: 1rem;
+  }
+
+  .secretaire-photo svg {
+    width: 40px;
+    height: 40px;
+    color: var(--gris-clair);
+  }
+
+  .secretaire-photo span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gris-clair);
+    font-weight: 600;
+  }
+
+  /* Photo de groupe */
   .photo-groupe {
     width: 100%;
-    max-height: 240px;
-    aspect-ratio: 16 / 6;
+    max-height: 320px;
+    aspect-ratio: 16 / 5;
     background: var(--fond);
     border: 2px dashed var(--gris-clair);
     border-radius: var(--radius);

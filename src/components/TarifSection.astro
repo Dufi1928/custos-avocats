@@ -1,0 +1,129 @@
+---
+import type { TarifDomaine } from '../data/tarifs';
+
+interface Props {
+  domaine: TarifDomaine;
+}
+const { domaine } = Astro.props;
+---
+
+<section class="tarifs" aria-label="Honoraires">
+  <h2>Honoraires</h2>
+  <p class="tarifs-intro">{domaine.intro}</p>
+
+  {domaine.groupes.map((groupe) => (
+    <div class="tarif-groupe">
+      <h3>{groupe.titre}</h3>
+      <ul class="tarif-liste">
+        {groupe.items.map((item) => (
+          <li class="tarif-item">
+            <div>
+              <strong>{item.service}</strong>
+              {item.detail && <p>{item.detail}</p>}
+            </div>
+            <span class="tarif-prix">{item.prix}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+
+  <p class="tarifs-note">
+    Les fourchettes sont indicatives et peuvent être adaptées selon la complexité du dossier
+    et la situation financière du client. Paiement échelonné possible. Aide juridictionnelle acceptée sous conditions.
+  </p>
+</section>
+
+<style>
+  .tarifs { padding-top: 2rem; }
+
+  .tarifs h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .tarifs-intro {
+    font-size: 0.875rem;
+    color: var(--gris);
+    line-height: 1.7;
+    margin-bottom: 2rem !important;
+    max-width: 72ch;
+    border-left: 3px solid var(--vert);
+    padding-left: 1rem;
+  }
+
+  .tarif-groupe {
+    margin-top: 2rem;
+  }
+
+  .tarif-groupe h3 {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--vert);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gris-clair);
+  }
+
+  .tarif-liste {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .tarif-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--gris-clair);
+  }
+
+  .tarif-item:last-child { border-bottom: none; }
+
+  .tarif-item > div { flex: 1; }
+
+  .tarif-item strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--texte);
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+
+  .tarif-item p {
+    font-size: 0.8rem;
+    color: var(--gris);
+    margin: 0;
+    max-width: none;
+    line-height: 1.4;
+  }
+
+  .tarif-prix {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--vert);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tarifs-note {
+    font-size: 0.78rem;
+    color: var(--gris);
+    margin-top: 2rem !important;
+    padding: 1rem 1.25rem;
+    background: var(--fond);
+    border-radius: var(--radius);
+    line-height: 1.65;
+    max-width: none;
+  }
+
+  @media (max-width: 560px) {
+    .tarif-item { flex-direction: column; gap: 0.4rem; }
+    .tarif-prix { font-size: 1rem; }
+  }
+</style>
