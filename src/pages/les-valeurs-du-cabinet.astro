@@ -61,17 +61,20 @@ const engagementsMission = [
 
 <Base title="Valeurs du cabinet" description="Cabinet à mission spécialisé en droit pénal — mission, engagements et valeurs de Custos Avocats.">
 
-  <section aria-label="Mission du cabinet">
-    <h1>Valeurs du cabinet</h1>
-    <p>
-      Custos Avocats a été fondé sur une conviction : la défense pénale exige à la fois une expertise
-      technique irréprochable et un engagement humain sans faille. Nous ne traitons pas des affaires —
-      nous défendons des personnes.
-    </p>
+  <section aria-label="Mission du cabinet" class="valeurs-intro">
+    <img src="/custos-avocats/plant-palmier.png" alt="" aria-hidden="true" class="plant-left" />
+    <div class="valeurs-intro-content">
+      <h1>Valeurs du cabinet</h1>
+      <p>
+        Custos Avocats a été fondé sur une conviction : la défense pénale exige à la fois une expertise
+        technique irréprochable et un engagement humain sans faille. Nous ne traitons pas des affaires —
+        nous défendons des personnes.
+      </p>
+    </div>
   </section>
 
   <!-- ══ CABINET À MISSION ══ -->
-  <section aria-label="Cabinet à mission">
+  <section aria-label="Cabinet à mission" class="mission-section">
     <h2>Un cabinet à mission</h2>
     <p>
       Custos Avocats est un cabinet à mission. Cela signifie que notre activité professionnelle
@@ -133,6 +136,39 @@ const engagementsMission = [
 </Base>
 
 <style>
+  /* ── Plant decorations ── */
+  .valeurs-intro {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .valeurs-intro-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .plant-left {
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    width: 200px;
+    opacity: 0.18;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    transform: scaleX(-1);
+  }
+
+  .mission-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mission-section > * {
+    position: relative;
+    z-index: 1;
+  }
+
   /* ── Encart raison d'être ── */
   .raison-etre {
     border-left: 3px solid var(--vert);

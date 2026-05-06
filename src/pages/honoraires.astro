@@ -13,13 +13,16 @@ const sorted = expertises.sort(
 <Base title="Domaines & Honoraires" description="Domaines d'intervention et grille tarifaire du cabinet Custos Avocats — Droit pénal, Barreau de Lille.">
 
   <!-- ══ DOMAINES D'INTERVENTION ══ -->
-  <section aria-label="Domaines d'intervention">
+  <section aria-label="Domaines d'intervention" class="domaines-intro">
+    <img src="/custos-avocats/plant-cascade.png" alt="" aria-hidden="true" class="plant-honoraires" />
+    <div class="domaines-intro-content">
     <h1>Domaines &amp; Honoraires</h1>
     <p>
       Custos Avocats est un cabinet spécialisé en droit pénal. Chacun de nos associés
       cumule cette expertise de base avec un second domaine d'intervention, pour vous
       accompagner dans toutes les dimensions de votre vie.
     </p>
+    </div>
     <ul class="domaines-grid">
       {sorted.map((e: CollectionEntry<'expertises'>) => (
         <li>
@@ -406,6 +409,28 @@ const sorted = expertises.sort(
 </Base>
 
 <style>
+  /* ── Plant decoration ── */
+  .domaines-intro {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .domaines-intro-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .plant-honoraires {
+    position: absolute;
+    top: -30px;
+    right: -15px;
+    width: 180px;
+    opacity: 0.18;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
   /* ── Grille domaines ── */
   .domaines-grid {
     display: grid !important;
