@@ -52,6 +52,14 @@ const sorted = expertises.sort(
     </p>
   </section>
 
+  <!-- ══ DROIT PÉNAL — BLOC TARIFAIRE ══ -->
+  <div class="tarif-domaine-bloc">
+    <div class="tarif-domaine-header">
+      <span class="tarif-domaine-label">Domaine</span>
+      <h2 class="tarif-domaine-titre">Droit Pénal</h2>
+      <p>Toutes les procédures pénales — de la phase d'enquête jusqu'aux voies de recours et à l'application des peines.</p>
+    </div>
+
   <section aria-label="Premier entretien">
     <h2>Premier entretien</h2>
     <p>
@@ -391,6 +399,8 @@ const sorted = expertises.sort(
     </div>
   </section>
 
+  </div><!-- fin .tarif-domaine-bloc -->
+
   <!-- ══════════════════════════════════════
        NOTES & CONDITIONS
   ══════════════════════════════════════ -->
@@ -429,6 +439,54 @@ const sorted = expertises.sort(
     pointer-events: none;
     user-select: none;
     z-index: 0;
+  }
+
+  /* ── Bloc domaine droit pénal ── */
+  .tarif-domaine-bloc {
+    border-left: 3px solid var(--vert);
+    margin-left: 0;
+  }
+
+  .tarif-domaine-header {
+    background: var(--blanc);
+    border-bottom: 1px solid var(--gris-clair);
+    padding: 2rem 2.5rem;
+  }
+
+  .tarif-domaine-label {
+    display: inline-block;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--vert);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .tarif-domaine-titre {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--texte);
+    margin: 0 0 0.75rem !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .tarif-domaine-header p {
+    font-size: 0.875rem;
+    color: var(--gris);
+    margin: 0;
+    max-width: 60ch;
+    line-height: 1.6;
+  }
+
+  .tarif-domaine-bloc > section {
+    padding-left: 2.5rem;
+    border-bottom: 1px solid var(--gris-clair);
+  }
+
+  .tarif-domaine-bloc > section:last-of-type {
+    border-bottom: none;
   }
 
   /* ── Grille domaines ── */
