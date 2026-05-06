@@ -25,24 +25,11 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
         accompagner dans toutes les dimensions de votre vie.
       </p>
     </div>
-    {droitPenal && (
-      <>
-        <p class="domaine-socle-label">Socle commun du cabinet</p>
-        <a href={`/custos-avocats/expertises/${droitPenal.data.slug}`} class="domaine-card-principal">
-          <h3>{droitPenal.data.title}</h3>
-          <span class="domaine-card-cta">Découvrir</span>
-        </a>
-      </>
-    )}
-
-    <p class="domaine-complementaires-label">Domaines complémentaires</p>
-
     <ul class="domaines-grid">
-      {complementaires.map((e: CollectionEntry<'expertises'>) => (
+      {sorted.map((e: CollectionEntry<'expertises'>) => (
         <li>
           <a href={`/custos-avocats/expertises/${e.data.slug}`} class="domaine-card">
             <h3>{e.data.title}</h3>
-            <span class="domaine-card-cta">Découvrir</span>
           </a>
         </li>
       ))}
@@ -90,61 +77,10 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     z-index: 0;
   }
 
-  /* ── Label socle ── */
-  .domaine-socle-label {
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--vert);
-    font-weight: 700;
-    margin-top: 2rem !important;
-    margin-bottom: 0.6rem !important;
-    max-width: none;
-  }
-
-  /* ── Carte droit pénal principale ── */
-  .domaine-card-principal {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1.5rem 2.5rem;
-    background: var(--vert);
-    border-radius: 1rem;
-    text-decoration: none;
-    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
-    animation: bubbleIn 0.4s ease both;
-  }
-  .domaine-card-principal:hover {
-    background: #3a4a3e;
-    opacity: 1;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(74, 93, 78, 0.3);
-  }
-  .domaine-card-principal h3 {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #F4F5F2;
-    margin: 0;
-    text-align: center;
-  }
-
-  .domaine-complementaires-label {
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--gris);
-    font-weight: 600;
-    margin-top: 1.75rem !important;
-    margin-bottom: 0.75rem !important;
-    max-width: none;
-  }
-
-  /* ── Grille domaines complémentaires ── */
+  /* ── Grille domaines ── */
   .domaines-grid {
     display: grid !important;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
     background: none;
     border: none;
@@ -153,40 +89,37 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     flex-direction: unset !important;
   }
 
-  .domaines-grid > li { grid-column: span 2; }
-  .domaines-grid > li:nth-child(4) { grid-column: 2 / 4; }
-  .domaines-grid > li:nth-child(5) { grid-column: 4 / 6; }
-
   .domaine-card {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    gap: 0.35rem;
-    padding: 1.75rem 1.5rem;
+    padding: 1.6rem 1.25rem;
     background: rgba(74, 93, 78, 0.08);
-    border: 1px solid rgba(74, 93, 78, 0.14);
+    border: 1px solid rgba(74, 93, 78, 0.18);
     text-decoration: none;
     color: var(--texte);
-    transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    transition: background 0.22s, border-color 0.22s, transform 0.22s, box-shadow 0.22s;
     border-radius: 1rem;
     height: 100%;
+    box-shadow: 0 2px 8px rgba(74, 93, 78, 0.07);
     animation: bubbleIn 0.5s ease both;
   }
   .domaine-card:hover {
     background: rgba(74, 93, 78, 0.14);
-    border-color: rgba(74, 93, 78, 0.25);
+    border-color: rgba(74, 93, 78, 0.32);
     color: var(--texte);
     opacity: 1;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(74, 93, 78, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(74, 93, 78, 0.18);
   }
 
-  .domaines-grid > li:nth-child(1) .domaine-card { animation-delay: 0.05s; }
-  .domaines-grid > li:nth-child(2) .domaine-card { animation-delay: 0.12s; }
-  .domaines-grid > li:nth-child(3) .domaine-card { animation-delay: 0.19s; }
-  .domaines-grid > li:nth-child(4) .domaine-card { animation-delay: 0.26s; }
-  .domaines-grid > li:nth-child(5) .domaine-card { animation-delay: 0.33s; }
+  .domaines-grid > li:nth-child(1) .domaine-card { animation-delay: 0.04s; }
+  .domaines-grid > li:nth-child(2) .domaine-card { animation-delay: 0.09s; }
+  .domaines-grid > li:nth-child(3) .domaine-card { animation-delay: 0.14s; }
+  .domaines-grid > li:nth-child(4) .domaine-card { animation-delay: 0.19s; }
+  .domaines-grid > li:nth-child(5) .domaine-card { animation-delay: 0.24s; }
+  .domaines-grid > li:nth-child(6) .domaine-card { animation-delay: 0.29s; }
 
   @keyframes bubbleIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -201,31 +134,10 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     margin: 0;
   }
 
-  .domaine-card-cta {
-    display: inline-block;
-    margin-top: auto;
-    padding-top: 1rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--vert);
+  @media (max-width: 640px) {
+    .domaines-grid { grid-template-columns: repeat(2, 1fr) !important; }
   }
-  .domaine-card-principal .domaine-card-cta {
-    color: rgba(244,245,242,0.75);
-    padding-top: 0;
-  }
-
-  @media (max-width: 760px) {
-    .domaines-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
-    }
-    .domaines-grid > li,
-    .domaines-grid > li:nth-child(4),
-    .domaines-grid > li:nth-child(5) { grid-column: span 1 !important; }
-  }
-
-  @media (max-width: 480px) {
+  @media (max-width: 380px) {
     .domaines-grid { grid-template-columns: 1fr !important; }
   }
 </style>

@@ -79,29 +79,14 @@ const piliers = [
       <h2>Nos domaines d'expertise</h2>
     </header>
 
-    {droitPenal && (
-      <>
-        <p class="expertise-socle-label">Socle commun du cabinet</p>
-        <a
-          href={`/custos-avocats/expertises/${droitPenal.data.slug}`}
-          class="expertise-card-principal"
-        >
-          <h3>{droitPenal.data.title}</h3>
-          <span class="expertise-card-cta">Découvrir</span>
-        </a>
-      </>
-    )}
-
-    <p class="expertise-complementaires-label">Domaines complémentaires</p>
     <ul class="expertise-grid">
-      {complementaires.map((e: CollectionEntry<'expertises'>) => (
+      {sorted.map((e: CollectionEntry<'expertises'>) => (
         <li>
           <a
             href={`/custos-avocats/expertises/${e.data.slug}`}
             class="expertise-card"
           >
             <h3>{e.data.title}</h3>
-            <span class="expertise-card-cta">Découvrir</span>
           </a>
         </li>
       ))}
@@ -386,55 +371,6 @@ const piliers = [
 .section-header { margin-bottom: 3rem; }
 .section-header h2 { margin-bottom: 0; }
 
-.expertise-socle-label {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--vert);
-  font-weight: 700;
-  margin-bottom: 0.6rem !important;
-  max-width: none;
-}
-
-.expertise-card-principal {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1.5rem 2.5rem;
-  background: var(--vert);
-  border-radius: 1rem;
-  text-decoration: none;
-  margin-bottom: 0.75rem;
-  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
-  animation: bubbleIn 0.4s ease both;
-}
-.expertise-card-principal:hover {
-  background: #3a4a3e;
-  opacity: 1;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(74, 93, 78, 0.3);
-}
-.expertise-card-principal h3 {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #F4F5F2;
-  margin: 0;
-  text-align: center;
-}
-
-.expertise-complementaires-label {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--gris);
-  font-weight: 600;
-  margin-bottom: 0.75rem !important;
-  margin-top: 1.75rem !important;
-  max-width: none;
-}
-
 .eyebrow {
   display: block;
   font-size: 0.7rem;
@@ -448,49 +384,45 @@ const piliers = [
 
 .expertise-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
   background: none;
   border: none;
   overflow: visible;
-  flex-direction: unset;
   margin-top: 0;
 }
 
-.expertise-grid > li { grid-column: span 2; }
-.expertise-grid > li:nth-child(4) { grid-column: 2 / 4; }
-.expertise-grid > li:nth-child(5) { grid-column: 4 / 6; }
-
 .expertise-card {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  gap: 0.4rem;
-  padding: 1.75rem 1.5rem;
+  padding: 1.6rem 1.25rem;
   background: rgba(74, 93, 78, 0.08);
-  border: 1px solid rgba(74, 93, 78, 0.14);
+  border: 1px solid rgba(74, 93, 78, 0.18);
   text-decoration: none;
-  transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  transition: background 0.22s, border-color 0.22s, transform 0.22s, box-shadow 0.22s;
   border-radius: 1rem;
   color: var(--texte);
   height: 100%;
+  box-shadow: 0 2px 8px rgba(74, 93, 78, 0.07);
   animation: bubbleIn 0.5s ease both;
 }
 .expertise-card:hover {
   background: rgba(74, 93, 78, 0.14);
-  border-color: rgba(74, 93, 78, 0.25);
+  border-color: rgba(74, 93, 78, 0.32);
   color: var(--texte);
   opacity: 1;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(74, 93, 78, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(74, 93, 78, 0.18);
 }
 
-.expertise-grid > li:nth-child(1) .expertise-card { animation-delay: 0.05s; }
-.expertise-grid > li:nth-child(2) .expertise-card { animation-delay: 0.12s; }
-.expertise-grid > li:nth-child(3) .expertise-card { animation-delay: 0.19s; }
-.expertise-grid > li:nth-child(4) .expertise-card { animation-delay: 0.26s; }
-.expertise-grid > li:nth-child(5) .expertise-card { animation-delay: 0.33s; }
+.expertise-grid > li:nth-child(1) .expertise-card { animation-delay: 0.04s; }
+.expertise-grid > li:nth-child(2) .expertise-card { animation-delay: 0.09s; }
+.expertise-grid > li:nth-child(3) .expertise-card { animation-delay: 0.14s; }
+.expertise-grid > li:nth-child(4) .expertise-card { animation-delay: 0.19s; }
+.expertise-grid > li:nth-child(5) .expertise-card { animation-delay: 0.24s; }
+.expertise-grid > li:nth-child(6) .expertise-card { animation-delay: 0.29s; }
 
 @keyframes bubbleIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -499,25 +431,17 @@ const piliers = [
 
 .expertise-card h3 {
   font-family: var(--font-serif);
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--texte);
   font-weight: 700;
-  margin-bottom: 0.2rem;
+  margin: 0;
 }
 
-.expertise-card-cta {
-  display: inline-block;
-  margin-top: auto;
-  padding-top: 1rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--vert);
+@media (max-width: 640px) {
+  .expertise-grid { grid-template-columns: repeat(2, 1fr); }
 }
-.expertise-card-principal .expertise-card-cta {
-  color: rgba(244,245,242,0.75);
-  padding-top: 0;
+@media (max-width: 380px) {
+  .expertise-grid { grid-template-columns: 1fr; }
 }
 
 /* ======================================

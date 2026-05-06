@@ -1,5 +1,5 @@
 ---
-title: Droit Pénal
+title: Droit Pénal Général
 slug: droit-penal
 ordre: 1
 focus:
