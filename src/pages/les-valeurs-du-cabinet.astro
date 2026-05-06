@@ -5,27 +5,26 @@ const axes = [
   {
     num: '01',
     titre: 'Préserver et protéger les droits de la défense',
-    couleur: 'axe--defense',
     items: [
       {
-        titre: 'Intervention en garde à vue',
-        texte: 'Disponibles 24h/24 pour intervenir dès la première heure de garde à vue. Le droit à l\'assistance d\'un avocat est immédiat — nous y répondons.',
-        tag: 'Urgence : +33 X XX XX XX XX',
+        titre: 'Permanence de défense',
+        texte: 'Instaurer une permanence de défense pour les auteurs dès que le cabinet est fermé — soir, nuit et week-end.',
         urgent: true,
+        tag: 'Disponible 24h/24',
       },
       {
-        titre: 'Assistance à tous les stades de la procédure',
-        texte: 'De l\'enquête préliminaire jusqu\'à la cour d\'assises, en passant par l\'instruction et le tribunal correctionnel, le cabinet est présent à chaque audience.',
+        titre: 'Formation continue ciblée',
+        texte: 'Se former à des problématiques ciblées d\'auteurs d\'infractions : 2 formations spécifiques par membre du cabinet et par an.',
         urgent: false,
       },
       {
-        titre: 'Stratégie de défense sur-mesure',
-        texte: 'Chaque dossier est analysé dans sa singularité. La défense que nous construisons est pensée pour votre situation — jamais standardisée.',
+        titre: 'Mémo des droits',
+        texte: 'Transmission systématique au client d\'un mémo de ses droits selon sa situation, grâce à la création d\'un livret actualisé.',
         urgent: false,
       },
       {
-        titre: 'Contradictoire et accès au dossier',
-        texte: 'Nous veillons au respect du principe du contradictoire à chaque étape. Vous êtes informé, consulté, et au cœur de chaque décision stratégique.',
+        titre: 'Orientation vers des structures de soins',
+        texte: 'Accompagner et orienter les auteurs vers des structures de soins adaptées, via des conclusions de partenariat avec ces structures.',
         urgent: false,
       },
     ],
@@ -33,26 +32,25 @@ const axes = [
   {
     num: '02',
     titre: 'Accompagner les victimes d\'infractions pénales',
-    couleur: 'axe--victimes',
     items: [
       {
-        titre: 'Constitution de partie civile',
-        texte: 'Nous vous assistons pour faire valoir vos droits en tant que victime : dépôt de plainte, constitution de partie civile, suivi de l\'information judiciaire.',
+        titre: 'Justice restaurative',
+        texte: 'Proposer la justice restaurative aux victimes : production de documentation à leur destination et explication de ce dispositif, lorsqu\'il est adapté à leur situation.',
         urgent: false,
       },
       {
-        titre: 'Évaluation et chiffrage des préjudices',
-        texte: 'L\'indemnisation juste exige une expertise fine. Nous évaluons l\'ensemble de vos préjudices — corporels, moraux, matériels — pour en obtenir la réparation intégrale.',
+        titre: 'Associations d\'aide aux victimes',
+        texte: 'Orientation et proposition d\'accompagnement vers des associations d\'aide aux victimes, avec une réunion de coordination tous les 2 mois.',
         urgent: false,
       },
       {
-        titre: 'Accompagnement dans le parcours judiciaire',
-        texte: 'La justice pénale est complexe et longue. Nous vous guidons à chaque étape du processus : enquête, instruction, audience — avec clarté et bienveillance.',
+        titre: 'Formation à l\'accueil des victimes',
+        texte: 'Se former spécifiquement à l\'accueil et à l\'accompagnement des victimes : 2 formations ciblées par membre du cabinet et par an.',
         urgent: false,
       },
       {
-        titre: 'Présence aux audiences',
-        texte: 'Nous plaidons vos intérêts devant toutes les juridictions pénales. Votre parole est portée avec force, votre souffrance reconnue.',
+        titre: 'Orientation vers des structures de soins',
+        texte: 'Accompagner et orienter les victimes vers des structures de soins adaptées, via des conclusions de partenariat avec ces structures.',
         urgent: false,
       },
     ],
@@ -60,26 +58,25 @@ const axes = [
   {
     num: '03',
     titre: 'Garantir l\'accès au droit pour tous',
-    couleur: 'axe--acces',
     items: [
       {
-        titre: 'Aide juridictionnelle acceptée',
-        texte: 'Nous acceptons l\'aide juridictionnelle totale ou partielle. La qualité de la défense ne doit pas être conditionnée aux seules ressources financières.',
+        titre: 'Veille juridique générale',
+        texte: 'Maintenir une veille juridique régulière : 2 articles par mois en droit pénal, et 1 article par mois sur chacune des autres matières proposées par le cabinet.',
         urgent: false,
       },
       {
-        titre: 'Paiement échelonné',
-        texte: 'En cas de difficultés financières, un paiement en plusieurs fois peut être convenu. Nous trouverons ensemble une solution adaptée à votre situation.',
+        titre: 'Aide juridictionnelle',
+        texte: '30 % des dossiers traités dans le cadre de l\'aide juridictionnelle. La qualité de la défense ne peut dépendre des seules ressources financières.',
         urgent: false,
       },
       {
-        titre: 'Convention d\'honoraires transparente',
-        texte: 'Conformément à la loi du 6 août 2015, une convention d\'honoraires écrite est établie avant toute intervention. Le coût de la défense est clair dès le départ.',
+        titre: 'Accessibilité PMR',
+        texte: 'Garantir l\'accessibilité aux personnes à mobilité réduite : rampes d\'accès PMR et sanitaires adaptés au sein du cabinet.',
         urgent: false,
       },
       {
-        titre: 'Consultation accessible',
-        texte: 'Un premier rendez-vous pour comprendre votre situation, poser vos questions, évaluer les options. Sans engagement, sans jargon.',
+        titre: 'Permanences juridiques gratuites',
+        texte: 'Participer aux permanences juridiques pour consultation gratuite : une permanence par mois, ouverte à tous.',
         urgent: false,
       },
     ],
@@ -106,17 +103,16 @@ const axes = [
 
   <!-- ══ RAISON D'ÊTRE ══ -->
   <section aria-label="Raison d'être" class="raison-section">
-    <p class="raison-label">Notre raison d'être</p>
+    <p class="raison-label">Raison d'être du cabinet</p>
     <blockquote class="raison-quote">
       Accompagner durablement le justiciable dans le contentieux pénal et les épreuves
-      juridiques et humaines complémentaires qu'il traverse — au-delà de la seule
-      procédure pénale.
+      juridiques et humaines complémentaires qu'il traverse — au-delà de la procédure pénale.
     </blockquote>
   </section>
 
-  <!-- ══ LES 3 AXES ══ -->
+  <!-- ══ LES 3 OBJECTIFS ══ -->
   {axes.map((axe) => (
-    <section aria-label={axe.titre} class={`axe-section ${axe.couleur}`}>
+    <section aria-label={axe.titre} class="axe-section">
       <header class="axe-header">
         <span class="axe-num">{axe.num}</span>
         <h2>{axe.titre}</h2>
