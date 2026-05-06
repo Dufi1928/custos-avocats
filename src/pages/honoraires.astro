@@ -37,19 +37,96 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
   </section>
 
   <!-- ══ HONORAIRES ══ -->
-  <section aria-label="Introduction honoraires">
+  <section aria-label="Honoraires" class="honoraires-section">
     <h2>Honoraires</h2>
-    <p>
+    <p class="honoraires-intro">
       Le cabinet Custos s'engage à une totale transparence sur ses honoraires.
       Une convention d'honoraires écrite est systématiquement établie avant toute intervention,
-      conformément à la loi du 6 août 2015.
+      conformément à la loi du 6 août 2015. Vous connaissez le coût de votre défense
+      avant même que nous commencions à travailler.
     </p>
-    <p>
-      Les grilles tarifaires détaillées sont consultables directement sur la page de chaque
-      domaine ci-dessus. En cas de difficultés de règlement, un paiement échelonné peut être
-      convenu. L'aide juridictionnelle est acceptée sous conditions de ressources.
-    </p>
-    <a href="/custos-avocats/contact">Prendre rendez-vous</a>
+
+    <div class="honoraires-blocs">
+
+      <div class="honoraires-bloc">
+        <div class="honoraires-bloc-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" width="28" height="28">
+            <circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M13 20h14M20 13v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Premier rendez-vous</h3>
+          <p>
+            Le premier rendez-vous est un moment d'écoute et d'analyse, sans engagement de votre part.
+            Vous exposez votre situation, nous l'examinons et vous présentons les options envisageables,
+            la stratégie possible et le cadre d'intervention du cabinet.
+          </p>
+          <p>
+            Ce rendez-vous est payant et fait l'objet d'une facturation forfaitaire,
+            quelle que soit sa durée. Son montant est déduit des honoraires si vous décidez
+            de confier votre dossier au cabinet.
+          </p>
+        </div>
+      </div>
+
+      <div class="honoraires-bloc">
+        <div class="honoraires-bloc-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" width="28" height="28">
+            <rect x="7" y="10" width="26" height="22" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M14 10V7M26 10V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M7 18h26" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M14 25h4M22 25h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Honoraires au forfait</h3>
+          <p>
+            Pour la majorité des procédures, le cabinet propose des honoraires au forfait :
+            un montant global est fixé pour l'ensemble de la procédure, quelle que soit
+            la durée effective des actes accomplis. Vous savez dès le départ ce que
+            votre défense vous coûtera.
+          </p>
+          <p>
+            Le forfait est déterminé en fonction de la nature de l'affaire, de sa complexité
+            et du stade de la procédure. Il est formalisé dans la convention d'honoraires
+            signée avant tout acte. Un complément d'honoraires peut être prévu contractuellement
+            en cas de développement imprévisible du dossier.
+          </p>
+        </div>
+      </div>
+
+      <div class="honoraires-bloc">
+        <div class="honoraires-bloc-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" width="28" height="28">
+            <path d="M20 7v4M20 29v4M7 20h4M29 20h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="20" cy="20" r="8" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M17 20.5l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Aide juridictionnelle</h3>
+          <p>
+            Le cabinet accepte les dossiers pris en charge par l'aide juridictionnelle (AJ),
+            totale ou partielle. L'AJ permet aux personnes dont les ressources sont insuffisantes
+            de bénéficier d'une prise en charge par l'État de tout ou partie des honoraires d'avocat.
+          </p>
+          <p>
+            La demande d'aide juridictionnelle se fait auprès du Bureau d'Aide Juridictionnelle (BAJ)
+            du tribunal compétent. Le cabinet vous accompagne dans cette démarche si nécessaire.
+            L'admission à l'AJ n'affecte pas la qualité de la défense qui vous est apportée :
+            chaque dossier bénéficie du même niveau d'engagement, quelle que soit la modalité
+            de prise en charge des honoraires.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="honoraires-cta">
+      <p>Une question sur nos honoraires ou votre éligibilité à l'aide juridictionnelle ?</p>
+      <a href="/custos-avocats/contact" class="honoraires-btn">Prendre rendez-vous</a>
+    </div>
   </section>
 
 </Base>
@@ -139,5 +216,101 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
   }
   @media (max-width: 380px) {
     .domaines-grid { grid-template-columns: 1fr !important; }
+  }
+
+  /* ── Section honoraires ── */
+  .honoraires-section { }
+
+  .honoraires-intro {
+    max-width: 68ch;
+    color: var(--anthracite);
+    line-height: 1.75;
+    margin-bottom: 2.5rem !important;
+  }
+
+  .honoraires-blocs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .honoraires-bloc {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-left: 3px solid var(--vert);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+  }
+
+  .honoraires-bloc-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    background: rgba(74, 93, 78, 0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--vert);
+    margin-top: 0.15rem;
+  }
+
+  .honoraires-bloc h3 {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--texte);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .honoraires-bloc p {
+    font-size: 0.9rem;
+    color: var(--anthracite);
+    line-height: 1.75;
+    margin: 0 0 0.6rem 0 !important;
+    max-width: none;
+  }
+
+  .honoraires-bloc p:last-child { margin-bottom: 0 !important; }
+
+  .honoraires-cta {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .honoraires-cta p {
+    font-size: 0.9rem;
+    color: var(--gris);
+    margin: 0 !important;
+    max-width: none;
+  }
+
+  .honoraires-btn {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    background: var(--vert);
+    color: #F4F5F2;
+    text-decoration: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: background 0.25s;
+  }
+
+  .honoraires-btn:hover {
+    background: #3a4a3e;
+    color: #F4F5F2;
+    opacity: 1;
+  }
+
+  @media (max-width: 560px) {
+    .honoraires-bloc { flex-direction: column; gap: 1rem; }
+    .honoraires-bloc-icon { width: 38px; height: 38px; }
   }
 </style>
