@@ -253,9 +253,8 @@ const axes = [
   }
 
   .axe-grid {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem !important;
     margin-top: 0 !important;
     background: none !important;
@@ -263,10 +262,18 @@ const axes = [
     overflow: visible !important;
   }
 
-  .axe-grid > li {
-    flex: 0 1 260px;
-    min-width: 220px;
-    max-width: 320px;
+  .axe-grid > li:nth-child(4) {
+    grid-column: 2 / 3;
+  }
+
+  @media (max-width: 760px) {
+    .axe-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .axe-grid > li:nth-child(4) { grid-column: 1 / 3; }
+  }
+
+  @media (max-width: 480px) {
+    .axe-grid { grid-template-columns: 1fr !important; }
+    .axe-grid > li:nth-child(4) { grid-column: auto; }
   }
 
   .axe-item {
