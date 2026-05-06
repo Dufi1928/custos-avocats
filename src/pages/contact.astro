@@ -5,7 +5,7 @@ import Base from '../layouts/Base.astro';
 <Base title="Contact" description="Contactez le cabinet Custos Avocats — Barreau de Lille.">
   <section aria-label="Coordonnées du cabinet" class="contact-intro">
     <img src="/custos-avocats/plant-corner-horiz.png" alt="" aria-hidden="true" class="plant-branche" />
-    <img src="/custos-avocats/justice-balance.png" alt="" aria-hidden="true" class="justice-contact" />
+    <img src="/custos-avocats/justice-themis2.png" alt="" aria-hidden="true" class="justice-contact" />
     <div class="contact-intro-content">
     <h1>Contact</h1>
     <address>
@@ -41,44 +41,39 @@ import Base from '../layouts/Base.astro';
 
   <section aria-label="Formulaire de contact">
     <h2>Nous écrire</h2>
-    <div class="form-avec-image">
-      <div class="form-cadre">
-        <form method="POST" action="#" novalidate>
-          <div>
-            <label for="nom">Nom complet</label>
-            <input type="text" id="nom" name="nom" autocomplete="name" required aria-required="true" />
-          </div>
-          <div>
-            <label for="email">Adresse email</label>
-            <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" />
-          </div>
-          <div>
-            <label for="telephone">Téléphone</label>
-            <input type="tel" id="telephone" name="telephone" autocomplete="tel" />
-          </div>
-          <div>
-            <label for="sujet">Objet de votre demande</label>
-            <select id="sujet" name="sujet" required aria-required="true">
-              <option value="">Sélectionner</option>
-              <option value="garde-a-vue">Garde à vue</option>
-              <option value="droit-des-mineurs">Droit des Mineurs</option>
-              <option value="droit-des-etrangers">Droit des Étrangers</option>
-              <option value="droit-de-la-famille">Droit de la Famille</option>
-              <option value="droit-penal-des-affaires">Droit Pénal des Affaires</option>
-              <option value="dommages-corporels">Dommages Corporels</option>
-              <option value="autre">Autre</option>
-            </select>
-          </div>
-          <div>
-            <label for="message">Votre message</label>
-            <textarea id="message" name="message" rows="6" required aria-required="true"></textarea>
-          </div>
-          <button type="submit">Envoyer le message</button>
-        </form>
-      </div>
-      <div class="form-image-col">
-        <img src="/custos-avocats/justice-themis2.png" alt="" aria-hidden="true" class="themis-form" />
-      </div>
+    <div class="form-cadre">
+      <form method="POST" action="#" novalidate>
+        <div>
+          <label for="nom">Nom complet</label>
+          <input type="text" id="nom" name="nom" autocomplete="name" required aria-required="true" />
+        </div>
+        <div>
+          <label for="email">Adresse email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required aria-required="true" />
+        </div>
+        <div>
+          <label for="telephone">Téléphone</label>
+          <input type="tel" id="telephone" name="telephone" autocomplete="tel" />
+        </div>
+        <div>
+          <label for="sujet">Objet de votre demande</label>
+          <select id="sujet" name="sujet" required aria-required="true">
+            <option value="">Sélectionner</option>
+            <option value="garde-a-vue">Garde à vue</option>
+            <option value="droit-des-mineurs">Droit des Mineurs</option>
+            <option value="droit-des-etrangers">Droit des Étrangers</option>
+            <option value="droit-de-la-famille">Droit de la Famille</option>
+            <option value="droit-penal-des-affaires">Droit Pénal des Affaires</option>
+            <option value="dommages-corporels">Dommages Corporels</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div>
+          <label for="message">Votre message</label>
+          <textarea id="message" name="message" rows="6" required aria-required="true"></textarea>
+        </div>
+        <button type="submit">Envoyer le message</button>
+      </form>
     </div>
   </section>
 
@@ -130,36 +125,6 @@ import Base from '../layouts/Base.astro';
     z-index: 0;
   }
 
-  /* ── Layout formulaire + image ── */
-  .form-avec-image {
-    display: grid;
-    grid-template-columns: 1fr 260px;
-    gap: 3rem;
-    align-items: center;
-  }
-
-  .form-image-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .themis-form {
-    width: 100%;
-    max-width: 260px;
-    height: auto;
-    opacity: 0.75;
-  }
-
-  @media (max-width: 720px) {
-    .form-avec-image {
-      grid-template-columns: 1fr;
-    }
-    .form-image-col {
-      display: none;
-    }
-  }
-
   /* ── Cadre formulaire ── */
   .form-cadre {
     position: relative;
@@ -168,6 +133,7 @@ import Base from '../layouts/Base.astro';
     border-radius: var(--radius);
     padding: 2rem 2rem 2rem 2.25rem;
     background: var(--blanc);
+    max-width: 600px;
   }
 
   .form-cadre::before,
