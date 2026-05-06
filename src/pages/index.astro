@@ -34,6 +34,8 @@ const piliers = [
 >
   <!-- ============ HERO ============ -->
   <section class="hero">
+    <img src="/custos-avocats/plant-palmier.png" alt="" aria-hidden="true" class="plant plant-hero-palm" />
+    <img src="/custos-avocats/plant-branche.png" alt="" aria-hidden="true" class="plant plant-hero-branch" />
     <div class="hero-inner">
       <div class="hero-content">
         <p class="hero-eyebrow">Droit pénal — Barreau de Lille</p>
@@ -162,6 +164,7 @@ const piliers = [
 
   <!-- ============ MISSION ============ -->
   <section class="mission" aria-label="Notre mission">
+    <img src="/custos-avocats/plant-cascade.png" alt="" aria-hidden="true" class="plant plant-mission" />
     <div class="mission-inner">
       <div class="mission-text">
         <p class="eyebrow">Pourquoi Custos</p>
@@ -182,21 +185,6 @@ const piliers = [
           <cite>Blaise Pascal — Pensées</cite>
         </blockquote>
 
-        <!-- Fougère décorative -->
-        <svg class="mission-plant" viewBox="0 0 140 200" fill="none" aria-hidden="true">
-          <path d="M 70,190 C 68,162 64,132 58,106 C 52,80 42,56 28,38" stroke="#4A5D4E" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
-          <!-- feuilles gauches -->
-          <path d="M 66,170 C 50,161 36,154 30,157" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-          <path d="M 63,148 C 46,138 32,131 26,134" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-          <path d="M 60,126 C 44,115 30,108 25,111" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-          <path d="M 56,104 C 41,92 28,86 24,88" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-          <path d="M 50,83 C 37,70 26,64 22,67" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-          <!-- feuilles droites -->
-          <path d="M 68,164 C 82,154 94,147 98,150" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-          <path d="M 65,142 C 79,131 90,124 94,127" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-          <path d="M 61,120 C 75,108 86,102 90,105" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-          <path d="M 57,98 C 69,86 80,80 84,83" stroke="#4A5D4E" stroke-width="1.4" stroke-linecap="round" opacity="0.3" fill="none"/>
-        </svg>
       </div>
     </div>
   </section>
@@ -234,6 +222,7 @@ const piliers = [
 
   <!-- ============ CONTACT CTA ============ -->
   <section class="urgence-cta" aria-label="Contact">
+    <img src="/custos-avocats/plant-eucalyptus.png" alt="" aria-hidden="true" class="plant plant-cta" />
     <p class="eyebrow urgence-eyebrow">Prendre rendez-vous</p>
     <h2>Besoin d'un avocat pénaliste ?</h2>
     <p>Exposez-nous votre situation. Nous vous répondons dans les meilleurs délais.</p>
@@ -256,9 +245,52 @@ const piliers = [
 /* ======================================
    HERO
    ====================================== */
-.hero { background: #1A1A1A; }
+/* ── Décorations botaniques communes ── */
+.plant {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Hero : palmier bas-gauche, branche haut-droite */
+.plant-hero-palm {
+  bottom: -20px;
+  left: -20px;
+  width: 280px;
+  opacity: 0.18;
+  transform: scaleX(-1) rotate(-10deg);
+}
+
+.plant-hero-branch {
+  top: 24px;
+  right: 0;
+  width: 260px;
+  opacity: 0.14;
+  transform: rotate(8deg);
+}
+
+/* Mission : eucalyptus cascade coin supérieur droit */
+.plant-mission {
+  top: -30px;
+  right: -20px;
+  width: 300px;
+  opacity: 0.28;
+}
+
+/* CTA bas : eucalyptus en arrière-plan centré */
+.plant-cta {
+  bottom: -10px;
+  right: 5%;
+  width: 420px;
+  opacity: 0.07;
+}
+
+.hero { background: #1A1A1A; position: relative; overflow: hidden; }
 
 .hero-inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -497,7 +529,11 @@ const piliers = [
   background: #ECECE7;
   border-top: 1px solid var(--gris-clair);
   border-bottom: 1px solid var(--gris-clair) !important;
+  position: relative;
+  overflow: hidden;
 }
+
+.mission-inner { position: relative; z-index: 1; }
 
 .mission-inner {
   display: grid;
@@ -644,6 +680,8 @@ const piliers = [
    URGENCE CTA
    ====================================== */
 .urgence-cta {
+  position: relative;
+  overflow: hidden;
   background: #1A1A1A;
   padding: 7rem var(--gap);
   text-align: center;
@@ -654,7 +692,8 @@ const piliers = [
   border-bottom: none !important;
 }
 
-.urgence-eyebrow { color: var(--vert-vif); }
+.urgence-eyebrow { color: var(--vert-vif); position: relative; z-index: 1; }
+.urgence-cta h2, .urgence-cta p, .urgence-btn { position: relative; z-index: 1; }
 
 .urgence-cta h2 { color: #F4F5F2; font-size: clamp(1.75rem, 4vw, 3rem); margin: 0; }
 .urgence-cta p { color: rgba(244, 245, 242, 0.45); max-width: none; margin: 0; }
