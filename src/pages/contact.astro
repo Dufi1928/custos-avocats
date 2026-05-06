@@ -5,6 +5,7 @@ import Base from '../layouts/Base.astro';
 <Base title="Contact" description="Contactez le cabinet Custos Avocats — Barreau de Lille.">
   <section aria-label="Coordonnées du cabinet" class="contact-intro">
     <img src="/custos-avocats/plant-corner-horiz.png" alt="" aria-hidden="true" class="plant-branche" />
+    <img src="/custos-avocats/justice-balance.png" alt="" aria-hidden="true" class="justice-contact" />
     <div class="contact-intro-content">
     <h1>Contact</h1>
     <address>
@@ -99,6 +100,18 @@ import Base from '../layouts/Base.astro';
   .contact-intro-content {
     position: relative;
     z-index: 1;
+  }
+
+  .justice-contact {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px;
+    opacity: 0.04;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
   }
 
   .plant-branche {

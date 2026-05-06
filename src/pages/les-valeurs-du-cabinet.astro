@@ -63,6 +63,7 @@ const engagementsMission = [
 
   <section aria-label="Mission du cabinet" class="valeurs-intro">
     <img src="/custos-avocats/plant-cascade.png" alt="" aria-hidden="true" class="plant-left" />
+    <img src="/custos-avocats/justice-themis.png" alt="" aria-hidden="true" class="justice-themis" />
     <div class="valeurs-intro-content">
       <h1>Valeurs du cabinet</h1>
       <p>
@@ -145,6 +146,17 @@ const engagementsMission = [
   .valeurs-intro-content {
     position: relative;
     z-index: 1;
+  }
+
+  .justice-themis {
+    position: absolute;
+    bottom: -20px;
+    left: -15px;
+    width: 180px;
+    opacity: 0.08;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
   }
 
   .plant-left {

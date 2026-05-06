@@ -50,6 +50,7 @@ const secretaires = [
 <Base title="Équipe" description="Cinq avocats associés au Barreau de Lille, tous spécialisés en droit pénal, avec chacun un second domaine d'intervention.">
   <section aria-label="Présentation de l'équipe" class="equipe-intro">
     <img src="/custos-avocats/plant-cascade.png" alt="" aria-hidden="true" class="plant-corner" />
+    <img src="/custos-avocats/justice-audience.png" alt="" aria-hidden="true" class="justice-audience" />
     <h1>Nos Avocats Associés</h1>
     <p>
       Custos Avocats est un cabinet spécialisé en droit pénal. Chacun de nos cinq associés,
@@ -127,9 +128,20 @@ const secretaires = [
     z-index: 0;
   }
 
-  .equipe-intro > :not(.plant-corner) {
+  .equipe-intro > :not(.plant-corner):not(.justice-audience) {
     position: relative;
     z-index: 1;
+  }
+
+  .justice-audience {
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    width: 220px;
+    opacity: 0.1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
   }
 
   /* Photo de groupe */
