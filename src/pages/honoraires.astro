@@ -28,7 +28,7 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     <ul class="domaines-grid">
       {sorted.map((e: CollectionEntry<'expertises'>) => (
         <li>
-          <a href={`/custos-avocats/expertises/${e.data.slug}`} class="domaine-card">
+          <a href={`/expertises/${e.data.slug}`} class="domaine-card">
             <h3>{e.data.title}</h3>
           </a>
         </li>

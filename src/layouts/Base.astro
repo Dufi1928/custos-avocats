@@ -525,7 +525,7 @@ const schemaOrg = {
     if (role === 'bot') {
       const lawyer = extractLawyer(text);
       const btn = document.createElement('a');
-      btn.href = '/custos-avocats/contact';
+      btn.href = '/contact';
       btn.className = 'msg-rdv-btn';
       btn.textContent = lawyer ? 'Prendre RDV avec ' + lawyer.short : 'Prendre un rendez-vous';
       div.appendChild(btn);
