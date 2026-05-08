@@ -35,7 +35,7 @@ const schemaOrg = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title} | Custos Avocats</title>
-    <link rel="icon" href="/custos-avocats/logo-emblem.png" type="image/png" />
+    <link rel="icon" href="/logo-emblem.png" type="image/png" />
     <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
   </head>
   <body>
@@ -560,7 +560,7 @@ const schemaOrg = {
       addMsg(data.reply ?? data.error ?? 'Une erreur est survenue.', 'bot');
     } catch {
       typing.remove();
-      addMsg('Impossible de joindre l\'assistant. Veuillez réessayer ou <a href="/custos-avocats/contact">nous contacter directement</a>.', 'bot');
+      addMsg('Impossible de joindre l\'assistant. Veuillez réessayer ou <a href="/contact">nous contacter directement</a>.', 'bot');
     } finally {
       loading = false;
     }
