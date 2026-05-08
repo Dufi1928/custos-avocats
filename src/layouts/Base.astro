@@ -45,5 +45,582 @@ const schemaOrg = {
       <slot />
     </main>
     <Footer />
+
+    <!-- ── Chatbot flottant ── -->
+    <div class="chatbot-wrap" id="chatbot-wrap">
+
+      <!-- Panel chat (en premier dans le DOM = en haut du flex column) -->
+      <div class="chatbot-panel" id="chatbot-panel" role="dialog" aria-label="Assistant Custos Avocats" aria-hidden="true">
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <div class="chat-avatar">TH</div>
+            <div>
+              <strong>Thémis</strong>
+              <span class="chat-status">
+                <span class="chat-dot"></span>En ligne
+              </span>
+            </div>
+          </div>
+          <button class="chat-close-btn" id="chat-close" aria-label="Fermer">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite">
+          <!-- Messages injectés par JS -->
+        </div>
+
+        <div class="chat-suggestions" id="chat-suggestions">
+          <button class="chip" data-msg="Je souhaite prendre rendez-vous">Prendre RDV</button>
+          <button class="chip" data-msg="Quels sont vos honoraires ?">Honoraires</button>
+          <button class="chip" data-msg="Quels domaines traitez-vous ?">Domaines</button>
+          <button class="chip" data-msg="C'est urgent, j'ai besoin d'aide">Urgence</button>
+        </div>
+
+        <form class="chat-input-row" id="chat-form" autocomplete="off">
+          <div class="chat-input-wrap">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Votre message…"
+              aria-label="Votre message"
+              maxlength="300"
+            />
+            <button type="submit" aria-label="Envoyer">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Bulle déclencheur (en dernier = en bas du flex column, près du viewport bottom) -->
+      <button class="chatbot-bubble" id="chatbot-toggle" aria-label="Ouvrir l'assistant" aria-expanded="false">
+        <span class="chatbot-label">Un conseil ?</span>
+        <span class="chatbot-btn">
+          <svg class="icon-chat" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <circle cx="8.5" cy="10.5" r="1" fill="currentColor"/>
+            <circle cx="12" cy="10.5" r="1" fill="currentColor"/>
+            <circle cx="15.5" cy="10.5" r="1" fill="currentColor"/>
+          </svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </button>
+    </div>
   </body>
 </html>
+
+<style is:global>
+  /* ── Wrapper ── */
+  .chatbot-wrap {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+    z-index: 1000;
+  }
+
+  /* ── Bulle déclencheur ── */
+  .chatbot-bubble {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .chatbot-label {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-radius: 20px;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.75rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--texte);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+
+  .chatbot-bubble:hover .chatbot-label,
+  .chatbot-bubble:focus-visible .chatbot-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .chatbot-btn {
+    width: 54px;
+    height: 54px;
+    background: var(--vert);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(74, 93, 78, 0.45);
+    transition: background 0.25s, transform 0.2s;
+    color: #F4F5F2;
+  }
+
+  .chatbot-bubble:hover .chatbot-btn { background: #3a4a3e; transform: scale(1.06); }
+
+  .chatbot-btn svg { width: 22px; height: 22px; transition: opacity 0.2s, transform 0.2s; }
+  .icon-close { position: absolute; opacity: 0; transform: rotate(-90deg); }
+  .chatbot-btn { position: relative; }
+
+  .chatbot-wrap.open .icon-chat  { opacity: 0; transform: rotate(90deg); }
+  .chatbot-wrap.open .icon-close { opacity: 1; transform: rotate(0deg); }
+  .chatbot-wrap.open .chatbot-label { display: none; }
+
+  /* ── Panel ── */
+  .chatbot-panel {
+    width: 370px;
+    height: 520px;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.14);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    transform-origin: bottom right;
+  }
+
+  .chatbot-wrap.open .chatbot-panel {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+
+  /* ── En-tête ── */
+  .chat-header {
+    background: var(--vert);
+    color: #F4F5F2;
+    padding: 1rem 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .chat-header-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .chat-avatar {
+    width: 38px;
+    height: 38px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .chat-header strong {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    color: #F4F5F2;
+  }
+
+  .chat-status {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    opacity: 0.85;
+  }
+
+  .chat-dot {
+    width: 7px;
+    height: 7px;
+    background: #7dde92;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .chat-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #F4F5F2;
+    opacity: 0.8;
+    padding: 0.25rem;
+    display: flex;
+    transition: opacity 0.2s;
+  }
+  .chat-close-btn:hover { opacity: 1; }
+  .chat-close-btn svg { width: 18px; height: 18px; }
+
+  /* ── Messages ── */
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    scroll-behavior: smooth;
+    background: #f0f2f0;
+  }
+
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--gris-clair); border-radius: 2px; }
+
+  .msg {
+    max-width: 78%;
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    animation: msgIn 0.2s ease both;
+    position: relative;
+    word-break: break-word;
+  }
+
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Bulle bot (gauche) ── */
+  .msg-bot {
+    background: #ffffff;
+    border: 1px solid var(--gris-clair);
+    color: var(--texte);
+    border-radius: 16px 16px 16px 4px;
+    align-self: flex-start;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  /* ── Bulle utilisateur (droite) ── */
+  .msg-user {
+    background: var(--vert);
+    color: #F4F5F2;
+    border-radius: 16px 16px 4px 16px;
+    align-self: flex-end;
+    box-shadow: 0 1px 4px rgba(74,93,78,0.25);
+  }
+
+  .msg a { color: inherit; text-decoration: underline; opacity: 0.85; }
+
+  .msg-rdv-btn {
+    display: block;
+    margin-top: 0.6rem;
+    padding: 0.45rem 0.9rem;
+    background: var(--vert);
+    color: #F4F5F2 !important;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    text-decoration: none !important;
+    letter-spacing: 0.02em;
+    text-align: center;
+    opacity: 1 !important;
+    transition: background 0.2s;
+  }
+
+  .msg-rdv-btn:hover { background: #3a4a3e; }
+
+  /* Indicateur de frappe */
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 0.65rem 0.9rem;
+    background: var(--fond);
+    border: 1px solid var(--gris-clair);
+    border-radius: 12px;
+    border-bottom-left-radius: 3px;
+    align-self: flex-start;
+    align-items: center;
+  }
+
+  .typing-indicator span {
+    width: 6px;
+    height: 6px;
+    background: var(--gris);
+    border-radius: 50%;
+    animation: bounce 1.2s ease infinite;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-5px); }
+  }
+
+  /* ── Suggestions ── */
+  .chat-suggestions {
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    border-top: 1px solid var(--gris-clair);
+    flex-shrink: 0;
+  }
+
+  .chip {
+    background: none;
+    border: 1px solid var(--vert);
+    color: var(--vert);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .chip:hover { background: var(--vert); color: #F4F5F2; }
+
+  /* ── Saisie ── */
+  .chat-input-row {
+    padding: 0.75rem;
+    border-top: 1px solid var(--gris-clair);
+    flex-shrink: 0;
+  }
+
+  .chat-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .chat-input-wrap input {
+    width: 100%;
+    background: var(--fond);
+    border: 1px solid var(--gris-clair);
+    color: var(--texte);
+    padding: 0.65rem 3rem 0.65rem 1rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    transition: border-color 0.2s;
+    max-width: none;
+    margin: 0;
+  }
+
+  .chat-input-wrap input:focus {
+    outline: none;
+    border-color: var(--vert);
+  }
+
+  .chat-input-wrap button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: var(--vert);
+    color: #F4F5F2;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s, opacity 0.2s;
+    padding: 0;
+    opacity: 0.5;
+  }
+
+  .chat-input-wrap input:not(:placeholder-shown) ~ button,
+  .chat-input-wrap input:focus ~ button {
+    opacity: 1;
+  }
+
+  .chat-input-wrap button:hover { background: #3a4a3e; opacity: 1; }
+  .chat-input-wrap button svg { width: 14px; height: 14px; }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    .chatbot-wrap {
+      bottom: 1.25rem;
+      right: 1.25rem;
+      left: 1.25rem;
+      align-items: flex-end;
+    }
+
+    .chatbot-bubble {
+      align-self: flex-end;
+    }
+
+    .chatbot-panel {
+      width: 100%;
+      max-height: 75dvh;
+      height: auto;
+      border-radius: 16px 16px 12px 12px;
+      transform: translateY(20px) scale(0.97);
+    }
+
+    .chatbot-wrap.open .chatbot-panel {
+      transform: translateY(0) scale(1);
+    }
+  }
+</style>
+
+<script>
+  const wrap       = document.getElementById('chatbot-wrap');
+  const toggle     = document.getElementById('chatbot-toggle');
+  const panel      = document.getElementById('chatbot-panel');
+  const closeBtn   = document.getElementById('chat-close');
+  const msgs       = document.getElementById('chat-messages');
+  const form       = document.getElementById('chat-form');
+  const input      = document.getElementById('chat-input') as HTMLInputElement;
+  const suggestionsEl = document.getElementById('chat-suggestions');
+
+  let opened  = false;
+  let loading = false;
+
+  const LAWYERS: { name: string; short: string }[] = [
+    { name: 'ROETYNCK',          short: 'Maître Roetynck' },
+    { name: 'DAVRILLON',         short: 'Maître Davrillon' },
+    { name: 'HAROUNE',           short: 'Maître Haroune' },
+    { name: 'DAVID',             short: 'Maître David' },
+    { name: 'JAULIN-DENISSELLE', short: 'Maître Jaulin-Denisselle' },
+  ];
+
+  function extractLawyer(text: string) {
+    return LAWYERS.find(l => text.toUpperCase().includes(l.name));
+  }
+
+  function addMsg(text: string, role: 'bot' | 'user') {
+    const div = document.createElement('div');
+    div.className = role === 'bot' ? 'msg msg-bot' : 'msg msg-user';
+    div.textContent = text;
+
+    if (role === 'bot') {
+      const lawyer = extractLawyer(text);
+      const btn = document.createElement('a');
+      btn.href = '/custos-avocats/contact';
+      btn.className = 'msg-rdv-btn';
+      btn.textContent = lawyer ? 'Prendre RDV avec ' + lawyer.short : 'Prendre un rendez-vous';
+      div.appendChild(btn);
+    }
+
+    msgs!.appendChild(div);
+    msgs!.scrollTop = msgs!.scrollHeight;
+  }
+
+  function showTyping(): HTMLElement {
+    const el = document.createElement('div');
+    el.className = 'typing-indicator';
+    el.innerHTML = '<span></span><span></span><span></span>';
+    msgs!.appendChild(el);
+    msgs!.scrollTop = msgs!.scrollHeight;
+    return el;
+  }
+
+  async function botReply(userMsg: string) {
+    if (loading) return;
+    loading = true;
+    const typing = showTyping();
+
+    try {
+      const res = await fetch('/custos-avocats/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMsg }),
+      });
+      const data = await res.json();
+      typing.remove();
+      addMsg(data.reply ?? data.error ?? 'Une erreur est survenue.', 'bot');
+    } catch {
+      typing.remove();
+      addMsg('Impossible de joindre l\'assistant. Veuillez réessayer ou <a href="/custos-avocats/contact">nous contacter directement</a>.', 'bot');
+    } finally {
+      loading = false;
+    }
+  }
+
+  function setInputEnabled(enabled: boolean) {
+    input.disabled = !enabled;
+    const btn = form!.querySelector('button[type="submit"]') as HTMLButtonElement;
+    if (btn) btn.disabled = !enabled;
+  }
+
+  function openChat() {
+    opened = true;
+    wrap!.classList.add('open');
+    panel!.setAttribute('aria-hidden', 'false');
+    toggle!.setAttribute('aria-expanded', 'true');
+    input.focus();
+
+    if (msgs!.children.length === 0) {
+      const typing = showTyping();
+      setTimeout(() => {
+        typing.remove();
+        addMsg('Bonjour, je suis Thémis, l\'assistante du cabinet Custos Avocats. Comment puis-je vous aider ?', 'bot');
+      }, 600);
+    }
+  }
+
+  function closeChat() {
+    opened = false;
+    wrap!.classList.remove('open');
+    panel!.setAttribute('aria-hidden', 'true');
+    toggle!.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle!.addEventListener('click', () => opened ? closeChat() : openChat());
+  closeBtn!.addEventListener('click', closeChat);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && opened) closeChat();
+  });
+
+  suggestionsEl!.addEventListener('click', async (e) => {
+    const chip = (e.target as HTMLElement).closest('.chip') as HTMLElement | null;
+    if (!chip || loading) return;
+    const msg = chip.dataset.msg ?? '';
+    suggestionsEl!.style.display = 'none';
+    addMsg(msg, 'user');
+    await botReply(msg);
+  });
+
+  form!.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text || loading) return;
+    input.value = '';
+    if (suggestionsEl!.style.display !== 'none') suggestionsEl!.style.display = 'none';
+    addMsg(text, 'user');
+    setInputEnabled(false);
+    await botReply(text);
+    setInputEnabled(true);
+    input.focus();
+  });
+</script>

@@ -105,79 +105,8 @@ import Base from '../layouts/Base.astro';
       </div>
     </div>
   </section>
+
 </Base>
-
-<!-- ── Chatbot flottant (visuel) ── -->
-<div class="chatbot-bubble" aria-label="Assistant virtuel" role="button" tabindex="0">
-  <div class="chatbot-label">Un conseil ?</div>
-  <div class="chatbot-btn">
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-      <circle cx="8.5" cy="10.5" r="1" fill="currentColor"/>
-      <circle cx="12" cy="10.5" r="1" fill="currentColor"/>
-      <circle cx="15.5" cy="10.5" r="1" fill="currentColor"/>
-    </svg>
-  </div>
-</div>
-
-<style>
-  .chatbot-bubble {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
-    z-index: 999;
-    cursor: pointer;
-  }
-
-  .chatbot-label {
-    background: var(--blanc);
-    border: 1px solid var(--gris-clair);
-    border-radius: 20px;
-    padding: 0.4rem 0.85rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--texte);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.2s, transform 0.2s;
-    pointer-events: none;
-  }
-
-  .chatbot-bubble:hover .chatbot-label,
-  .chatbot-bubble:focus .chatbot-label {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .chatbot-btn {
-    width: 54px;
-    height: 54px;
-    background: var(--vert);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 20px rgba(74, 93, 78, 0.45);
-    transition: background 0.25s, transform 0.2s;
-    color: #F4F5F2;
-  }
-
-  .chatbot-btn svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .chatbot-bubble:hover .chatbot-btn {
-    background: #3a4a3e;
-    transform: scale(1.06);
-  }
-</style>
 
 <style>
   .contact-intro {

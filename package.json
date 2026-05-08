@@ -12,6 +12,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.95.1",
+    "@astrojs/node": "^10.0.6",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
     "astro": "^6.1.10",
