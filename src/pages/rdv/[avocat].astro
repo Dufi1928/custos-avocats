@@ -437,6 +437,78 @@ const joursDispo = Object.keys(avocat.schedule).sort().map(k => joursNoms[k]).jo
   }
 
   .rdv-retour:hover { background: var(--vert-vif) !important; color: #F4F5F2 !important; }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    #rdv-page > section {
+      padding: 2.5rem 1rem;
+    }
+
+    /* Hero */
+    .rdv-hero-inner {
+      gap: 1rem;
+    }
+    .rdv-avatar-wrap {
+      width: 60px;
+      height: 60px;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .rdv-hero-info h1 {
+      font-size: clamp(1.1rem, 5vw, 1.5rem);
+      line-height: 1.25;
+    }
+
+    /* Booking : déjà 1 colonne à 720px, on réduit juste le gap */
+    .rdv-booking-inner {
+      gap: 1.5rem;
+    }
+
+    /* Calendrier : plus facile à toucher */
+    .rdv-cal-day {
+      font-size: 0.8rem;
+    }
+    .rdv-cal-hd {
+      font-size: 0.6rem;
+      letter-spacing: 0;
+    }
+
+    /* Créneaux : pillules plus larges, 3 par ligne */
+    .rdv-slots-grid {
+      gap: 0.4rem;
+    }
+    .rdv-slot {
+      flex: 1;
+      min-width: calc(33.33% - 0.4rem);
+      text-align: center;
+      padding: 0.55rem 0.5rem;
+      font-size: 0.825rem;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Formulaire */
+    .rdv-form-wrap {
+      max-width: 100%;
+    }
+    .rdv-two-cols {
+      grid-template-columns: 1fr;
+    }
+    .rdv-recap {
+      font-size: 0.825rem;
+      word-break: break-word;
+    }
+
+    /* Succès */
+    .rdv-success-wrap {
+      max-width: 100%;
+    }
+    .rdv-success-note {
+      max-width: 100% !important;
+    }
+  }
 </style>
 
 <script define:vars={{ schedule: avocat.schedule, avocatTitre: avocat.titre }}>
