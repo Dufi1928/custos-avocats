@@ -127,6 +127,7 @@ const schemaOrg = {
     align-items: flex-end;
     gap: 0.75rem;
     z-index: 1000;
+    pointer-events: none; /* le wrapper ne bloque pas les clics */
   }
 
   /* ── Bulle déclencheur ── */
@@ -139,6 +140,7 @@ const schemaOrg = {
     border: none;
     padding: 0;
     cursor: pointer;
+    pointer-events: auto; /* restaure les clics sur la bulle */
   }
 
   .chatbot-label {
@@ -208,7 +210,11 @@ const schemaOrg = {
   .chatbot-wrap.open .chatbot-panel {
     opacity: 1;
     transform: translateY(0) scale(1);
-    pointer-events: all;
+    pointer-events: auto;
+  }
+
+  .chatbot-wrap.open {
+    pointer-events: auto; /* tout le wrapper est cliquable quand le panel est ouvert */
   }
 
   /* ── En-tête ── */
