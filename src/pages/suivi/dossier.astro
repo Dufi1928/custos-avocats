@@ -98,9 +98,11 @@ import Base from '../../layouts/Base.astro';
     <table class="chrono-table">
       <thead>
         <tr>
-          <th class="col-date">Date et heure</th>
-          <th class="col-event">Événement</th>
-          <th class="col-comp">Complément</th>
+          <th class="col-num">N°</th>
+          <th class="col-etape">Étape</th>
+          <th class="col-statut">Statut</th>
+          <th class="col-date">Date</th>
+          <th class="col-detail">Détail</th>
         </tr>
       </thead>
       <tbody id="chrono-tbody"></tbody>
@@ -403,41 +405,112 @@ import Base from '../../layouts/Base.astro';
   }
 
   /* ══ Tableau ══ */
-  .chrono-wrap { border: 1px solid #ddd; border-radius: var(--radius); overflow: hidden; }
+  .chrono-wrap {
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
 
-  .chrono-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .chrono-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
 
+  /* En-tête — dans le template, styles scopés OK */
   .chrono-table thead tr { background: #3a4a3e; color: #F4F5F2; }
 
   .chrono-table th {
-    padding: 0.95rem 1.4rem; text-align: left;
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+    padding: 0.85rem 1.2rem;
+    text-align: left;
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  .chrono-table th:last-child { border-right: none; }
+
+  .col-num    { width: 52px; text-align: center; }
+  .col-etape  { width: 22%; }
+  .col-statut { width: 130px; }
+  .col-date   { width: 150px; }
+  .col-detail { /* flexible */ }
+
+  /* tbody — créé via JS → :global() obligatoire */
+  .chrono-wrap :global(tbody tr) {
+    border-bottom: 1px solid #ddd;
+    transition: background 0.15s;
+  }
+  .chrono-wrap :global(tbody tr:last-child) { border-bottom: none; }
+  .chrono-wrap :global(tbody tr:nth-child(odd))  { background: #fff; }
+  .chrono-wrap :global(tbody tr:nth-child(even)) { background: #f7f8f6; }
+  .chrono-wrap :global(tbody tr:hover) { background: #edf2ee; }
+
+  .chrono-wrap :global(td) {
+    padding: 1rem 1.2rem;
+    vertical-align: middle;
+    border-right: 1px solid #ddd;
+    line-height: 1.5;
+  }
+  .chrono-wrap :global(td:last-child) { border-right: none; }
+
+  /* Cellule N° */
+  .chrono-wrap :global(.td-num) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 auto;
   }
 
-  .col-date { width: 170px; }
-  .col-event { width: 44%; }
-
-  .chrono-table tbody tr { border-bottom: 1px solid #e8e8e8; transition: background 0.15s; }
-  .chrono-table tbody tr:last-child { border-bottom: none; }
-  .chrono-table tbody tr:nth-child(odd)  { background: #fff; }
-  .chrono-table tbody tr:nth-child(even) { background: #f6f7f5; }
-  .chrono-table tbody tr:hover { background: #edf2ee; }
-  .chrono-table td { padding: 1.1rem 1.4rem; vertical-align: top; line-height: 1.5; }
-
-  .td-jour  { display: block; font-weight: 700; font-size: 0.85rem; color: #222; margin-bottom: 0.15rem; }
-  .td-heure { font-size: 0.8rem; color: #888; }
-  .td-lieu  { display: block; font-size: 0.72rem; font-weight: 800; color: var(--vert); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.25rem; }
-  .td-titre { display: block; font-size: 0.875rem; color: #222; line-height: 1.4; }
-
-  .td-badge-encours {
-    display: inline-block; margin-top: 0.35rem;
-    background: #dde8de; color: var(--vert); font-size: 0.65rem; font-weight: 800;
-    text-transform: uppercase; letter-spacing: 0.07em; padding: 0.15rem 0.6rem;
-    border-radius: 999px; border: 1px solid #b8cebb;
+  /* Titre étape */
+  .chrono-wrap :global(.td-etape-titre) {
+    display: block;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #222;
+    line-height: 1.35;
   }
 
-  .td-comp-ligne { display: flex; gap: 0.4rem; font-size: 0.82rem; color: #555; margin-bottom: 0.2rem; line-height: 1.4; }
-  .td-comp-cle   { font-weight: 700; color: #333; white-space: nowrap; }
+  /* Badge statut */
+  .chrono-wrap :global(.td-statut-badge) {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.22rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  /* Date */
+  .chrono-wrap :global(.td-date-val) {
+    font-size: 0.82rem;
+    color: #555;
+  }
+
+  /* Détail */
+  .chrono-wrap :global(.td-detail-val) {
+    font-size: 0.82rem;
+    color: #666;
+    line-height: 1.5;
+  }
+  .chrono-wrap :global(.td-lieu-val) {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #4A5D4E;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.3rem;
+  }
 
   /* ── Contact ── */
   .dossier-contact {
@@ -756,24 +829,58 @@ import Base from '../../layouts/Base.astro';
 
     wrapper.appendChild(row);
 
-    /* ══ TABLEAU ══ */
+    /* ══ TABLEAU — reflet exact de la frise ══ */
     const tbody = document.getElementById('chrono-tbody')!;
     tbody.innerHTML = '';
 
-    proc.evenements.forEach(ev => {
+    proc.etapes.forEach((etape, i) => {
+      const state: 'done' | 'active' | 'todo' = etape.done ? 'done' : etape.active ? 'active' : 'todo';
+      const col = COL[state];
       const tr = document.createElement('tr');
-      const compHTML = ev.complement
-        ? ev.complement.map(c => `<div class="td-comp-ligne"><span class="td-comp-cle">${c.cle}</span> ${c.valeur}</div>`).join('')
-        : '';
 
-      tr.innerHTML = `
-        <td><span class="td-jour">${ev.date}</span><span class="td-heure">${ev.heure}</span></td>
-        <td>
-          <span class="td-lieu">${ev.lieu}</span>
-          <span class="td-titre">${ev.titre}</span>
-          ${ev.encours ? `<span class="td-badge-encours">En cours</span>` : ''}
-        </td>
-        <td>${compHTML}</td>`;
+      // Cellule N°
+      const tdNum = document.createElement('td');
+      tdNum.style.textAlign = 'center';
+      const numSpan = document.createElement('span');
+      numSpan.className = 'td-num';
+      numSpan.textContent = String(i + 1);
+      numSpan.style.background = state === 'todo' ? '#ccc' : col.main;
+      tdNum.appendChild(numSpan);
+
+      // Cellule Étape
+      const tdEtape = document.createElement('td');
+      tdEtape.innerHTML = `<span class="td-etape-titre">${etape.titre.replace(/\n/g, ' ')}</span>`;
+
+      // Cellule Statut
+      const tdStatut = document.createElement('td');
+      const badgeSpan = document.createElement('span');
+      badgeSpan.className = 'td-statut-badge';
+      badgeSpan.textContent = etape.badge;
+      badgeSpan.style.cssText = `background: ${col.bg}; color: ${state === 'todo' ? '#999' : col.main};`;
+      tdStatut.appendChild(badgeSpan);
+
+      // Cellule Date
+      const tdDate = document.createElement('td');
+      tdDate.innerHTML = `<span class="td-date-val">${etape.date || '—'}</span>`;
+
+      // Cellule Détail (description + lieu)
+      const tdDetail = document.createElement('td');
+      const detailSpan = document.createElement('span');
+      detailSpan.className = 'td-detail-val';
+      detailSpan.textContent = etape.desc;
+      tdDetail.appendChild(detailSpan);
+      if (etape.location) {
+        const lieuSpan = document.createElement('span');
+        lieuSpan.className = 'td-lieu-val';
+        lieuSpan.textContent = etape.location;
+        tdDetail.appendChild(lieuSpan);
+      }
+
+      tr.appendChild(tdNum);
+      tr.appendChild(tdEtape);
+      tr.appendChild(tdStatut);
+      tr.appendChild(tdDate);
+      tr.appendChild(tdDetail);
       tbody.appendChild(tr);
     });
   }
