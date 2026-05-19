@@ -10,6 +10,14 @@ const sorted = expertises.sort(
 );
 const droitPenal = sorted.find((e: CollectionEntry<'expertises'>) => e.data.slug === 'droit-penal');
 const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.data.slug !== 'droit-penal');
+
+const domainIcons: Record<string, string> = {
+  'droit-des-mineurs': `<svg viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M305.406,269.895c6.441,4.993,14.604,7.975,23.367,7.975c8.706,0,16.826-2.938,23.252-7.867c6.426-4.928,11.246-11.846,13.54-19.872c1.498-5.268-1.556-10.762-6.824-12.259c-5.268-1.505-10.746,1.549-12.245,6.817h-0.007c-1.086,3.828-3.416,7.179-6.528,9.56c-3.126,2.38-6.94,3.777-11.188,3.777c-4.269,0-8.105-1.418-11.239-3.828c-3.119-2.41-5.449-5.811-6.513-9.675c-1.462-5.283-6.918-8.38-12.201-6.933c-5.276,1.462-8.38,6.926-6.926,12.202C294.138,257.903,298.958,264.909,305.406,269.895z"/><path d="M220.091,250.131c1.506-5.262-1.541-10.754-6.809-12.259c-5.269-1.505-10.754,1.542-12.259,6.81c-1.1,3.836-3.423,7.186-6.535,9.568c-3.126,2.38-6.94,3.777-11.188,3.777c-4.262,0-8.112-1.418-11.239-3.828c-3.126-2.41-5.45-5.811-6.513-9.675c-1.462-5.283-6.918-8.38-12.201-6.933c-5.283,1.462-8.38,6.926-6.926,12.202c2.244,8.112,7.056,15.117,13.512,20.104c6.44,4.993,14.61,7.975,23.367,7.975c8.713,0,16.826-2.938,23.244-7.867C212.978,265.075,217.804,258.157,220.091,250.131z"/><path d="M494.002,217.703c-10.052-10.066-23.715-16.666-38.818-17.773c-9.436-44.376-33.188-83.454-66.173-112.156c-36.046-31.35-83.229-50.368-134.747-50.368c-51.44,0-98.565,18.96-134.582,50.216c-33.18,28.794-57.04,68.076-66.423,112.676c-13.692,1.788-26.012,8.134-35.282,17.404C6.897,228.783,0,244.226,0,261.145c0,16.891,6.897,32.334,17.976,43.413c11.079,11.08,26.522,17.969,43.435,17.969c1.166,0,2.302-0.029,3.438-0.086c14.792,35.142,39.042,65.319,69.603,87.311c14.046,10.117,29.468,18.504,45.902,24.851c-1.983-6.94-3.004-14.227-3.004-21.652c0-3.423,0.225-6.853,0.674-10.197c-9.509-4.537-18.548-9.914-27.029-16.008c-29.077-20.921-51.577-50.476-63.734-84.851l-4.393-12.411l-12.693,3.488c-2.924,0.789-5.811,1.216-8.764,1.216c-9.176,0-17.364-3.684-23.375-9.69c-6.006-6.014-9.694-14.198-9.694-23.353c0-9.183,3.687-17.375,9.694-23.382c6.01-6.006,14.199-9.69,23.375-9.69c0.572,0,1.418,0.058,2.613,0.138l13.178,1.02l1.954-13.026c6.404-42.574,27.999-80.176,59.088-107.155c7.772-6.738,16.131-12.809,24.988-18.136c0.767,4.806,1.947,9.307,3.596,13.439c2.613,6.564,6.274,12.252,10.616,17.108c7.606,8.518,17.122,14.517,27.066,19.431c14.922,7.33,31.045,12.411,44.593,18.743c6.773,3.141,12.874,6.556,17.875,10.493c5.008,3.959,8.915,8.344,11.702,13.685c1.498,2.887,4.486,4.653,7.743,4.58c3.257-0.079,6.159-1.982,7.519-4.943c14.698-31.841,20.003-56.895,20.003-76.572c0.022-13.431-2.519-24.294-6.072-32.847c23.288,7.396,44.499,19.452,62.548,35.128c31.118,27.072,52.654,64.761,59.001,107.436l2.106,14.054l14.053-2.15c1.867-0.289,3.51-0.427,5.015-0.427c9.176,0,17.339,3.684,23.375,9.69c6.014,6.007,9.661,14.199,9.697,23.382c-0.036,9.155-3.684,17.34-9.697,23.353c-6.036,6.006-14.198,9.69-23.375,9.69c-3.807,0-7.432-0.688-10.949-1.896l-13.432-4.74l-4.675,13.431c-12.013,34.606-34.49,64.393-63.618,85.474c-7.62,5.522-15.696,10.457-24.171,14.712c0.594,3.879,0.876,7.794,0.876,11.782c0,6.89-0.876,13.634-2.576,20.125c15.168-6.23,29.418-14.198,42.48-23.664c30.409-22.021,54.551-52.148,69.263-87.282c2.208,0.253,4.501,0.398,6.803,0.398c16.912,0,32.334-6.889,43.406-17.969C505.089,293.479,512,278.036,512,261.145C512,244.226,505.089,228.783,494.002,217.703z M221.64,130.008c-12.324-5.195-23.143-10.999-30.474-18.736c-3.69-3.879-6.586-8.214-8.648-13.46c-1.701-4.364-2.786-9.459-3.119-15.465c11.123-5.204,22.875-9.307,35.128-12.115c0.058,9.626,2.294,24.692,11.868,42.798c4.277,8.12,10.023,16.818,17.636,25.936C236.425,135.899,228.804,133.041,221.64,130.008z M286.677,156.64c-23.918-19.235-37.53-36.936-45.244-51.548c-8.387-15.906-9.893-28.201-9.907-35.322c0-0.956,0.029-1.795,0.073-2.554c7.424-0.948,14.979-1.469,22.666-1.469c10.413,0,20.602,0.933,30.503,2.648c1.027,1.186,2.098,2.547,3.154,4.146c4.48,6.789,8.988,17.448,9.024,34.338C296.953,119.638,294.268,136.023,286.677,156.64z"/><path d="M256,351.33c-16.962-0.007-32.471,6.926-43.579,18.056c-11.13,11.101-18.056,26.61-18.049,43.579c-0.008,16.971,6.918,32.479,18.049,43.58c11.108,11.13,26.617,18.056,43.579,18.048c16.977,0.007,32.478-6.918,43.588-18.048c11.13-11.101,18.055-26.609,18.048-43.58c0.007-16.97-6.918-32.478-18.048-43.579C288.478,358.255,272.977,351.323,256,351.33z M284.672,425.072c-2.344,5.558-6.318,10.342-11.282,13.699c-4.986,3.358-10.891,5.298-17.39,5.305c-4.334-0.008-8.387-0.876-12.1-2.446c-5.565-2.345-10.341-6.311-13.699-11.282c-3.358-4.986-5.298-10.891-5.304-17.383c0-4.342,0.868-8.394,2.438-12.107c2.352-5.558,6.31-10.342,11.282-13.699c4.986-3.358,10.892-5.297,17.382-5.304c4.342,0.008,8.395,0.875,12.107,2.439c5.565,2.352,10.349,6.318,13.706,11.289c3.358,4.979,5.29,10.891,5.298,17.382C287.111,417.3,286.243,421.353,284.672,425.072z"/><path d="M256.008,314.365c-41.857,0-75.812,20.291-75.812,45.338c0,7.483,3.04,14.546,8.417,20.777c3.256-5.384,7.23-10.428,11.788-14.994c14.821-14.842,34.577-23.034,55.578-23.034c21.081,0,40.808,8.192,55.651,23.071c4.566,4.53,8.502,9.574,11.767,14.958c5.376-6.231,8.416-13.294,8.416-20.777C331.812,334.656,297.887,314.365,256.008,314.365z"/></svg>`,
+  'droit-des-etrangers': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  'droit-de-la-famille': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  'droit-penal-des-affaires': `<svg viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M496,120H384c0-8.844-7.164-16-16-16v-16c0-26.469-21.531-48-48-48H192c-26.469,0-48,21.531-48,48v16c-8.836,0-16,7.156-16,16H16C7.164,120,0,127.156,0,136v304c0,8.844,7.164,16,16,16h48c0,8.836,7.163,16,16,16h32c8.837,0,16-7.164,16-16h256c0,8.836,7.163,16,16,16h32c8.837,0,16-7.164,16-16h48c8.836,0,16-7.156,16-16V136C512,127.156,504.836,120,496,120zM176,88c0-8.828,7.18-16,16-16h128c8.82,0,16,7.172,16,16v16c-8.836,0-16,7.156-16,16H192c0-8.844-7.164-16-16-16V88zM480,424H32V152h448V424z"/><path d="M128,376c8.836,0,16-7.156,16-16V216c0-8.844-7.164-16-16-16s-16,7.156-16,16v144C112,368.844,119.164,376,128,376z"/><path d="M384,376c8.836,0,16-7.156,16-16V216c0-8.844-7.164-16-16-16s-16,7.156-16,16v144C368,368.844,375.164,376,384,376z"/></svg>`,
+  'dommages-corporels': `<svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M22,7H10C9.692,7,9.401,6.858,9.212,6.615C9.023,6.373,8.955,6.056,9.03,5.757l1-4C10.141,1.313,10.541,1,11,1h10c0.459,0,0.859,0.313,0.97,0.757l1,4c0.075,0.299,0.007,0.615-0.182,0.858C22.599,6.858,22.308,7,22,7z M11.281,5h9.438l-0.5-2h-8.438L11.281,5z"/><path d="M19,23h-6c-0.552,0-1-0.448-1-1v-2h-2c-0.552,0-1-0.448-1-1v-6c0-0.552,0.448-1,1-1h2v-2c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1v2h2c0.552,0,1,0.448,1,1v6c0,0.552-0.448,1-1,1h-2v2C20,22.552,19.552,23,19,23z M14,21h4v-2c0-0.552,0.448-1,1-1h2v-4h-2c-0.552,0-1-0.448-1-1v-2h-4v2c0,0.552-0.448,1-1,1h-2v4h2c0.552,0,1,0.448,1,1V21z"/><path d="M30,27H2c-0.283,0-0.552-0.12-0.741-0.329c-0.19-0.21-0.282-0.489-0.254-0.771l2-20C3.056,5.389,3.486,5,4,5h24c0.514,0,0.944,0.389,0.995,0.9l2,20c0.028,0.281-0.064,0.561-0.254,0.771C30.552,26.88,30.283,27,30,27z M3.105,25h25.79l-1.8-18H4.905L3.105,25z"/></svg>`,
+};
 ---
 
 <Base title="Domaines & Honoraires" description="Domaines d'intervention et honoraires du cabinet Custos Avocats — Droit pénal, Barreau de Lille.">
@@ -25,11 +33,26 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
         accompagner dans toutes les dimensions de votre vie.
       </p>
     </div>
-    <ul class="domaines-grid">
-      {sorted.map((e: CollectionEntry<'expertises'>) => (
+
+    {droitPenal && (
+      <a href={`/expertises/${droitPenal.data.slug}`} class="expertise-card-principal">
+        <div>
+          <p class="eyebrow expertise-socle">Socle commun du cabinet</p>
+          <h3>{droitPenal.data.title}</h3>
+        </div>
+        <span class="expertise-principal-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 16 4 C 13.75 4 12.234375 4.886719 10.875 5.625 C 9.515625 6.363281 8.28125 7 6 7 L 5 7 L 5 8 C 5 15.71875 7.609375 20.742188 10.25 23.78125 C 12.890625 26.820313 15.625 27.9375 15.625 27.9375 L 16 28.0625 L 16.375 27.9375 C 16.375 27.9375 19.109375 26.84375 21.75 23.8125 C 24.390625 20.78125 27 15.746094 27 8 L 27 7 L 26 7 C 23.730469 7 22.484375 6.363281 21.125 5.625 C 19.765625 4.886719 18.25 4 16 4 Z M 16 6 C 17.75 6 18.753906 6.613281 20.15625 7.375 C 21.339844 8.019531 22.910156 8.636719 24.9375 8.84375 C 24.746094 15.609375 22.507813 19.910156 20.25 22.5 C 18.203125 24.847656 16.484375 25.628906 16 25.84375 C 15.511719 25.625 13.796875 24.824219 11.75 22.46875 C 9.492188 19.871094 7.253906 15.578125 7.0625 8.84375 C 9.097656 8.636719 10.660156 8.019531 11.84375 7.375 C 13.246094 6.613281 14.25 6 16 6 Z"/></svg>
+        </span>
+      </a>
+    )}
+
+    <p class="expertise-complementaires-label">Domaines complémentaires</p>
+    <ul class="expertise-grid">
+      {complementaires.map((e: CollectionEntry<'expertises'>) => (
         <li>
-          <a href={`/expertises/${e.data.slug}`} class="domaine-card">
+          <a href={`/expertises/${e.data.slug}`} class="expertise-card">
             <h3>{e.data.title}</h3>
+            <span class="expertise-card-icon" aria-hidden="true" set:html={domainIcons[e.data.slug] ?? ''} />
           </a>
         </li>
       ))}
@@ -125,7 +148,7 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
 
     <div class="honoraires-cta">
       <p>Une question sur nos honoraires ou votre éligibilité à l'aide juridictionnelle ?</p>
-      <a href="/contact" class="honoraires-btn">Prendre rendez-vous</a>
+      <a href="/rdv" class="honoraires-btn">Prendre rendez-vous</a>
     </div>
   </section>
 
@@ -154,10 +177,70 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     z-index: 0;
   }
 
-  /* ── Grille domaines ── */
-  .domaines-grid {
+  /* ── Carte principale Droit Pénal ── */
+  .expertise-card-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.75rem 2rem;
+    background: var(--vert);
+    border-radius: 1rem;
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .expertise-card-principal:hover { background: #3a4a3e; opacity: 1; }
+  .expertise-card-principal h3 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #F4F5F2;
+    margin: 0;
+  }
+  .eyebrow {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    max-width: none;
+  }
+  .expertise-socle { color: rgba(244,245,242,0.65) !important; margin-bottom: 0.3rem !important; }
+
+  .expertise-principal-icon {
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    width: 72px;
+    height: 72px;
+    color: rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+    transition: color 0.25s, transform 0.25s;
+  }
+  .expertise-principal-icon svg { width: 100%; height: 100%; }
+  .expertise-card-principal:hover .expertise-principal-icon {
+    color: rgba(255, 255, 255, 0.26);
+    transform: scale(1.08) rotate(-4deg);
+  }
+
+  .expertise-complementaires-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gris);
+    font-weight: 600;
+    margin-bottom: 0.75rem !important;
+    margin-top: 1.75rem !important;
+    max-width: none;
+  }
+
+  /* ── Grille domaines complémentaires ── */
+  .expertise-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 0.75rem;
     background: none;
     border: none;
@@ -165,57 +248,71 @@ const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.da
     margin-top: 0 !important;
     flex-direction: unset !important;
   }
+  .expertise-grid > li             { grid-column: span 2; }
+  .expertise-grid > li:nth-child(4) { grid-column: span 3; }
+  .expertise-grid > li:nth-child(5) { grid-column: span 3; }
 
-  .domaine-card {
+  .expertise-card {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 1.6rem 1.25rem;
-    background: #dde8de;
-    border: 1.5px solid #b8cebb;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.75rem 1.5rem;
+    background: rgba(74, 93, 78, 0.08);
+    border: 1px solid rgba(74, 93, 78, 0.14);
     text-decoration: none;
-    color: var(--texte);
-    transition: background 0.22s, border-color 0.22s, transform 0.22s, box-shadow 0.22s;
+    transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
     border-radius: 1rem;
+    color: var(--texte);
     height: 100%;
-    box-shadow: 0 2px 8px rgba(74, 93, 78, 0.1);
-    animation: bubbleIn 0.5s ease both;
+    position: relative;
+    overflow: hidden;
   }
-  .domaine-card:hover {
-    background: #ccdace;
-    border-color: #9ab89e;
+  .expertise-card:hover {
+    background: rgba(74, 93, 78, 0.14);
+    border-color: rgba(74, 93, 78, 0.25);
     color: var(--texte);
     opacity: 1;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(74, 93, 78, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74, 93, 78, 0.15);
+  }
+  .expertise-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--texte);
+    font-weight: 700;
+    margin: 0;
   }
 
-  .domaines-grid > li:nth-child(1) .domaine-card { animation-delay: 0.04s; }
-  .domaines-grid > li:nth-child(2) .domaine-card { animation-delay: 0.09s; }
-  .domaines-grid > li:nth-child(3) .domaine-card { animation-delay: 0.14s; }
-  .domaines-grid > li:nth-child(4) .domaine-card { animation-delay: 0.19s; }
-  .domaines-grid > li:nth-child(5) .domaine-card { animation-delay: 0.24s; }
-  .domaines-grid > li:nth-child(6) .domaine-card { animation-delay: 0.29s; }
+  .expertise-card-icon {
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+    width: 68px;
+    height: 68px;
+    color: var(--vert);
+    opacity: 0.13;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .expertise-card-icon svg { width: 100%; height: 100%; }
+  .expertise-card:hover .expertise-card-icon {
+    opacity: 0.22;
+    transform: scale(1.08) rotate(-4deg);
+  }
 
   @keyframes bubbleIn {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .domaine-card h3 {
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--texte);
-    margin: 0;
+  @media (max-width: 900px) {
+    .expertise-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .expertise-grid > li,
+    .expertise-grid > li:nth-child(4),
+    .expertise-grid > li:nth-child(5) { grid-column: span 1 !important; }
   }
-
-  @media (max-width: 640px) {
-    .domaines-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  }
-  @media (max-width: 380px) {
-    .domaines-grid { grid-template-columns: 1fr !important; }
+  @media (max-width: 600px) {
+    .expertise-grid { grid-template-columns: 1fr !important; }
   }
 
   /* ── Section honoraires ── */
