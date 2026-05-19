@@ -3,110 +3,219 @@ import Base from '../../layouts/Base.astro';
 ---
 
 <Base title="Mon dossier" description="Suivi confidentiel de votre dossier — Custos Avocats.">
+<section class="dossier-page" aria-label="Suivi de dossier">
 
-  <section class="dossier-page" aria-label="Suivi de dossier">
-
-    <!-- En-tête -->
-    <div class="dossier-header">
-      <img src="/plant-cascade.png"  alt="" aria-hidden="true" class="plant-deco plant-right" />
-      <img src="/plant-laurel.png"   alt="" aria-hidden="true" class="plant-deco plant-left" />
-      <div class="header-content">
-        <p class="header-eyebrow">Espace confidentiel</p>
-        <div class="dossier-meta">
-          <span class="dossier-ref" id="dossier-ref">—</span>
-          <span class="dossier-badge" id="dossier-proc-label">Procédure pénale</span>
-        </div>
-        <p class="dossier-cabinet">Cabinet Custos Avocats — Barreau de Lille</p>
+  <!-- ══ EN-TÊTE ══ -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="header-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <line x1="24" y1="6" x2="24" y2="42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M12 12l-5 10c0 3.3 2.7 6 5 6s5-2.7 5-6l-5-10z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M36 12l-5 10c0 3.3 2.7 6 5 6s5-2.7 5-6l-5-10z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 42h32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M8 12h32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="page-title" id="page-title">SUIVI DU DOSSIER PÉNAL</h1>
+        <p class="page-subtitle">Suivez l'avancement de votre dossier comme un colis</p>
       </div>
     </div>
-
-    <!-- Onglets -->
-    <div class="proc-select-wrap">
-      <p class="proc-select-label">Type de procédure</p>
-      <div class="proc-tabs" role="tablist" id="proc-tabs">
-        <button role="tab" aria-selected="true"  data-proc="penal"    class="proc-tab active">Pénal général</button>
-        <button role="tab" aria-selected="false" data-proc="mineurs"  class="proc-tab">Droit des mineurs</button>
-        <button role="tab" aria-selected="false" data-proc="famille"  class="proc-tab">Droit de la famille</button>
-        <button role="tab" aria-selected="false" data-proc="affaires" class="proc-tab">Pénal des affaires</button>
-        <button role="tab" aria-selected="false" data-proc="corporel" class="proc-tab">Dommages corporels</button>
-        <button role="tab" aria-selected="false" data-proc="etranger" class="proc-tab">Droit des étrangers</button>
+    <div class="page-header-right">
+      <div class="header-dossier">
+        <p class="header-dossier-num" id="header-dossier-num">—</p>
+        <p class="header-dossier-date" id="header-dossier-date">
+          <svg viewBox="0 0 16 16" fill="none" width="13" height="13"><rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M5 1v4M11 1v4M2 7h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Ouvert le 03 mars 2025
+        </p>
+      </div>
+      <div class="header-statut">
+        <p class="statut-label">STATUT ACTUEL</p>
+        <p class="statut-value" id="statut-value">
+          <span class="statut-dot"></span>
+          <span id="statut-text">—</span>
+        </p>
       </div>
     </div>
+  </div>
 
-    <!-- Frise style Chronopost -->
-    <div class="frise-card">
-      <div class="frise-scroll">
-        <div class="frise" id="frise" role="list"></div>
+  <!-- ══ ONGLETS ══ -->
+  <div class="proc-select-wrap">
+    <p class="proc-select-label">Type de procédure</p>
+    <div class="proc-tabs" role="tablist" id="proc-tabs">
+      <button role="tab" aria-selected="true"  data-proc="penal"    class="proc-tab active">Pénal général</button>
+      <button role="tab" aria-selected="false" data-proc="mineurs"  class="proc-tab">Droit des mineurs</button>
+      <button role="tab" aria-selected="false" data-proc="famille"  class="proc-tab">Droit de la famille</button>
+      <button role="tab" aria-selected="false" data-proc="affaires" class="proc-tab">Pénal des affaires</button>
+      <button role="tab" aria-selected="false" data-proc="corporel" class="proc-tab">Dommages corporels</button>
+      <button role="tab" aria-selected="false" data-proc="etranger" class="proc-tab">Droit des étrangers</button>
+    </div>
+  </div>
+
+  <!-- ══ FRISE ══ -->
+  <div class="frise-card">
+    <div class="frise-scroll">
+      <div class="frise-wrapper" id="frise-wrapper">
+        <!-- Injecté par JS -->
       </div>
     </div>
+  </div>
 
-    <!-- Tableau Chronopost -->
-    <div class="chrono-wrap">
-      <table class="chrono-table" id="chrono-table">
-        <thead>
-          <tr>
-            <th class="col-date">Date et heure</th>
-            <th class="col-event">Événement</th>
-            <th class="col-comp">Complément</th>
-          </tr>
-        </thead>
-        <tbody id="chrono-tbody"></tbody>
-      </table>
+  <!-- ══ CARTES INFO ══ -->
+  <div class="info-bar" id="info-bar">
+    <div class="info-card">
+      <div class="info-card-icon info-icon--info">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><line x1="12" y1="11" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="8" r="0.8" fill="currentColor"/></svg>
+      </div>
+      <div>
+        <p class="info-card-titre">INFORMATION</p>
+        <p class="info-card-texte">Les délais varient selon la complexité de l'affaire et la charge des juridictions. Votre avocat reste disponible pour toute question.</p>
+      </div>
     </div>
-
-    <!-- Contact -->
-    <div class="dossier-contact">
-      <img src="/plant-eucalyptus.png" alt="" aria-hidden="true" class="plant-contact" />
-      <p>Une question sur votre dossier ?</p>
-      <a href="/contact" class="contact-btn">Contacter le cabinet</a>
+    <div class="info-card">
+      <div class="info-card-icon info-icon--action">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <p class="info-card-titre">DERNIÈRE ACTION</p>
+        <p class="info-card-texte" id="info-derniere-action">—</p>
+      </div>
     </div>
+    <div class="info-card">
+      <div class="info-card-icon info-icon--next">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <p class="info-card-titre">PROCHAINE ÉTAPE</p>
+        <p class="info-card-texte" id="info-prochaine-etape">—</p>
+      </div>
+    </div>
+  </div>
 
-  </section>
+  <!-- ══ TABLEAU ══ -->
+  <div class="chrono-wrap">
+    <table class="chrono-table">
+      <thead>
+        <tr>
+          <th class="col-date">Date et heure</th>
+          <th class="col-event">Événement</th>
+          <th class="col-comp">Complément</th>
+        </tr>
+      </thead>
+      <tbody id="chrono-tbody"></tbody>
+    </table>
+  </div>
 
+  <!-- Contact -->
+  <div class="dossier-contact">
+    <img src="/plant-eucalyptus.png" alt="" aria-hidden="true" class="plant-contact" />
+    <p>Une question sur votre dossier ?</p>
+    <a href="/contact" class="contact-btn">Contacter le cabinet</a>
+  </div>
+
+</section>
 </Base>
 
 <style>
+  :root {
+    --col-done:   #4A5D4E;
+    --col-active: #5a8a5c;
+    --col-todo:   #b8b8b8;
+    --col-done-bg: #edf2ee;
+    --col-active-bg: #e8f2e8;
+  }
+
   .dossier-page {
-    max-width: 940px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding-top: 2.5rem;
-    padding-bottom: 4rem;
+    padding: 2rem 1rem 4rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.75rem;
   }
 
   /* ── En-tête ── */
-  .dossier-header {
-    position: relative;
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
     background: var(--blanc);
     border: 1px solid var(--gris-clair);
     border-radius: var(--radius);
-    padding: 2rem 2.5rem;
-    overflow: hidden;
+    padding: 1.75rem 2rem;
+    flex-wrap: wrap;
   }
 
-  .plant-deco { position: absolute; pointer-events: none; user-select: none; opacity: 0.17; }
-  .plant-right { top: -10px; right: -15px; width: 175px; }
-  .plant-left  { bottom: -10px; left: -10px; width: 120px; transform: scaleX(-1); }
-  .header-content { position: relative; z-index: 1; }
+  .page-header-left { display: flex; align-items: center; gap: 1.25rem; }
 
-  .header-eyebrow {
-    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.16em; color: var(--vert); margin: 0 0 0.6rem; max-width: none;
+  .header-icon {
+    width: 56px; height: 56px;
+    background: var(--col-done-bg);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--col-done);
+    flex-shrink: 0;
+  }
+  .header-icon svg { width: 28px; height: 28px; }
+
+  .page-title {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: var(--texte);
+    margin: 0 0 0.2rem;
   }
 
-  .dossier-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+  .page-subtitle { font-size: 0.85rem; color: var(--gris); margin: 0; max-width: none; }
 
-  .dossier-ref { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--texte); }
+  .page-header-right { display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap; }
 
-  .dossier-badge {
-    background: #dde8de; color: var(--vert); font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase; padding: 0.3rem 0.85rem;
-    border-radius: 999px; border: 1px solid #b8cebb;
+  .header-dossier-num {
+    font-size: 1rem; font-weight: 800; color: var(--texte);
+    margin: 0 0 0.3rem; max-width: none;
   }
 
-  .dossier-cabinet { font-size: 0.82rem; color: var(--gris); margin: 0; max-width: none; }
+  .header-dossier-date {
+    display: flex; align-items: center; gap: 0.35rem;
+    font-size: 0.82rem; color: var(--gris);
+    margin: 0; max-width: none;
+  }
+
+  .header-statut {
+    border-left: 1px solid var(--gris-clair);
+    padding-left: 2rem;
+  }
+
+  .statut-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gris);
+    margin: 0 0 0.5rem; max-width: none;
+  }
+
+  .statut-value {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.88rem; font-weight: 800; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--col-active);
+    background: var(--col-active-bg);
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius);
+    margin: 0; max-width: none;
+  }
+
+  .statut-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--col-active);
+    animation: dotPulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes dotPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
 
   /* ── Onglets ── */
   .proc-select-wrap {
@@ -129,14 +238,14 @@ import Base from '../../layouts/Base.astro';
   .proc-tab:hover  { border-color: var(--vert); color: var(--vert); }
   .proc-tab.active { background: var(--vert); border-color: var(--vert); color: #F4F5F2; }
 
-  /* ════════════════════════════════════
-     FRISE CHRONOPOST
-  ════════════════════════════════════ */
+  /* ══════════════════════════════════════════
+     FRISE
+  ══════════════════════════════════════════ */
   .frise-card {
     background: var(--blanc);
     border: 1px solid var(--gris-clair);
     border-radius: var(--radius);
-    padding: 2.5rem 2rem 2rem;
+    padding: 2rem 1.5rem;
   }
 
   .frise-scroll {
@@ -144,175 +253,258 @@ import Base from '../../layouts/Base.astro';
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--gris-clair) transparent;
-    padding-bottom: 0.5rem;
   }
 
-  /* Grille d'étapes */
-  .frise {
-    display: grid;
+  .frise-wrapper {
     position: relative;
+    display: grid;
     min-width: max-content;
     width: 100%;
     /* grid-template-columns set by JS */
+    padding-bottom: 0.5rem;
   }
 
-  /* ── Ligne continue (fine, traverse les bulles) ── */
-  /* top = moitié des cercles = 18px (36px / 2) */
+  /* Ligne continue (derrière tout) */
   .frise-line-bg,
   .frise-line-done,
-  .frise-line-active {
+  .frise-line-active,
+  .frise-line-dashed {
     position: absolute;
-    top: 18px;
     height: 2px;
-    border-radius: 1px;
-    z-index: 0;
+    z-index: 1;
+    /* top set by JS based on bubble height */
   }
 
-  .frise-line-bg     { background: #d8d8d8; }
-  .frise-line-done   { background: #a8b8ab; transition: width 0.9s cubic-bezier(.4,0,.2,1); }
-  .frise-line-active { background: var(--vert); transition: width 0.9s cubic-bezier(.4,0,.2,1) 0.15s; }
+  .frise-line-bg     { background: #e0e0e0; }
+  .frise-line-done   { background: var(--col-done); }
+  .frise-line-active { background: var(--col-active); }
+  .frise-line-dashed {
+    background: repeating-linear-gradient(
+      to right, var(--col-todo) 0, var(--col-todo) 6px, transparent 6px, transparent 12px
+    );
+  }
 
   /* Étape */
-  .frise-etape {
+  .frise-step {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.7rem;
+    min-width: 120px;
     position: relative;
-    z-index: 2;
-    min-width: 100px;
+    z-index: 3;
     animation: fadeUp 0.4s ease both;
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(5px); }
+    from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── Cercle : même taille pour tous, ligne passe dedans ── */
-  .frise-cercle {
-    width: 36px;
-    height: 36px;
+  /* Grande bulle avec icône */
+  .step-bubble {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    background: #fff;
+    position: relative;
+    z-index: 4;
+  }
+
+  .step-bubble svg { width: 32px; height: 32px; display: block; }
+
+  .frise-step--done   .step-bubble { color: var(--col-done);   border-color: var(--col-done); }
+  .frise-step--active .step-bubble { color: var(--col-active); border-color: var(--col-active); border-width: 2.5px; }
+  .frise-step--todo   .step-bubble { color: var(--col-todo);   border-color: var(--col-todo); }
+
+  /* Petit cercle numéroté sur la ligne */
+  .step-num-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fff;
     flex-shrink: 0;
-    position: relative;
-    z-index: 3; /* au-dessus de la ligne */
   }
 
-  /* Icônes très petites */
-  .frise-cercle svg { width: 14px; height: 14px; display: block; }
+  .frise-step--done   .step-num { background: var(--col-done); }
+  .frise-step--active .step-num {
+    background: var(--col-active);
+    box-shadow: 0 0 0 4px rgba(90,138,92,0.22);
+    animation: numPulse 2.2s ease-in-out infinite;
+  }
+  .frise-step--todo   .step-num { background: var(--col-todo); }
 
-  /* ── Fait : gris-vert rempli ── */
-  .frise-etape--done .frise-cercle {
-    background: #a8b8ab;
-    border: 2.5px solid #a8b8ab;
+  @keyframes numPulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(90,138,92,0.22); }
+    50%       { box-shadow: 0 0 0 8px rgba(90,138,92,0.08); }
+  }
+
+  /* Connecteur (petit cercle coche entre étapes faites) */
+  .frise-connector {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--col-done);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #fff;
+    z-index: 4;
   }
 
-  /* ── En cours : vert vif, légèrement plus grand, mis en avant ── */
-  .frise-etape--active .frise-cercle {
-    width: 44px;
-    height: 44px;
-    margin-top: -4px; /* reste centré sur la ligne */
-    background: var(--vert);
-    border: 3px solid var(--vert);
-    color: #fff;
-    box-shadow: 0 0 0 5px rgba(74,93,78,0.2);
-    animation: ringPulse 2.4s ease-in-out infinite;
+  .frise-connector svg { width: 8px; height: 8px; }
+
+  .frise-connector--active { background: var(--col-active); }
+  .frise-connector--todo   { background: #fff; border: 2px solid var(--col-todo); }
+
+  /* Corps de l'étape */
+  .step-body {
+    text-align: center;
+    padding: 0.75rem 0.4rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
   }
 
-  .frise-etape--active .frise-cercle svg { width: 16px; height: 16px; }
-
-  @keyframes ringPulse {
-    0%, 100% { box-shadow: 0 0 0 5px rgba(74,93,78,0.20); }
-    50%       { box-shadow: 0 0 0 9px rgba(74,93,78,0.08); }
+  .step-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    margin: 0;
   }
 
-  /* ── À faire : blanc, bordure gris clair ── */
-  .frise-etape--todo .frise-cercle {
-    background: #fff;
-    border: 2px solid #d0d0d0;
-    color: #d0d0d0;
-  }
+  .frise-step--done   .step-label { color: var(--col-done); }
+  .frise-step--active .step-label { color: var(--col-active); }
+  .frise-step--todo   .step-label { color: #aaa; }
 
-  /* Labels */
-  .frise-label { text-align: center; padding: 0 0.2rem; }
-
-  .frise-titre { font-size: 0.74rem; font-weight: 700; line-height: 1.3; margin: 0; }
-
-  .frise-etape--done   .frise-titre { color: #aaa; }
-  .frise-etape--todo   .frise-titre { color: #ccc; }
-  .frise-etape--active .frise-titre { color: var(--vert); font-size: 0.78rem; font-weight: 800; }
-
-  .frise-date { display: block; font-size: 0.66rem; margin-top: 0.2rem; }
-  .frise-etape--done   .frise-date { color: #bbb; }
-  .frise-etape--todo   .frise-date { color: #ccc; font-weight: 600; }
-  .frise-etape--active .frise-date { color: var(--vert); font-weight: 700; }
-
-  .frise-encours {
-    display: block;
+  /* Badge de statut */
+  .step-badge {
+    display: inline-block;
     font-size: 0.62rem;
     font-weight: 800;
-    color: var(--vert);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 0.15rem;
-    animation: blink 1.9s ease-in-out infinite;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
   }
 
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
+  .step-badge--done   { background: var(--col-done-bg); color: var(--col-done); }
+  .step-badge--active { background: var(--col-active-bg); color: var(--col-active); }
+  .step-badge--todo   { background: #f0f0f0; color: #aaa; }
+
+  /* Description + date */
+  .step-desc {
+    font-size: 0.72rem;
+    color: #888;
+    line-height: 1.4;
+    margin: 0;
+    max-width: 110px;
   }
 
-  /* ════════════════════════════════════
-     TABLEAU CHRONOPOST
-  ════════════════════════════════════ */
-  .chrono-wrap {
-    border: 1px solid #ddd;
+  .frise-step--active .step-desc { color: #666; }
+  .frise-step--todo   .step-desc { color: #ccc; }
+
+  .step-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    color: #aaa;
+    margin: 0;
+    max-width: none;
+  }
+
+  .step-meta svg { flex-shrink: 0; }
+  .frise-step--todo .step-meta { color: #ccc; }
+
+  /* ══ Cartes info ══ */
+  .info-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
     border-radius: var(--radius);
-    overflow: hidden;
+    padding: 1.25rem;
   }
+
+  .info-card-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .info-card-icon svg { width: 18px; height: 18px; }
+
+  .info-icon--info   { background: #e8f0ff; color: #4a6fa5; }
+  .info-icon--action { background: #fff8e6; color: #b57a00; }
+  .info-icon--next   { background: var(--col-done-bg); color: var(--col-done); }
+
+  .info-card-titre {
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--texte);
+    margin: 0 0 0.35rem; max-width: none;
+  }
+
+  .info-card-texte {
+    font-size: 0.82rem; color: var(--anthracite);
+    line-height: 1.55; margin: 0; max-width: none;
+  }
+
+  /* ══ Tableau ══ */
+  .chrono-wrap { border: 1px solid #ddd; border-radius: var(--radius); overflow: hidden; }
 
   .chrono-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
 
   .chrono-table thead tr { background: #3a4a3e; color: #F4F5F2; }
 
   .chrono-table th {
-    padding: 0.95rem 1.4rem;
-    text-align: left;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
+    padding: 0.95rem 1.4rem; text-align: left;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
   }
 
-  .col-date  { width: 170px; }
+  .col-date { width: 170px; }
   .col-event { width: 44%; }
 
-  .chrono-table tbody tr {
-    border-bottom: 1px solid #e8e8e8;
-    transition: background 0.15s;
-  }
+  .chrono-table tbody tr { border-bottom: 1px solid #e8e8e8; transition: background 0.15s; }
   .chrono-table tbody tr:last-child { border-bottom: none; }
   .chrono-table tbody tr:nth-child(odd)  { background: #fff; }
   .chrono-table tbody tr:nth-child(even) { background: #f6f7f5; }
   .chrono-table tbody tr:hover { background: #edf2ee; }
-
   .chrono-table td { padding: 1.1rem 1.4rem; vertical-align: top; line-height: 1.5; }
 
   .td-jour  { display: block; font-weight: 700; font-size: 0.85rem; color: #222; margin-bottom: 0.15rem; }
   .td-heure { font-size: 0.8rem; color: #888; }
-
-  .td-lieu {
-    display: block; font-size: 0.72rem; font-weight: 800;
-    color: var(--vert); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.25rem;
-  }
-  .td-titre  { display: block; font-size: 0.875rem; color: #222; line-height: 1.4; }
+  .td-lieu  { display: block; font-size: 0.72rem; font-weight: 800; color: var(--vert); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.25rem; }
+  .td-titre { display: block; font-size: 0.875rem; color: #222; line-height: 1.4; }
 
   .td-badge-encours {
     display: inline-block; margin-top: 0.35rem;
@@ -332,7 +524,7 @@ import Base from '../../layouts/Base.astro';
 
   .plant-contact {
     position: absolute; right: -20px; bottom: -10px; width: 130px;
-    opacity: 0.13; pointer-events: none; user-select: none; transform: scaleX(-1);
+    opacity: 0.12; pointer-events: none; user-select: none; transform: scaleX(-1);
   }
 
   .dossier-contact p { font-size: 0.9rem; color: var(--gris); margin-bottom: 1rem; max-width: none; position: relative; z-index: 1; }
@@ -345,126 +537,163 @@ import Base from '../../layouts/Base.astro';
   }
   .contact-btn:hover { background: var(--vert); color: #F4F5F2; }
 
+  @media (max-width: 900px) {
+    .info-bar { grid-template-columns: 1fr; }
+    .page-header { flex-direction: column; }
+    .header-statut { border-left: none; padding-left: 0; border-top: 1px solid var(--gris-clair); padding-top: 1rem; }
+  }
+
   @media (max-width: 640px) {
-    .plant-right, .plant-left { display: none; }
     .chrono-table th:last-child, .chrono-table td:last-child { display: none; }
-    .frise-etape { min-width: 90px; }
-    .dossier-header { padding: 1.5rem 1.25rem; }
   }
 </style>
 
 <script>
-  /* ── Icônes par état ── */
-  const ICON_DONE = `<svg viewBox="0 0 24 24" fill="none"><polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  const ICON_CLOCK = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><polyline points="12,7 12,12 15,15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
-  const ICON_TODO  = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/></svg>`;
+  /* ── Icônes SVG (48×48 viewBox, style trait fin) ── */
+  const ICONS: Record<string, string> = {
+    rdv: `<svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="18" r="7" stroke="currentColor" stroke-width="2.5"/><path d="M10 42c0-7.7 6.3-14 14-14s14 6.3 14 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    conclusions: `<svg viewBox="0 0 48 48" fill="none"><path d="M14 8h14l8 8v26H14V8z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M28 8v8h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 24l8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M18 30l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    conclFin: `<svg viewBox="0 0 48 48" fill="none"><path d="M14 8h14l8 8v26H14V8z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M28 8v8h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 30l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 22h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    scales: `<svg viewBox="0 0 48 48" fill="none"><line x1="24" y1="8" x2="24" y2="40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M14 16l-5 9c0 2.8 2.2 5 5 5s5-2.2 5-5l-5-9z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 16l-5 9c0 2.8 2.2 5 5 5s5-2.2 5-5l-5-9z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 40h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M10 16h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    send: `<svg viewBox="0 0 48 48" fill="none"><path d="M6 24h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M26 14l12 10-12 10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="6" y="10" width="10" height="28" rx="2" stroke="currentColor" stroke-width="2.5"/></svg>`,
+    clock: `<svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="2.5"/><path d="M24 16v8l7 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    calendar: `<svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="28" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M8 20h32M16 8v8M32 8v8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="18" cy="30" r="2" fill="currentColor"/><circle cx="24" cy="30" r="2" fill="currentColor"/><circle cx="30" cy="30" r="2" fill="currentColor"/></svg>`,
+    gavel: `<svg viewBox="0 0 48 48" fill="none"><rect x="12" y="8" width="16" height="8" rx="2" transform="rotate(45 12 8)" stroke="currentColor" stroke-width="2.5"/><path d="M22 22l-12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M12 38h24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="12" y="34" width="24" height="8" rx="2" stroke="currentColor" stroke-width="2.5"/></svg>`,
+    lock: `<svg viewBox="0 0 48 48" fill="none"><rect x="10" y="22" width="28" height="20" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M16 22v-6a8 8 0 0 1 16 0v6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="33" r="3" fill="currentColor" opacity="0.5"/><path d="M24 36v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    check: `<svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="2.5"/><path d="M16 24l6 6 10-10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    search: `<svg viewBox="0 0 48 48" fill="none"><circle cx="22" cy="22" r="12" stroke="currentColor" stroke-width="2.5"/><path d="M32 32l8 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    building: `<svg viewBox="0 0 48 48" fill="none"><path d="M8 40V16l16-8 16 8v24H8z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M18 40V28h12v12" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 20h32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  };
 
-  type Etape = { titre: string; done?: boolean; active?: boolean; date?: string };
+  type Etape = {
+    titre: string; icon: string;
+    done?: boolean; active?: boolean;
+    badge: string; desc: string;
+    location?: string; date?: string;
+  };
   type Evenement = {
     date: string; heure: string; lieu: string; titre: string;
     encours?: boolean;
     complement?: { cle: string; valeur: string }[];
   };
-  type Procedure = { label: string; etapes: Etape[]; evenements: Evenement[] };
+  type Procedure = {
+    label: string; statut: string;
+    derniereAction: string; prochaineEtape: string;
+    etapes: Etape[];
+    evenements: Evenement[];
+  };
 
   const procedures: Record<string, Procedure> = {
     penal: {
       label: 'Procédure pénale',
+      statut: 'EN ATTENTE D\'AUDIENCE',
+      derniereAction: 'Transmission des pièces au greffe le 19 mai 2025.',
+      prochaineEtape: 'Audience fixée au 18 août 2026 au tribunal correctionnel de Lille.',
       etapes: [
-        { titre: '1er rendez-vous',             done: true,  date: '03 mars 2025' },
-        { titre: 'Jet de conclusions',           done: true,  date: '28 mars 2025' },
-        { titre: 'Conclusions finalisées',       done: true,  date: '15 avr. 2025' },
-        { titre: 'Mise en état',                 done: true,  date: '02 mai 2025' },
-        { titre: 'Transmission des pièces',      done: true,  date: '19 mai 2025' },
-        { titre: 'En attente d\'audience',        done: false, active: true },
-        { titre: 'Audience',                     done: false, date: '18 août 2026' },
-        { titre: 'Décision',                     done: false },
+        { titre: '1ER\nRENDEZ-VOUS',           icon: 'rdv',       done: true,  badge: 'TERMINÉ',    desc: 'Analyse de la situation, ouverture du dossier.', location: 'Cabinet Custos Avocats', date: '03 mars 2025' },
+        { titre: 'PREMIER JET DE\nCONCLUSIONS', icon: 'conclusions', done: true, badge: 'TERMINÉ',  desc: 'Rédaction des premières conclusions de défense.', location: 'Cabinet Custos Avocats', date: '28 mars 2025' },
+        { titre: 'CONCLUSIONS\nFINALISÉES',     icon: 'conclFin',  done: true,  badge: 'TERMINÉ',   desc: 'Version définitive signée et enregistrée.', location: 'Cabinet Custos Avocats', date: '15 avr. 2025' },
+        { titre: 'MISE\nEN ÉTAT',               icon: 'scales',    done: true,  badge: 'TERMINÉ',   desc: 'Vérification de la complétude du dossier.', location: 'Cabinet Custos Avocats', date: '02 mai 2025' },
+        { titre: 'TRANSMISSION\nDES PIÈCES',    icon: 'send',      done: true,  badge: 'TERMINÉ',   desc: 'Dossier complet transmis à la juridiction.', location: 'Greffe du tribunal', date: '19 mai 2025' },
+        { titre: 'EN ATTENTE\nD\'AUDIENCE',      icon: 'clock',     active: true, badge: 'EN COURS', desc: 'Attente de l\'audience fixée au 18 août 2026.', date: 'En cours' },
+        { titre: 'AUDIENCE',                    icon: 'gavel',     badge: 'À VENIR',     desc: 'Plaidoirie devant le tribunal correctionnel.', location: 'Tribunal de Lille', date: '18 août 2026' },
+        { titre: 'DÉCISION',                    icon: 'lock',      badge: 'À VENIR',     desc: 'Rendu du jugement par le tribunal.', date: 'Date à venir' },
       ],
       evenements: [
-        { date: 'Mardi 19 mai 2025',    heure: '11h00', lieu: 'Cabinet Custos Avocats', titre: 'En attente de l\'audience fixée au 18 août 2026', encours: true, complement: [{ cle: 'Statut :', valeur: 'Dossier complet — audience fixée au 18 août 2026' }] },
-        { date: 'Lundi 19 mai 2025',    heure: '09h30', lieu: 'Greffe du tribunal', titre: 'Transmission des pièces au greffe', complement: [{ cle: 'Commentaire :', valeur: 'Dossier complet transmis à la juridiction' }] },
-        { date: 'Jeudi 02 mai 2025',    heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Mise en état du dossier', complement: [{ cle: 'Commentaire :', valeur: 'Vérification de la complétude des pièces' }] },
-        { date: 'Mardi 15 avril 2025',  heure: '14h30', lieu: 'Cabinet Custos Avocats', titre: 'Conclusions finalisées et signées', complement: [{ cle: 'Commentaire :', valeur: 'Version définitive des conclusions de défense' }] },
+        { date: 'Lundi 19 mai 2025', heure: '11h00', lieu: 'Greffe du tribunal', titre: 'En attente de l\'audience', encours: true, complement: [{ cle: 'Statut :', valeur: 'Dossier complet — audience fixée au 18 août 2026' }] },
+        { date: 'Lundi 19 mai 2025', heure: '09h30', lieu: 'Greffe du tribunal', titre: 'Transmission des pièces', complement: [{ cle: 'Commentaire :', valeur: 'Dossier complet transmis à la juridiction' }] },
+        { date: 'Jeudi 02 mai 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Mise en état du dossier', complement: [{ cle: 'Commentaire :', valeur: 'Vérification de la complétude des pièces' }] },
+        { date: 'Mardi 15 avril 2025', heure: '14h30', lieu: 'Cabinet Custos Avocats', titre: 'Conclusions finalisées et signées', complement: [{ cle: 'Commentaire :', valeur: 'Version définitive des conclusions de défense' }] },
         { date: 'Vendredi 28 mars 2025', heure: '16h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier jet de conclusions', complement: [{ cle: 'Commentaire :', valeur: 'Rédaction des premières conclusions de défense' }] },
-        { date: 'Lundi 03 mars 2025',   heure: '14h30', lieu: 'Cabinet Custos Avocats', titre: 'Premier rendez-vous', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }, { cle: 'Commentaire :', valeur: 'Analyse de la situation, remise des identifiants de suivi' }] },
+        { date: 'Lundi 03 mars 2025', heure: '14h30', lieu: 'Cabinet Custos Avocats', titre: 'Premier rendez-vous', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }, { cle: 'Commentaire :', valeur: 'Analyse de la situation, remise des identifiants' }] },
       ],
     },
     mineurs: {
-      label: 'Droit des mineurs',
+      label: 'Droit des mineurs', statut: 'SAISINE EN COURS',
+      derniereAction: 'Analyse du dossier éducatif et pénal le 18 avril 2025.',
+      prochaineEtape: 'Dépôt de la requête devant le juge des enfants.',
       etapes: [
-        { titre: '1er rendez-vous',   done: true,  date: '10 avr. 2025' },
-        { titre: 'Analyse dossier',   done: true,  date: '18 avr. 2025' },
-        { titre: 'Saisine du juge',   done: false, active: true },
-        { titre: 'Audience',          done: false },
-        { titre: 'Mesure / Décision', done: false },
+        { titre: '1ER\nENTRETIEN',     icon: 'rdv',      done: true,   badge: 'TERMINÉ',   desc: 'Analyse de la situation du mineur.', location: 'Cabinet Custos Avocats', date: '10 avr. 2025' },
+        { titre: 'ANALYSE\nDOSSIER',   icon: 'search',   done: true,   badge: 'TERMINÉ',   desc: 'Rapports éducatifs et pièces de procédure.', location: 'Cabinet Custos Avocats', date: '18 avr. 2025' },
+        { titre: 'SAISINE\nDU JUGE',   icon: 'building', active: true, badge: 'EN COURS',  desc: 'Rédaction de la requête au juge des enfants.', date: 'En cours' },
+        { titre: 'AUDIENCE',           icon: 'gavel',    badge: 'À VENIR', desc: 'Audience devant le juge des enfants.', date: 'Date à venir' },
+        { titre: 'MESURE /\nDÉCISION', icon: 'lock',     badge: 'À VENIR', desc: 'Prononcé de la mesure éducative.', date: 'Date à venir' },
       ],
       evenements: [
-        { date: 'Lundi 22 avril 2025',  heure: '09h00', lieu: 'Cabinet Custos Avocats', titre: 'Préparation de la requête au juge des enfants', encours: true, complement: [{ cle: 'Statut :', valeur: 'Rédaction en cours' }] },
-        { date: 'Vendredi 18 avril 2025', heure: '14h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse du dossier éducatif et pénal', complement: [{ cle: 'Pièces :', valeur: 'Rapports éducatifs et actes de procédure' }] },
-        { date: 'Jeudi 10 avril 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien — mineur et représentants légaux', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }] },
+        { date: 'Lundi 22 avril 2025', heure: '09h00', lieu: 'Cabinet Custos Avocats', titre: 'Préparation de la requête', encours: true, complement: [{ cle: 'Statut :', valeur: 'Rédaction en cours' }] },
+        { date: 'Vendredi 18 avril 2025', heure: '14h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse du dossier', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }] },
+        { date: 'Jeudi 10 avril 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }] },
       ],
     },
     famille: {
-      label: 'Droit de la famille',
+      label: 'Droit de la famille', statut: 'ÉCHANGE DE PIÈCES',
+      derniereAction: 'Assignation déposée au greffe le 05 mars 2025.',
+      prochaineEtape: 'Attente de communication des pièces adverses.',
       etapes: [
-        { titre: 'Consultation',       done: true,  date: '20 fév. 2025' },
-        { titre: 'Assignation',        done: true,  date: '05 mars 2025' },
-        { titre: 'Échange de pièces',  done: false, active: true },
-        { titre: 'Conciliation',       done: false },
-        { titre: 'Audience au fond',   done: false },
-        { titre: 'Jugement',           done: false },
+        { titre: 'CONSULTATION\nINITIALE',   icon: 'rdv',      done: true,   badge: 'TERMINÉ',  desc: 'Évaluation de la situation.', location: 'Cabinet Custos Avocats', date: '20 fév. 2025' },
+        { titre: 'ASSIGNATION',              icon: 'send',     done: true,   badge: 'TERMINÉ',  desc: 'Introduction de l\'instance devant le JAF.', location: 'Tribunal judiciaire', date: '05 mars 2025' },
+        { titre: 'ÉCHANGE\nDE PIÈCES',       icon: 'search',   active: true, badge: 'EN COURS', desc: 'Communication des pièces entre parties.', date: 'En cours' },
+        { titre: 'CONCILIATION',             icon: 'scales',   badge: 'À VENIR', desc: 'Tentative de règlement amiable.', date: 'Date à venir' },
+        { titre: 'AUDIENCE\nAU FOND',        icon: 'gavel',    badge: 'À VENIR', desc: 'Plaidoiries sur le fond.', date: 'Date à venir' },
+        { titre: 'JUGEMENT',                 icon: 'lock',     badge: 'À VENIR', desc: 'Rendu de la décision définitive.', date: 'Date à venir' },
       ],
       evenements: [
-        { date: 'Mardi 18 mars 2025', heure: '11h00', lieu: 'Cabinet Custos Avocats', titre: 'Échange de pièces en cours', encours: true, complement: [{ cle: 'Statut :', valeur: 'Attente de communication des pièces adverses' }] },
-        { date: 'Mercredi 05 mars 2025', heure: '10h30', lieu: 'Tribunal judiciaire de Lille', titre: 'Assignation déposée au greffe', complement: [{ cle: 'Commentaire :', valeur: 'Introduction de l\'instance devant le JAF' }] },
+        { date: 'Mardi 18 mars 2025', heure: '11h00', lieu: 'Cabinet Custos Avocats', titre: 'Échange de pièces en cours', encours: true, complement: [{ cle: 'Statut :', valeur: 'Attente des pièces adverses' }] },
+        { date: 'Mercredi 05 mars 2025', heure: '10h30', lieu: 'Tribunal judiciaire de Lille', titre: 'Assignation déposée', complement: [{ cle: 'Avocat :', valeur: 'Maître Lauriana DAVRILLON' }] },
         { date: 'Jeudi 20 février 2025', heure: '14h00', lieu: 'Cabinet Custos Avocats', titre: 'Consultation initiale', complement: [{ cle: 'Avocat :', valeur: 'Maître Lauriana DAVRILLON' }] },
       ],
     },
     affaires: {
-      label: 'Pénal des affaires',
+      label: 'Pénal des affaires', statut: 'ENQUÊTE EN COURS',
+      derniereAction: 'Analyse des actes d\'enquête le 12 avril 2025.',
+      prochaineEtape: 'Suivi de l\'enquête préliminaire et contact avec le parquet.',
       etapes: [
-        { titre: '1er entretien', done: true,  date: '01 avr. 2025' },
-        { titre: 'Analyse actes', done: true,  date: '12 avr. 2025' },
-        { titre: 'Enquête',       done: false, active: true },
-        { titre: 'Renvoi',        done: false },
-        { titre: 'Audience',      done: false },
-        { titre: 'Décision',      done: false },
+        { titre: '1ER\nENTRETIEN',     icon: 'rdv',      done: true,   badge: 'TERMINÉ',  desc: 'Analyse des risques pénaux.', location: 'Cabinet Custos Avocats', date: '01 avr. 2025' },
+        { titre: 'ANALYSE\nACTES',     icon: 'search',   done: true,   badge: 'TERMINÉ',  desc: 'Examen des actes d\'enquête.', location: 'Cabinet Custos Avocats', date: '12 avr. 2025' },
+        { titre: 'ENQUÊTE\nPRÉLIM.',   icon: 'building', active: true, badge: 'EN COURS', desc: 'Suivi de l\'enquête et contacts parquet.', date: 'En cours' },
+        { titre: 'RENVOI EN\nJUGEMENT', icon: 'send',   badge: 'À VENIR', desc: 'Renvoi devant la juridiction.', date: 'Date à venir' },
+        { titre: 'AUDIENCE',           icon: 'gavel',    badge: 'À VENIR', desc: 'Plaidoirie devant le tribunal.', date: 'Date à venir' },
+        { titre: 'DÉCISION',           icon: 'lock',     badge: 'À VENIR', desc: 'Rendu du jugement.', date: 'Date à venir' },
       ],
       evenements: [
-        { date: 'Lundi 14 avril 2025', heure: '09h00', lieu: 'Cabinet Custos Avocats', titre: 'Suivi de l\'enquête préliminaire', encours: true, complement: [{ cle: 'Statut :', valeur: 'Contact en cours avec le parquet financier' }] },
-        { date: 'Samedi 12 avril 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse des actes d\'enquête', complement: [{ cle: 'Pièces :', valeur: 'Convocation et PV d\'audition libre examinés' }] },
+        { date: 'Lundi 14 avril 2025', heure: '09h00', lieu: 'Cabinet Custos Avocats', titre: 'Suivi de l\'enquête', encours: true, complement: [{ cle: 'Avocat :', valeur: 'Maître Alexis HAROUNE' }] },
+        { date: 'Samedi 12 avril 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse des actes d\'enquête', complement: [{ cle: 'Avocat :', valeur: 'Maître Alexis HAROUNE' }] },
         { date: 'Mardi 01 avril 2025', heure: '16h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien', complement: [{ cle: 'Avocat :', valeur: 'Maître Alexis HAROUNE' }] },
       ],
     },
     corporel: {
-      label: 'Dommages corporels',
+      label: 'Dommages corporels', statut: 'CONSOLIDATION EN COURS',
+      derniereAction: 'Expertise médicale contradictoire le 02 avril 2025.',
+      prochaineEtape: 'Attente de la consolidation médicale pour évaluation du préjudice.',
       etapes: [
-        { titre: '1er entretien',      done: true,  date: '15 mars 2025' },
-        { titre: 'Expertise médicale', done: true,  date: '02 avr. 2025' },
-        { titre: 'Consolidation',      done: false, active: true },
-        { titre: 'Négociation',        done: false },
-        { titre: 'Audience',           done: false },
-        { titre: 'Indemnisation',      done: false },
+        { titre: '1ER\nENTRETIEN',     icon: 'rdv',      done: true,   badge: 'TERMINÉ',  desc: 'Évaluation du préjudice.', location: 'Cabinet Custos Avocats', date: '15 mars 2025' },
+        { titre: 'EXPERTISE\nMÉDICALE', icon: 'search',  done: true,   badge: 'TERMINÉ',  desc: 'Expertise contradictoire assistée.', location: 'Service médecine légale', date: '02 avr. 2025' },
+        { titre: 'CONSOLIDATION',      icon: 'clock',    active: true, badge: 'EN COURS', desc: 'Évaluation du préjudice définitif.', date: 'En cours' },
+        { titre: 'NÉGOCIATION',        icon: 'scales',   badge: 'À VENIR', desc: 'Négociation ou saisine judiciaire.', date: 'Date à venir' },
+        { titre: 'AUDIENCE',           icon: 'gavel',    badge: 'À VENIR', desc: 'Plaidoirie sur l\'indemnisation.', date: 'Date à venir' },
+        { titre: 'INDEMNISATION',      icon: 'check',    badge: 'À VENIR', desc: 'Versement de l\'indemnisation.', date: 'Date à venir' },
       ],
       evenements: [
-        { date: 'Jeudi 10 avril 2025', heure: '09h30', lieu: 'Cabinet Custos Avocats', titre: 'Attente de consolidation médicale', encours: true, complement: [{ cle: 'Statut :', valeur: 'Évaluation du préjudice définitif en attente' }] },
-        { date: 'Mercredi 02 avril 2025', heure: '14h00', lieu: 'Service de médecine légale', titre: 'Expertise médicale contradictoire', complement: [{ cle: 'Commentaire :', valeur: 'Assistance lors de l\'expertise' }] },
+        { date: 'Jeudi 10 avril 2025', heure: '09h30', lieu: 'Cabinet Custos Avocats', titre: 'Attente de consolidation', encours: true, complement: [{ cle: 'Avocat :', valeur: 'Maître Lola DAVID' }] },
+        { date: 'Mercredi 02 avril 2025', heure: '14h00', lieu: 'Service de médecine légale', titre: 'Expertise médicale', complement: [{ cle: 'Avocat :', valeur: 'Maître Lola DAVID' }] },
         { date: 'Samedi 15 mars 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien', complement: [{ cle: 'Avocat :', valeur: 'Maître Lola DAVID' }] },
       ],
     },
     etranger: {
-      label: 'Droit des étrangers',
+      label: 'Droit des étrangers', statut: 'INSTRUCTION EN COURS',
+      derniereAction: 'Recours enregistré au greffe du TA le 11 avril 2025.',
+      prochaineEtape: 'Échange de mémoires avec le tribunal administratif de Lille.',
       etapes: [
-        { titre: 'Analyse dossier', done: true,  date: '01 avr. 2025' },
-        { titre: 'Recours déposé',  done: true,  date: '11 avr. 2025' },
-        { titre: 'Instruction',     done: false, active: true },
-        { titre: 'Audience',        done: false },
-        { titre: 'Décision',        done: false },
+        { titre: 'ANALYSE\nDOSSIER',   icon: 'search',   done: true,   badge: 'TERMINÉ',  desc: 'Examen de la situation et voies de recours.', location: 'Cabinet Custos Avocats', date: '01 avr. 2025' },
+        { titre: 'RECOURS\nDÉPOSÉ',   icon: 'send',     done: true,   badge: 'TERMINÉ',  desc: 'Recours contre OQTF enregistré.', location: 'Tribunal administratif', date: '11 avr. 2025' },
+        { titre: 'INSTRUCTION',        icon: 'building', active: true, badge: 'EN COURS', desc: 'Échange de mémoires avec la juridiction.', date: 'En cours' },
+        { titre: 'AUDIENCE',           icon: 'gavel',    badge: 'À VENIR', desc: 'Plaidoirie devant le tribunal.', date: 'Date à venir' },
+        { titre: 'DÉCISION',           icon: 'lock',     badge: 'À VENIR', desc: 'Rendu de la décision.', date: 'Date à venir' },
       ],
       evenements: [
-        { date: 'Lundi 14 avril 2025', heure: '11h00', lieu: 'Tribunal administratif de Lille', titre: 'Instruction en cours', encours: true, complement: [{ cle: 'Statut :', valeur: 'Échange de mémoires avec le tribunal' }] },
-        { date: 'Vendredi 11 avril 2025', heure: '09h30', lieu: 'Tribunal administratif de Lille', titre: 'Recours enregistré au greffe', complement: [{ cle: 'Commentaire :', valeur: 'Recours contre OQTF déposé' }] },
-        { date: 'Mardi 01 avril 2025', heure: '15h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse du dossier administratif', complement: [{ cle: 'Avocat :', valeur: 'Maître Chloé JAULIN-DENISSELLE' }] },
+        { date: 'Lundi 14 avril 2025', heure: '11h00', lieu: 'Tribunal administratif de Lille', titre: 'Instruction en cours', encours: true, complement: [{ cle: 'Avocat :', valeur: 'Maître Chloé JAULIN-DENISSELLE' }] },
+        { date: 'Vendredi 11 avril 2025', heure: '09h30', lieu: 'Tribunal administratif de Lille', titre: 'Recours enregistré', complement: [{ cle: 'Avocat :', valeur: 'Maître Chloé JAULIN-DENISSELLE' }] },
+        { date: 'Mardi 01 avril 2025', heure: '15h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse du dossier', complement: [{ cle: 'Avocat :', valeur: 'Maître Chloé JAULIN-DENISSELLE' }] },
       ],
     },
   };
@@ -472,70 +701,112 @@ import Base from '../../layouts/Base.astro';
   const dossierId = sessionStorage.getItem('suivi-id');
   const procFromSession = sessionStorage.getItem('suivi-proc');
   if (!dossierId) { window.location.href = '/suivi'; }
-  document.getElementById('dossier-ref')!.textContent = 'Dossier ' + (dossierId || '—');
+  document.getElementById('header-dossier-num')!.textContent = 'DOSSIER N° ' + (dossierId || '—');
+
+  const CHECK_ICON = `<svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  const BUBBLE_H = 72;   // hauteur bulle
+  const GAP_H    = 12;   // espace entre bulle et ligne
+  const NUM_H    = 28;   // hauteur du cercle numéroté
+  const LINE_TOP = BUBBLE_H + GAP_H + NUM_H / 2; // = 98px
 
   function renderProc(key: string) {
     const proc = procedures[key];
     if (!proc) return;
 
-    document.getElementById('dossier-proc-label')!.textContent = proc.label;
+    // En-tête
+    const procLabel = { penal: 'PÉNAL', mineurs: 'MINEURS', famille: 'FAMILLE', affaires: 'AFFAIRES', corporel: 'CORPOREL', etranger: 'ÉTRANGERS' }[key] || 'PÉNAL';
+    document.getElementById('page-title')!.textContent = 'SUIVI DU DOSSIER — ' + procLabel;
+    document.getElementById('statut-text')!.textContent = proc.statut;
+    document.getElementById('info-derniere-action')!.textContent = proc.derniereAction;
+    document.getElementById('info-prochaine-etape')!.textContent = proc.prochaineEtape;
 
     /* ══ FRISE ══ */
-    const friseEl = document.getElementById('frise')!;
-    friseEl.innerHTML = '';
+    const wrapper = document.getElementById('frise-wrapper')!;
+    wrapper.innerHTML = '';
 
     const n = proc.etapes.length;
-    const doneCount  = proc.etapes.filter(e => e.done).length;
-    const activeIdx  = proc.etapes.findIndex(e => e.active);
+    const doneCount = proc.etapes.filter(e => e.done).length;
+    const activeIdx = proc.etapes.findIndex(e => e.active);
 
-    /* Grid */
-    friseEl.style.gridTemplateColumns = `repeat(${n}, minmax(110px, 1fr))`;
+    wrapper.style.gridTemplateColumns = `repeat(${n}, minmax(120px, 1fr))`;
 
-    /* Ligne fond : de centre col 0 à centre col n-1 */
-    const bgLine = document.createElement('div');
-    bgLine.className = 'frise-line-bg';
-    bgLine.style.left  = `calc(${50 / n}%)`;
-    bgLine.style.width = `calc(${(n - 1) / n * 100}%)`;
-    friseEl.appendChild(bgLine);
+    /* ── Lignes ── */
+    // Ligne gris de fond (toute la longueur)
+    const makeLine = (cls: string, leftPct: number, widthPct: number) => {
+      const d = document.createElement('div');
+      d.className = cls;
+      d.style.top   = `${LINE_TOP}px`;
+      d.style.left  = `${leftPct}%`;
+      d.style.width = `${widthPct}%`;
+      wrapper.appendChild(d);
+    };
 
-    /* Ligne gris-vert : étapes faites */
+    const startPct = 50 / n;
+    const totalPct = (n - 1) / n * 100;
+
+    makeLine('frise-line-bg', startPct, totalPct);
+
     if (doneCount > 0) {
-      const doneLine = document.createElement('div');
-      doneLine.className = 'frise-line-done';
-      doneLine.style.left  = `calc(${50 / n}%)`;
-      doneLine.style.width = `calc(${(doneCount - 1) / n * 100}%)`;
-      friseEl.appendChild(doneLine);
+      // Ligne verte (étapes faites) : du centre step 0 au centre step doneCount-1
+      makeLine('frise-line-done', startPct, (doneCount - 1) / n * 100);
     }
 
-    /* Ligne verte : du dernier done vers l'étape active */
-    if (activeIdx > 0 && doneCount > 0) {
-      const activeLine = document.createElement('div');
-      activeLine.className = 'frise-line-active';
-      const startPct = (doneCount - 0.5) / n * 100;
-      const endPct   = (activeIdx + 0.5) / n * 100;
-      activeLine.style.left  = `calc(${startPct}%)`;
-      activeLine.style.width = `calc(${endPct - startPct}%)`;
-      friseEl.appendChild(activeLine);
+    if (activeIdx >= 0 && doneCount > 0) {
+      // Ligne verte plus claire (vers l'étape active)
+      const fromPct = (doneCount - 0.5) / n * 100;
+      const toPct   = (activeIdx + 0.5) / n * 100;
+      makeLine('frise-line-active', fromPct, toPct - fromPct);
     }
 
-    /* Étapes */
+    if (activeIdx >= 0 && activeIdx < n - 1) {
+      // Ligne pointillée (étapes à venir)
+      const fromPct = (activeIdx + 0.5) / n * 100;
+      makeLine('frise-line-dashed', fromPct, totalPct - fromPct);
+    }
+
+    /* ── Connecteurs entre étapes ── */
+    for (let i = 0; i < n - 1; i++) {
+      const midPct = (i + 1) / n * 100;
+      const conn = document.createElement('div');
+      conn.className = 'frise-connector';
+      if (i < doneCount - 1) conn.className += ' frise-connector--done';
+      else if (i === doneCount - 1 && activeIdx >= 0) conn.className += ' frise-connector--active';
+      else conn.className += ' frise-connector--todo';
+
+      conn.style.top  = `${LINE_TOP - 8}px`;
+      conn.style.left = `calc(${midPct}% - 8px)`;
+
+      if (i < doneCount - 1 || (i === doneCount - 1 && activeIdx >= 0)) {
+        conn.innerHTML = CHECK_ICON;
+      }
+      wrapper.appendChild(conn);
+    }
+
+    /* ── Étapes ── */
     proc.etapes.forEach((etape, i) => {
       const state = etape.done ? 'done' : etape.active ? 'active' : 'todo';
+      const badgeCls = etape.done ? 'step-badge--done' : etape.active ? 'step-badge--active' : 'step-badge--todo';
+
       const div = document.createElement('div');
-      div.className = `frise-etape frise-etape--${state}`;
-      div.setAttribute('role', 'listitem');
+      div.className = `frise-step frise-step--${state}`;
       div.style.animationDelay = `${i * 0.07}s`;
 
-      const icon = etape.done ? ICON_DONE : etape.active ? ICON_CLOCK : ICON_TODO;
+      const metaLoc  = etape.location ? `<p class="step-meta"><svg viewBox="0 0 16 16" fill="none" width="11" height="11"><path d="M8 1.5A4.5 4.5 0 0 1 12.5 6c0 3.5-4.5 8.5-4.5 8.5S3.5 9.5 3.5 6A4.5 4.5 0 0 1 8 1.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.3"/></svg>${etape.location}</p>` : '';
+      const metaDate = etape.date ? `<p class="step-meta"><svg viewBox="0 0 16 16" fill="none" width="11" height="11"><rect x="1.5" y="2.5" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 6.5h13M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>${etape.date}</p>` : '';
 
       div.innerHTML = `
-        <div class="frise-cercle">${icon}</div>
-        <div class="frise-label">
-          <p class="frise-titre">${etape.titre}</p>
-          ${etape.date   ? `<span class="frise-date">${etape.date}</span>` : ''}
-          ${etape.active ? `<span class="frise-encours">En cours</span>` : ''}
+        <div class="step-bubble">${ICONS[etape.icon] || ''}</div>
+        <div class="step-num-row">
+          <div class="step-num">${i + 1}</div>
+        </div>
+        <div class="step-body">
+          <strong class="step-label">${etape.titre.replace(/\n/g, '<br>')}</strong>
+          <span class="step-badge ${badgeCls}">${etape.badge}</span>
+          <p class="step-desc">${etape.desc}</p>
+          ${metaLoc}${metaDate}
         </div>`;
-      friseEl.appendChild(div);
+      wrapper.appendChild(div);
     });
 
     /* ══ TABLEAU ══ */
@@ -549,10 +820,7 @@ import Base from '../../layouts/Base.astro';
         : '';
 
       tr.innerHTML = `
-        <td>
-          <span class="td-jour">${ev.date}</span>
-          <span class="td-heure">${ev.heure}</span>
-        </td>
+        <td><span class="td-jour">${ev.date}</span><span class="td-heure">${ev.heure}</span></td>
         <td>
           <span class="td-lieu">${ev.lieu}</span>
           <span class="td-titre">${ev.titre}</span>
