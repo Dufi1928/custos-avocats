@@ -34,17 +34,14 @@ const avocatsData = avocatsRdv.map(a => ({
       <div class="rdv-chooser-grid">
         {avocatsData.map(a => (
           <a href={`/rdv/${a.slug}`} class="rdv-card" aria-label={`Choisir ${a.titre}`}>
-            <div class="rdv-card-avatar" aria-hidden="true">
-              <img src={a.photo} alt="" width="48" height="48" onerror="this.style.display='none'" />
+            <div class="rdv-card-photo">
+              <img src={a.photo} alt={a.titre} onerror="this.parentElement.classList.add('rdv-card-photo--empty')" />
             </div>
-            <div class="rdv-card-info">
-              <span class="rdv-card-tag">{a.specialite}</span>
+            <div class="rdv-card-body">
+              <span class="rdv-card-specialite">Droit Pénal — {a.specialite}</span>
               <strong class="rdv-card-nom">{a.titre}</strong>
               <span class="rdv-card-jours">{a.jours}</span>
             </div>
-            <svg class="rdv-card-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
           </a>
         ))}
       </div>
@@ -146,65 +143,70 @@ const avocatsData = avocatsRdv.map(a => ({
 
   /* ── Cards chooser ── */
   .rdv-chooser-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
   }
 
   .rdv-card {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
     background: var(--blanc);
     border: 1px solid var(--gris-clair);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
+    border-radius: 1rem;
     text-decoration: none !important;
     color: var(--texte) !important;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     cursor: pointer;
+    overflow: hidden;
   }
 
   .rdv-card:hover {
     border-color: var(--vert);
-    box-shadow: 0 2px 12px rgba(74,93,78,0.08);
+    box-shadow: 0 6px 24px rgba(74,93,78,0.13);
     background: var(--blanc) !important;
     color: var(--texte) !important;
+    transform: translateY(-3px);
   }
 
-  .rdv-card-avatar {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+  .rdv-card-photo {
+    width: 100%;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
-    border: 1px solid var(--gris-clair);
     background: var(--fond);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-serif);
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--vert);
+    position: relative;
   }
 
-  .rdv-card-avatar img {
+  .rdv-card-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: top;
+    display: block;
+    transition: transform 0.35s ease;
   }
 
-  .rdv-card-info {
-    flex: 1;
+  .rdv-card:hover .rdv-card-photo img {
+    transform: scale(1.04);
+  }
+
+  .rdv-card-photo--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gris-clair);
+  }
+
+  .rdv-card-body {
+    padding: 1rem 1rem 1.1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
+    gap: 0.25rem;
+    border-top: 1px solid var(--gris-clair);
   }
 
-  .rdv-card-tag {
-    font-size: 0.68rem;
+  .rdv-card-specialite {
+    font-size: 0.63rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -213,27 +215,16 @@ const avocatsData = avocatsRdv.map(a => ({
 
   .rdv-card-nom {
     font-family: var(--font-serif);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--texte);
     font-weight: 700;
+    line-height: 1.3;
   }
 
   .rdv-card-jours {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--gris);
-  }
-
-  .rdv-card-arrow {
-    flex-shrink: 0;
-    width: 18px;
-    height: 18px;
-    color: var(--gris-clair);
-    transition: color 0.2s, transform 0.2s;
-  }
-
-  .rdv-card:hover .rdv-card-arrow {
-    color: var(--vert);
-    transform: translateX(2px);
+    margin-top: 0.15rem;
   }
 
   /* ── Sans préférence separator ── */
@@ -507,21 +498,8 @@ const avocatsData = avocatsRdv.map(a => ({
     }
 
     /* Cards avocats */
-    .rdv-card {
-      padding: 0.85rem 1rem;
-      gap: 0.85rem;
-    }
-    .rdv-card-avatar {
-      width: 40px;
-      height: 40px;
-    }
-    .rdv-card-nom {
-      font-size: 0.85rem;
-      line-height: 1.3;
-    }
-    .rdv-card-tag {
-      font-size: 0.63rem;
-    }
+    .rdv-chooser-grid { grid-template-columns: repeat(2, 1fr); }
+    .rdv-card-nom { font-size: 0.82rem; }
 
     /* Séparateur */
     .rdv-divider-label {
