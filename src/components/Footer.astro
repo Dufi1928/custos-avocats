@@ -1,67 +1,151 @@
 ---
 const expertises = [
-  { label: 'Droit Pénal', href: '/expertises/droit-penal' },
-  { label: 'Droit des Mineurs', href: '/expertises/droit-des-mineurs' },
-  { label: 'Droit des Étrangers', href: '/expertises/droit-des-etrangers' },
-  { label: 'Droit de la Famille', href: '/expertises/droit-de-la-famille' },
+  { label: 'Droit Pénal',              href: '/expertises/droit-penal' },
+  { label: 'Droit des Mineurs',        href: '/expertises/droit-des-mineurs' },
+  { label: 'Droit des Étrangers',      href: '/expertises/droit-des-etrangers' },
+  { label: 'Droit de la Famille',      href: '/expertises/droit-de-la-famille' },
   { label: 'Droit Pénal des Affaires', href: '/expertises/droit-penal-des-affaires' },
-  { label: 'Dommages Corporels', href: '/expertises/dommages-corporels' },
+  { label: 'Dommages Corporels',       href: '/expertises/dommages-corporels' },
 ];
 ---
 
 <footer>
-  <section aria-label="Custos Avocats">
-    <a href="/" class="footer-logo-link" aria-label="Custos Avocats — Accueil">
-      <img
-        src="/logo-emblem.png"
-        alt="Emblème Custos Avocats"
-        class="footer-emblem"
-        width="48"
-        height="56"
-      />
-    </a>
-    <p>Cabinet d'avocats spécialisé en droit pénal. Disponible 24h/24 pour vous défendre.</p>
-  </section>
+  <div class="footer-main">
 
-  <nav aria-label="Plan du site — Domaine d'intervention">
-    <h3>Domaine d'intervention</h3>
-    <ul>
-      {expertises.map(({ label, href }) => (
-        <li><a href={href}>{label}</a></li>
-      ))}
-    </ul>
-  </nav>
+    <!-- Colonne 1 : logo + baseline -->
+    <div class="footer-brand">
+      <a href="/" aria-label="Custos Avocats — Accueil">
+        <img
+          src="/logo-emblem.svg"
+          alt="Emblème Custos Avocats"
+          class="footer-emblem"
+          width="90"
+          height="106"
+        />
+      </a>
+      <p class="footer-baseline">Cabinet d'avocats spécialisé en droit pénal. Disponible 24h/24 pour vous défendre.</p>
+    </div>
 
-  <nav aria-label="Plan du site — Cabinet">
-    <h3>Cabinet</h3>
-    <ul>
-      <li><a href="/les-valeurs-du-cabinet">Les valeurs du cabinet</a></li>
-      <li><a href="/equipe">Notre équipe</a></li>
-      <li><a href="/honoraires">Honoraires</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </nav>
+    <!-- Colonne 2 : domaines -->
+    <nav aria-label="Plan du site — Domaine d'intervention">
+      <h3>Domaine d'intervention</h3>
+      <ul>
+        {expertises.map(({ label, href }) => (
+          <li><a href={href}>{label}</a></li>
+        ))}
+      </ul>
+    </nav>
 
-  <section aria-label="Informations légales">
-    <p>
-      <a href="/mentions-legales">Mentions légales</a>
-    </p>
-    <p>&copy; {new Date().getFullYear()} Custos Avocats — Tous droits réservés</p>
-  </section>
+    <!-- Colonne 3 : cabinet -->
+    <nav aria-label="Plan du site — Cabinet">
+      <h3>Cabinet</h3>
+      <ul>
+        <li><a href="/les-valeurs-du-cabinet">Les valeurs du cabinet</a></li>
+        <li><a href="/equipe">Notre équipe</a></li>
+        <li><a href="/honoraires">Honoraires</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+  </div>
+
+  <!-- Barre basse -->
+  <div class="footer-bottom">
+    <span>&copy; {new Date().getFullYear()} Custos Avocats — Tous droits réservés</span>
+    <a href="/mentions-legales">Mentions légales</a>
+  </div>
 </footer>
 
-<style>
-  .footer-logo-link {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-    margin-bottom: 0.75rem;
+<style is:global>
+  footer {
+    border-top: 1px solid var(--gris-clair);
+    padding: 0;
+    display: block;
   }
 
-  .footer-emblem {
-    height: 56px;
+  /* ── Grille principale ── */
+  footer .footer-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding: 3.5rem var(--gap) 3rem;
+  }
+
+  /* ── Brand ── */
+  footer .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  footer .footer-brand a {
+    display: inline-block;
+    border: none;
+    padding: 0;
+    background: none;
+  }
+
+  footer .footer-brand a:hover { background: none; }
+
+  footer .footer-emblem {
+    height: 90px;
     width: auto;
-    flex-shrink: 0;
+    display: block;
+  }
+
+  footer .footer-baseline {
+    font-size: 0.875rem;
+    color: var(--gris);
+    line-height: 1.65;
+    max-width: 26ch;
+    margin: 0;
+  }
+
+  /* ── Barre basse ── */
+  footer .footer-bottom {
+    border-top: 1px solid var(--gris-clair);
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding: 1.1rem var(--gap);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--gris);
+    width: 100%;
+  }
+
+  footer .footer-bottom a {
+    color: var(--gris);
+    text-decoration: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+    transition: color 0.2s;
+  }
+
+  footer .footer-bottom a:hover { color: var(--texte); background: none; }
+
+  /* ── Responsive ── */
+  @media (max-width: 760px) {
+    footer .footer-main {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    footer .footer-brand {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    footer .footer-baseline { max-width: 34ch; }
+  }
+
+  @media (max-width: 480px) {
+    footer .footer-main { grid-template-columns: 1fr; }
+    footer .footer-brand { flex-direction: column; }
+    footer .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
   }
 </style>

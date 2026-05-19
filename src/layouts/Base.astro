@@ -524,15 +524,15 @@ const schemaOrg = {
     return LAWYERS.find(l => text.toUpperCase().includes(l.name));
   }
 
-  function addMsg(text: string, role: 'bot' | 'user') {
+  function addMsg(text: string, role: 'bot' | 'user', showRdv = true) {
     const div = document.createElement('div');
     div.className = role === 'bot' ? 'msg msg-bot' : 'msg msg-user';
     div.textContent = text;
 
-    if (role === 'bot') {
+    if (role === 'bot' && showRdv) {
       const lawyer = extractLawyer(text);
       const btn = document.createElement('a');
-      btn.href = lawyer ? `/rdv/${lawyer.slug}` : '/contact';
+      btn.href = lawyer ? `/rdv/${lawyer.slug}` : '/rdv';
       btn.className = 'msg-rdv-btn';
       btn.textContent = lawyer ? 'Prendre RDV avec ' + lawyer.short : 'Prendre un rendez-vous';
       div.appendChild(btn);
@@ -564,7 +564,7 @@ const schemaOrg = {
       });
       const data = await res.json();
       typing.remove();
-      addMsg(data.reply ?? data.error ?? 'Une erreur est survenue.', 'bot');
+      addMsg(data.reply ?? data.error ?? 'Une erreur est survenue.', 'bot', data.showRdv !== false);
     } catch {
       typing.remove();
       addMsg('Impossible de joindre l\'assistant. Veuillez réessayer ou <a href="/contact">nous contacter directement</a>.', 'bot');

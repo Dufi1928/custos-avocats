@@ -268,17 +268,6 @@ button[type="submit"] {
 button[type="submit"]:hover { background: var(--vert-vif); }
 
 /* --- Footer --- */
-footer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 2.5rem;
-  max-width: var(--max-width);
-  margin-inline: auto;
-  padding: 3.5rem var(--gap) 2.5rem;
-  border-top: 1px solid var(--gris-clair);
-  width: 100%;
-}
-
 footer h3 {
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -288,15 +277,15 @@ footer h3 {
   font-weight: 700;
 }
 
-footer p, footer a {
+footer nav p, footer nav a {
   font-size: 0.875rem;
   color: var(--gris);
   text-decoration: none;
   transition: color 0.25s;
 }
 
-footer ul { gap: 0.6rem; }
-footer a:hover { color: var(--texte); }
+footer nav ul { gap: 0.6rem; }
+footer nav a:hover { color: var(--texte); }
 
 /* --- Contenu Markdown (expertises) --- */
 .prose h2 { margin: 2.5rem 0 0.75rem; }
