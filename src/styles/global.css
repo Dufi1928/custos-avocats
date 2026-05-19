@@ -85,12 +85,10 @@ header {
   max-width: var(--max-width);
   margin-inline: auto;
   width: 100%;
-  border-bottom: 1px solid var(--gris-clair);
 }
 
-/* La bordure basse du header-wrap remplace celle du header quand on scrolle */
-#header-wrap.header-scrolled header {
-  border-bottom-color: transparent;
+#header-wrap {
+  border-bottom: 1px solid var(--gris-clair);
 }
 
 header strong {
