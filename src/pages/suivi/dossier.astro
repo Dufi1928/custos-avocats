@@ -6,6 +6,7 @@ import Base from '../../layouts/Base.astro';
 
   <section class="dossier-page" aria-label="Suivi de dossier">
 
+    <!-- En-tête -->
     <div class="dossier-header">
       <div class="dossier-meta">
         <span class="dossier-ref" id="dossier-ref">—</span>
@@ -14,7 +15,8 @@ import Base from '../../layouts/Base.astro';
       <p class="dossier-cabinet">Cabinet Custos Avocats — Barreau de Lille</p>
     </div>
 
-    <div class="proc-select-wrap" aria-label="Type de procédure">
+    <!-- Onglets procédure -->
+    <div class="proc-select-wrap">
       <p class="proc-select-label">Type de procédure</p>
       <div class="proc-tabs" role="tablist" id="proc-tabs">
         <button role="tab" aria-selected="true"  data-proc="penal"    class="proc-tab active">Pénal général</button>
@@ -26,36 +28,28 @@ import Base from '../../layouts/Base.astro';
       </div>
     </div>
 
-    <!-- Timeline horizontale -->
-    <div class="timeline-wrap" id="timeline-wrap" aria-label="Étapes de la procédure">
-      <div class="timeline-scroll">
-        <div class="timeline" id="timeline"></div>
+    <!-- Frise chronologique style Chronopost -->
+    <div class="frise-wrap">
+      <div class="frise-scroll">
+        <div class="frise" id="frise"></div>
       </div>
     </div>
 
-    <!-- Étape en cours -->
-    <div class="next-step" id="next-step">
-      <div class="next-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/>
-          <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div>
-        <p class="next-label">Étape en cours</p>
-        <p class="next-titre" id="next-titre">—</p>
-        <p class="next-desc" id="next-desc"></p>
-      </div>
+    <!-- Tableau de détail -->
+    <div class="detail-wrap">
+      <table class="detail-table" id="detail-table" aria-label="Détail des événements">
+        <thead>
+          <tr>
+            <th>Date et heure</th>
+            <th>Événement</th>
+            <th>Complément</th>
+          </tr>
+        </thead>
+        <tbody id="detail-tbody"></tbody>
+      </table>
     </div>
 
-    <!-- Barre de progression -->
-    <div class="progress-wrap" aria-label="Avancement global">
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progress-fill"></div>
-      </div>
-      <span class="progress-pct" id="progress-pct">0 %</span>
-    </div>
-
+    <!-- Contact -->
     <div class="dossier-contact">
       <p>Une question sur votre dossier ?</p>
       <a href="/contact" class="contact-btn">Contacter le cabinet</a>
@@ -67,18 +61,19 @@ import Base from '../../layouts/Base.astro';
 
 <style>
   .dossier-page {
-    max-width: 860px;
+    max-width: 900px;
     margin: 0 auto;
-    padding-top: 3rem;
+    padding-top: 2.5rem;
     padding-bottom: 4rem;
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
+  /* ── En-tête ── */
   .dossier-header {
     border-bottom: 1px solid var(--gris-clair);
-    padding-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
   }
 
   .dossier-meta {
@@ -86,7 +81,7 @@ import Base from '../../layouts/Base.astro';
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
   }
 
   .dossier-ref {
@@ -97,7 +92,6 @@ import Base from '../../layouts/Base.astro';
   }
 
   .dossier-badge {
-    display: inline-block;
     background: #dde8de;
     color: var(--vert);
     font-size: 0.72rem;
@@ -116,7 +110,7 @@ import Base from '../../layouts/Base.astro';
     max-width: none;
   }
 
-  /* ── Onglets procédure ── */
+  /* ── Onglets ── */
   .proc-select-wrap {
     background: var(--fond);
     border: 1px dashed var(--gris-clair);
@@ -157,134 +151,145 @@ import Base from '../../layouts/Base.astro';
   .proc-tab:hover  { border-color: var(--vert); color: var(--vert); }
   .proc-tab.active { background: var(--vert); border-color: var(--vert); color: #F4F5F2; }
 
-  /* ── Timeline horizontale ── */
-  .timeline-wrap {
-    width: 100%;
+  /* ── Frise ── */
+  .frise-wrap {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--radius);
+    padding: 2.5rem 2rem 2rem;
     overflow: hidden;
   }
 
-  .timeline-scroll {
+  .frise-scroll {
     overflow-x: auto;
-    padding-bottom: 0.5rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--gris-clair) transparent;
   }
 
-  .timeline {
+  .frise {
     display: flex;
     align-items: flex-start;
     position: relative;
     min-width: max-content;
-    padding: 1.5rem 0.5rem 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
   /* Ligne de fond */
-  .timeline::before {
+  .frise::before {
     content: '';
     position: absolute;
-    top: calc(1.5rem + 20px);
-    left: calc(0.5rem + 20px);
-    right: calc(0.5rem + 20px);
-    height: 2px;
-    background: var(--gris-clair);
+    top: 28px;
+    left: 28px;
+    right: 28px;
+    height: 3px;
+    background: #d8d8d8;
     z-index: 0;
+    border-radius: 2px;
   }
 
-  /* Ligne de progression */
-  .timeline-progress-line {
+  /* Ligne de progression verte */
+  .frise-line {
     position: absolute;
-    top: calc(1.5rem + 20px);
-    left: calc(0.5rem + 20px);
-    height: 2px;
+    top: 28px;
+    left: 28px;
+    height: 3px;
     background: var(--vert);
     z-index: 1;
-    transition: width 0.8s cubic-bezier(.4,0,.2,1);
-    width: 0%;
+    border-radius: 2px;
+    transition: width 0.9s cubic-bezier(.4,0,.2,1);
+    width: 0;
   }
 
-  /* Chaque étape */
-  .etape {
+  /* Étape */
+  .frise-etape {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    min-width: 120px;
+    max-width: 160px;
     position: relative;
     z-index: 2;
-    flex: 1;
-    min-width: 110px;
-    max-width: 150px;
-    animation: fadeUp 0.35s ease both;
+    animation: fadeIn 0.4s ease both;
   }
 
-  @keyframes fadeUp {
+  @keyframes fadeIn {
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .etape-dot {
-    width: 40px;
-    height: 40px;
+  .frise-cercle {
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    margin-bottom: 0.85rem;
     position: relative;
     z-index: 3;
-    margin-bottom: 0.75rem;
+    transition: all 0.3s;
   }
 
-  .etape-dot svg { width: 18px; height: 18px; }
+  .frise-cercle svg { width: 22px; height: 22px; }
 
-  .etape--done .etape-dot {
+  /* Fait */
+  .frise-etape--done .frise-cercle {
+    background: #a8b8ab;
+    border: 3px solid #a8b8ab;
+    color: #fff;
+  }
+
+  /* En cours */
+  .frise-etape--active .frise-cercle {
     background: var(--vert);
-    border: 2px solid var(--vert);
-    color: #F4F5F2;
+    border: 3px solid var(--vert);
+    color: #fff;
+    box-shadow: 0 0 0 6px rgba(74,93,78,0.15);
+    animation: pulseGreen 2s ease-in-out infinite;
   }
 
-  .etape--active .etape-dot {
-    background: #dde8de;
-    border: 2.5px solid var(--vert);
-    color: var(--vert);
-    box-shadow: 0 0 0 5px rgba(74,93,78,0.12);
-    animation: pulseRing 2s ease-in-out infinite;
+  @keyframes pulseGreen {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(74,93,78,0.15); }
+    50%       { box-shadow: 0 0 0 11px rgba(74,93,78,0.06); }
   }
 
-  @keyframes pulseRing {
-    0%, 100% { box-shadow: 0 0 0 5px rgba(74,93,78,0.12); }
-    50%       { box-shadow: 0 0 0 9px rgba(74,93,78,0.05); }
+  /* À venir */
+  .frise-etape--todo .frise-cercle {
+    background: #fff;
+    border: 3px solid #d0d0d0;
+    color: #c0c0c0;
   }
 
-  .etape--todo .etape-dot {
-    background: var(--blanc);
-    border: 2px solid var(--gris-clair);
-    color: var(--gris-clair);
-  }
-
-  .etape-body {
+  .frise-label {
     text-align: center;
-    padding: 0 0.25rem;
+    padding: 0 0.4rem;
   }
 
-  .etape-titre {
+  .frise-titre {
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--texte);
     line-height: 1.3;
-    margin: 0 0 0.25rem;
+    color: var(--texte);
+    margin: 0;
   }
 
-  .etape--todo .etape-titre { color: var(--gris); }
+  .frise-etape--done  .frise-titre { color: #888; }
+  .frise-etape--todo  .frise-titre { color: #aaa; }
+  .frise-etape--active .frise-titre {
+    color: var(--vert);
+    font-size: 0.82rem;
+  }
 
-  .etape-date {
+  .frise-date {
     display: block;
     font-size: 0.68rem;
-    font-weight: 600;
-    color: var(--vert);
-    margin-top: 0.2rem;
+    color: #999;
+    margin-top: 0.25rem;
   }
 
-  .etape-en-cours {
+  .frise-encours {
     display: block;
     font-size: 0.66rem;
     font-weight: 700;
@@ -297,84 +302,135 @@ import Base from '../../layouts/Base.astro';
 
   @keyframes blink {
     0%, 100% { opacity: 1; }
-    50%       { opacity: 0.45; }
+    50% { opacity: 0.4; }
   }
 
-  /* ── Étape en cours ── */
-  .next-step {
-    display: flex;
-    gap: 1rem;
-    background: var(--blanc);
+  /* ── Tableau de détail ── */
+  .detail-wrap {
     border: 1px solid var(--gris-clair);
-    border-left: 4px solid var(--vert);
-    border-radius: 0 var(--radius) var(--radius) 0;
-    padding: 1.25rem 1.5rem;
-    align-items: flex-start;
-  }
-
-  .next-icon { color: var(--vert); flex-shrink: 0; margin-top: 2px; }
-  .next-icon svg { width: 22px; height: 22px; }
-
-  .next-label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--vert);
-    margin: 0 0 0.25rem;
-    max-width: none;
-  }
-
-  .next-titre {
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--texte);
-    margin: 0 0 0.2rem;
-    max-width: none;
-  }
-
-  .next-desc {
-    font-size: 0.845rem;
-    color: var(--anthracite);
-    margin: 0;
-    max-width: none;
-  }
-
-  /* ── Barre de progression ── */
-  .progress-wrap {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .progress-bar-bg {
-    flex: 1;
-    height: 8px;
-    background: var(--gris-clair);
-    border-radius: 999px;
+    border-radius: var(--radius);
     overflow: hidden;
   }
 
-  .progress-bar-fill {
-    height: 100%;
-    background: var(--vert);
-    border-radius: 999px;
-    transition: width 0.8s cubic-bezier(.4,0,.2,1);
-    width: 0%;
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
   }
 
-  .progress-pct {
+  .detail-table thead tr {
+    background: var(--vert);
+    color: #F4F5F2;
+  }
+
+  .detail-table th {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .detail-table tbody tr {
+    border-bottom: 1px solid var(--gris-clair);
+    transition: background 0.15s;
+  }
+
+  .detail-table tbody tr:nth-child(even) {
+    background: var(--fond);
+  }
+
+  .detail-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .detail-table tbody tr:hover {
+    background: #dde8de44;
+  }
+
+  .detail-table td {
+    padding: 0.9rem 1.25rem;
+    vertical-align: top;
+    color: var(--anthracite);
+    line-height: 1.5;
+  }
+
+  .td-date {
+    white-space: nowrap;
     font-size: 0.8rem;
+    color: var(--gris);
+    min-width: 130px;
+  }
+
+  .td-date strong {
+    display: block;
+    font-weight: 700;
+    color: var(--texte);
+    font-size: 0.82rem;
+  }
+
+  .td-event {
+    font-weight: 600;
+    color: var(--texte);
+    min-width: 200px;
+  }
+
+  .td-event .event-lieu {
+    font-size: 0.78rem;
     font-weight: 700;
     color: var(--vert);
-    min-width: 3.5ch;
-    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  .td-event .event-detail {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--anthracite);
+  }
+
+  .td-complement {
+    font-size: 0.82rem;
+    color: var(--gris);
+    min-width: 160px;
+  }
+
+  .td-complement .comp-ligne {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .td-complement .comp-key {
+    font-weight: 600;
+    color: var(--anthracite);
+    white-space: nowrap;
+  }
+
+  /* Badge en cours dans le tableau */
+  .badge-encours {
+    display: inline-block;
+    background: #dde8de;
+    color: var(--vert);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid #b8cebb;
+    margin-left: 0.5rem;
+    vertical-align: middle;
   }
 
   /* ── Contact ── */
   .dossier-contact {
     text-align: center;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     border-top: 1px solid var(--gris-clair);
   }
 
@@ -398,74 +454,255 @@ import Base from '../../layouts/Base.astro';
   }
 
   .contact-btn:hover { background: var(--vert); color: #F4F5F2; }
+
+  @media (max-width: 600px) {
+    .frise-wrap { padding: 2rem 1rem 1.5rem; }
+    .detail-table th:last-child,
+    .detail-table td:last-child { display: none; }
+  }
 </style>
 
 <script>
-  const procedures: Record<string, {
+  type Etape = {
+    titre: string;
+    done?: boolean;
+    active?: boolean;
+    date?: string;
+  };
+
+  type Evenement = {
+    date: string;
+    heure: string;
+    lieu: string;
+    evenement: string;
+    complement?: { cle: string; valeur: string }[];
+    encours?: boolean;
+  };
+
+  type Procedure = {
     label: string;
-    etapes: { titre: string; desc: string; done?: boolean; active?: boolean; date?: string }[]
-  }> = {
+    etapes: Etape[];
+    evenements: Evenement[];
+  };
+
+  const procedures: Record<string, Procedure> = {
     penal: {
       label: 'Procédure pénale',
       etapes: [
-        { titre: 'Premier entretien', desc: 'Analyse de votre situation et constitution du dossier.', done: true, date: '03 mars 2025' },
-        { titre: 'Analyse des pièces', desc: 'Étude approfondie des pièces et des actes de procédure.', done: true, date: '14 mars 2025' },
-        { titre: 'Préparation de la défense', desc: 'Élaboration de la stratégie et rédaction des conclusions.', done: false, active: true },
-        { titre: 'Audience', desc: 'Plaidoirie devant le tribunal correctionnel.', done: false },
-        { titre: 'Décision', desc: 'Rendu du jugement par le tribunal.', done: false },
+        { titre: 'Premier entretien',       done: true,  date: '03 mars 2025' },
+        { titre: 'Analyse des pièces',       done: true,  date: '14 mars 2025' },
+        { titre: 'Préparation de la défense', done: false, active: true },
+        { titre: 'Audience',                 done: false },
+        { titre: 'Décision',                 done: false },
+      ],
+      evenements: [
+        {
+          date: 'Lundi 17 mars 2025', heure: '10h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Préparation de la défense',
+          complement: [{ cle: 'Statut :', valeur: 'En cours — rédaction des conclusions' }],
+          encours: true,
+        },
+        {
+          date: 'Vendredi 14 mars 2025', heure: '11h30',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Note d\'analyse transmise',
+          complement: [{ cle: 'Commentaire :', valeur: 'Synthèse des actes de procédure communiquée' }],
+        },
+        {
+          date: 'Vendredi 14 mars 2025', heure: '09h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Analyse des actes de procédure',
+          complement: [{ cle: 'Pièces examinées :', valeur: 'Procès-verbal, réquisitions du parquet' }],
+        },
+        {
+          date: 'Lundi 03 mars 2025', heure: '15h15',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Dossier constitué',
+          complement: [{ cle: 'Commentaire :', valeur: 'Pièces d\'identité et documents reçus' }],
+        },
+        {
+          date: 'Lundi 03 mars 2025', heure: '14h30',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Premier entretien',
+          complement: [
+            { cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' },
+            { cle: 'Commentaire :', valeur: 'Analyse de la situation, remise des identifiants de suivi' },
+          ],
+        },
       ],
     },
     mineurs: {
       label: 'Droit des mineurs',
       etapes: [
-        { titre: 'Premier entretien', desc: 'Analyse de la situation du mineur et de sa famille.', done: true, date: '10 avr. 2025' },
-        { titre: 'Analyse du dossier', desc: 'Examen des actes éducatifs et pièces de procédure.', done: true, date: '18 avr. 2025' },
-        { titre: 'Saisine du juge', desc: 'Introduction de la procédure devant le juge des enfants.', done: false, active: true },
-        { titre: 'Audience', desc: 'Audience devant le juge des enfants ou le tribunal pour enfants.', done: false },
-        { titre: 'Mesure / Décision', desc: 'Prononcé de la mesure éducative ou de la sanction pénale.', done: false },
+        { titre: 'Premier entretien',  done: true, date: '10 avr. 2025' },
+        { titre: 'Analyse du dossier', done: true, date: '18 avr. 2025' },
+        { titre: 'Saisine du juge',    done: false, active: true },
+        { titre: 'Audience',           done: false },
+        { titre: 'Mesure / Décision',  done: false },
+      ],
+      evenements: [
+        {
+          date: 'Lundi 22 avril 2025', heure: '09h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Préparation de la saisine',
+          complement: [{ cle: 'Statut :', valeur: 'En cours — rédaction de la requête' }],
+          encours: true,
+        },
+        {
+          date: 'Vendredi 18 avril 2025', heure: '14h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Analyse du dossier éducatif et pénal',
+          complement: [{ cle: 'Pièces :', valeur: 'Rapports éducatifs, actes de procédure examinés' }],
+        },
+        {
+          date: 'Jeudi 10 avril 2025', heure: '10h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Premier entretien — mineur et famille',
+          complement: [
+            { cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' },
+            { cle: 'Commentaire :', valeur: 'Évaluation de la situation, droits expliqués au mineur' },
+          ],
+        },
       ],
     },
     famille: {
       label: 'Droit de la famille',
       etapes: [
-        { titre: 'Consultation initiale', desc: 'Évaluation de la situation et des enjeux juridiques.', done: true, date: '20 fév. 2025' },
-        { titre: 'Assignation', desc: 'Introduction de la procédure devant le juge aux affaires familiales.', done: true, date: '05 mars 2025' },
-        { titre: 'Échange de pièces', desc: 'Communication des pièces entre les parties et le tribunal.', done: false, active: true },
-        { titre: 'Audience de conciliation', desc: 'Tentative de règlement amiable devant le juge.', done: false },
-        { titre: 'Audience au fond', desc: 'Plaidoiries sur le fond du litige familial.', done: false },
-        { titre: 'Jugement', desc: 'Rendu de la décision définitive.', done: false },
+        { titre: 'Consultation initiale',    done: true, date: '20 fév. 2025' },
+        { titre: 'Assignation',              done: true, date: '05 mars 2025' },
+        { titre: 'Échange de pièces',        done: false, active: true },
+        { titre: 'Audience de conciliation', done: false },
+        { titre: 'Audience au fond',         done: false },
+        { titre: 'Jugement',                 done: false },
+      ],
+      evenements: [
+        {
+          date: 'Mardi 18 mars 2025', heure: '11h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Échange de pièces en cours',
+          complement: [{ cle: 'Statut :', valeur: 'Attente de communication des pièces adverses' }],
+          encours: true,
+        },
+        {
+          date: 'Mercredi 05 mars 2025', heure: '10h30',
+          lieu: 'TRIBUNAL JUDICIAIRE DE LILLE',
+          evenement: 'Assignation déposée',
+          complement: [{ cle: 'Commentaire :', valeur: 'Introduction de l\'instance devant le JAF' }],
+        },
+        {
+          date: 'Jeudi 20 février 2025', heure: '14h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Consultation initiale',
+          complement: [
+            { cle: 'Avocat :', valeur: 'Maître Lauriana DAVRILLON' },
+            { cle: 'Commentaire :', valeur: 'Évaluation des enjeux, stratégie définie' },
+          ],
+        },
       ],
     },
     affaires: {
       label: 'Pénal des affaires',
       etapes: [
-        { titre: 'Premier entretien', desc: 'Analyse de la situation et des risques pénaux.', done: true, date: '01 avr. 2025' },
-        { titre: 'Analyse des actes', desc: 'Étude des actes d\'enquête, convocations et mises en cause.', done: true, date: '12 avr. 2025' },
-        { titre: 'Audition / Enquête', desc: 'Assistance lors des auditions et suivi de l\'enquête préliminaire.', done: false, active: true },
-        { titre: 'Mise en examen / Renvoi', desc: 'Gestion de la mise en examen ou du renvoi en jugement.', done: false },
-        { titre: 'Audience', desc: 'Plaidoirie devant le tribunal correctionnel ou la cour.', done: false },
-        { titre: 'Décision', desc: 'Rendu du jugement, voies de recours si nécessaire.', done: false },
+        { titre: 'Premier entretien',      done: true, date: '01 avr. 2025' },
+        { titre: 'Analyse des actes',      done: true, date: '12 avr. 2025' },
+        { titre: 'Audition / Enquête',     done: false, active: true },
+        { titre: 'Renvoi en jugement',     done: false },
+        { titre: 'Audience',               done: false },
+        { titre: 'Décision',               done: false },
+      ],
+      evenements: [
+        {
+          date: 'Lundi 14 avril 2025', heure: '09h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Suivi de l\'enquête préliminaire',
+          complement: [{ cle: 'Statut :', valeur: 'En cours — contact avec le parquet financier' }],
+          encours: true,
+        },
+        {
+          date: 'Samedi 12 avril 2025', heure: '10h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Analyse des actes d\'enquête',
+          complement: [{ cle: 'Pièces :', valeur: 'Convocation, PV d\'audition libre examinés' }],
+        },
+        {
+          date: 'Mardi 01 avril 2025', heure: '16h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Premier entretien',
+          complement: [
+            { cle: 'Avocat :', valeur: 'Maître Alexis HAROUNE' },
+            { cle: 'Commentaire :', valeur: 'Analyse des risques pénaux, stratégie de défense' },
+          ],
+        },
       ],
     },
     corporel: {
       label: 'Dommages corporels',
       etapes: [
-        { titre: 'Premier entretien', desc: 'Évaluation du préjudice et des voies d\'indemnisation.', done: true, date: '15 mars 2025' },
-        { titre: 'Expertise médicale', desc: 'Assistance et suivi lors de l\'expertise médicale contradictoire.', done: true, date: '02 avr. 2025' },
-        { titre: 'Consolidation', desc: 'Évaluation du préjudice définitif après consolidation de l\'état de santé.', done: false, active: true },
-        { titre: 'Négociation / Saisine', desc: 'Négociation amiable ou introduction d\'une action en justice.', done: false },
-        { titre: 'Audience', desc: 'Plaidoirie sur le montant de l\'indemnisation.', done: false },
-        { titre: 'Indemnisation', desc: 'Versement de l\'indemnisation après décision ou accord.', done: false },
+        { titre: 'Premier entretien',    done: true, date: '15 mars 2025' },
+        { titre: 'Expertise médicale',   done: true, date: '02 avr. 2025' },
+        { titre: 'Consolidation',        done: false, active: true },
+        { titre: 'Négociation / Saisine', done: false },
+        { titre: 'Audience',             done: false },
+        { titre: 'Indemnisation',        done: false },
+      ],
+      evenements: [
+        {
+          date: 'Jeudi 10 avril 2025', heure: '09h30',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Attente de consolidation médicale',
+          complement: [{ cle: 'Statut :', valeur: 'Suivi de l\'état de santé — évaluation du préjudice définitif' }],
+          encours: true,
+        },
+        {
+          date: 'Mercredi 02 avril 2025', heure: '14h00',
+          lieu: 'SERVICE DE MÉDECINE LÉGALE',
+          evenement: 'Expertise médicale contradictoire',
+          complement: [{ cle: 'Commentaire :', valeur: 'Assistance et défense lors de l\'expertise' }],
+        },
+        {
+          date: 'Samedi 15 mars 2025', heure: '10h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Premier entretien',
+          complement: [
+            { cle: 'Avocat :', valeur: 'Maître Lola DAVID' },
+            { cle: 'Commentaire :', valeur: 'Évaluation du préjudice, recueil des pièces médicales' },
+          ],
+        },
       ],
     },
     etranger: {
       label: 'Droit des étrangers',
       etapes: [
-        { titre: 'Analyse du dossier', desc: 'Examen de la situation administrative et des voies de recours.', done: true, date: '01 avr. 2025' },
-        { titre: 'Recours déposé', desc: 'Introduction du recours devant la juridiction compétente (TA, CNDA…).', done: true, date: '11 avr. 2025' },
-        { titre: 'Instruction', desc: 'Échange de mémoires et pièces avec la juridiction.', done: false, active: true },
-        { titre: 'Audience', desc: 'Plaidoirie devant le tribunal ou la cour.', done: false },
-        { titre: 'Décision', desc: 'Rendu de la décision sur votre situation.', done: false },
+        { titre: 'Analyse du dossier', done: true, date: '01 avr. 2025' },
+        { titre: 'Recours déposé',     done: true, date: '11 avr. 2025' },
+        { titre: 'Instruction',        done: false, active: true },
+        { titre: 'Audience',           done: false },
+        { titre: 'Décision',           done: false },
+      ],
+      evenements: [
+        {
+          date: 'Lundi 14 avril 2025', heure: '11h00',
+          lieu: 'TRIBUNAL ADMINISTRATIF DE LILLE',
+          evenement: 'Instruction en cours',
+          complement: [{ cle: 'Statut :', valeur: 'Échange de mémoires avec le tribunal' }],
+          encours: true,
+        },
+        {
+          date: 'Vendredi 11 avril 2025', heure: '09h30',
+          lieu: 'TRIBUNAL ADMINISTRATIF DE LILLE',
+          evenement: 'Recours déposé',
+          complement: [{ cle: 'Commentaire :', valeur: 'Recours contre OQTF enregistré au greffe' }],
+        },
+        {
+          date: 'Mardi 01 avril 2025', heure: '15h00',
+          lieu: 'CABINET CUSTOS AVOCATS',
+          evenement: 'Analyse du dossier administratif',
+          complement: [
+            { cle: 'Avocat :', valeur: 'Maître Chloé JAULIN-DENISSELLE' },
+            { cle: 'Commentaire :', valeur: 'Examen de la situation, identification des voies de recours' },
+          ],
+        },
       ],
     },
   };
@@ -473,9 +710,7 @@ import Base from '../../layouts/Base.astro';
   const dossierId = sessionStorage.getItem('suivi-id');
   const procFromSession = sessionStorage.getItem('suivi-proc');
 
-  if (!dossierId) {
-    window.location.href = '/suivi';
-  }
+  if (!dossierId) { window.location.href = '/suivi'; }
 
   document.getElementById('dossier-ref')!.textContent = 'Dossier ' + (dossierId || '—');
 
@@ -485,77 +720,102 @@ import Base from '../../layouts/Base.astro';
 
     document.getElementById('dossier-proc-label')!.textContent = proc.label;
 
-    const timeline = document.getElementById('timeline')!;
-    timeline.innerHTML = '';
+    // ── Frise ──
+    const frise = document.getElementById('frise')!;
+    frise.innerHTML = '';
 
     const etapes = proc.etapes;
     const doneCount = etapes.filter(e => e.done).length;
-    const activeIndex = etapes.findIndex(e => e.active);
-    const totalSegments = etapes.length - 1;
-
-    // Largeur de la ligne de progression
-    // Si activeIndex > 0, ligne va jusqu'au milieu de l'étape active
-    let progressRatio = 0;
-    if (doneCount > 0 && totalSegments > 0) {
-      progressRatio = (doneCount - 0.5) / totalSegments;
-      if (activeIndex >= 0) {
-        progressRatio = (activeIndex - 0.5) / totalSegments;
-      }
-    }
+    const activeIdx = etapes.findIndex(e => e.active);
 
     // Ligne de progression
-    const progressLine = document.createElement('div');
-    progressLine.className = 'timeline-progress-line';
-    timeline.appendChild(progressLine);
+    const line = document.createElement('div');
+    line.className = 'frise-line';
+    frise.appendChild(line);
 
     etapes.forEach((etape, i) => {
-      const div = document.createElement('div');
       const state = etape.done ? 'done' : etape.active ? 'active' : 'todo';
-      div.className = `etape etape--${state}`;
+      const div = document.createElement('div');
+      div.className = `frise-etape frise-etape--${state}`;
       div.style.animationDelay = `${i * 0.08}s`;
 
-      let dotIcon = '';
+      let icon = '';
       if (etape.done) {
-        dotIcon = `<svg viewBox="0 0 24 24" fill="none"><polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+        icon = `<svg viewBox="0 0 24 24" fill="none"><polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       } else if (etape.active) {
-        dotIcon = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg>`;
+        icon = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg>`;
       } else {
-        dotIcon = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/></svg>`;
+        icon = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/></svg>`;
       }
 
-      const dateTag   = etape.date   ? `<span class="etape-date">${etape.date}</span>` : '';
-      const activeTag = etape.active ? `<span class="etape-en-cours">En cours</span>` : '';
+      const dateTag    = etape.date   ? `<span class="frise-date">${etape.date}</span>` : '';
+      const encoursTag = etape.active ? `<span class="frise-encours">En cours</span>` : '';
 
       div.innerHTML = `
-        <div class="etape-dot">${dotIcon}</div>
-        <div class="etape-body">
-          <p class="etape-titre">${etape.titre}</p>
-          ${dateTag}${activeTag}
-        </div>
-      `;
-      timeline.appendChild(div);
+        <div class="frise-cercle">${icon}</div>
+        <div class="frise-label">
+          <p class="frise-titre">${etape.titre}</p>
+          ${dateTag}${encoursTag}
+        </div>`;
+      frise.appendChild(div);
     });
 
-    // Animer la ligne après rendu
+    // Calcul largeur de la ligne verte
     requestAnimationFrame(() => {
-      const timelineEl = document.getElementById('timeline')!;
-      const totalWidth = timelineEl.scrollWidth - 40 - 40; // marges gauche/droite
-      const lineWidth = progressRatio * totalWidth;
-      progressLine.style.width = lineWidth + 'px';
+      const friseEl = document.getElementById('frise')!;
+      const dots = friseEl.querySelectorAll<HTMLElement>('.frise-cercle');
+      if (dots.length < 2) return;
 
-      const fill = document.getElementById('progress-fill')!;
-      const pctEl = document.getElementById('progress-pct')!;
-      const pct = Math.round((doneCount / etapes.length) * 100);
-      fill.style.width = pct + '%';
-      pctEl.textContent = pct + ' %';
+      let endX = 0;
+      if (doneCount > 0) {
+        const lastDone = dots[Math.min(doneCount - 1, dots.length - 1)];
+        const nextDot  = activeIdx >= 0 ? dots[activeIdx] : null;
+        const friseRect = friseEl.getBoundingClientRect();
+
+        if (nextDot) {
+          const r1 = lastDone.getBoundingClientRect();
+          const r2 = nextDot.getBoundingClientRect();
+          endX = ((r1.left + r1.width / 2) + (r2.left + r2.width / 2)) / 2 - friseRect.left;
+        } else {
+          const r = lastDone.getBoundingClientRect();
+          endX = r.left + r.width / 2 - friseRect.left;
+        }
+      }
+      line.style.width = endX + 'px';
     });
 
-    // Étape en cours
-    const activeEtape = etapes.find(e => e.active) || etapes.find(e => !e.done);
-    if (activeEtape) {
-      document.getElementById('next-titre')!.textContent = activeEtape.titre;
-      document.getElementById('next-desc')!.textContent  = activeEtape.desc;
-    }
+    // ── Tableau ──
+    const tbody = document.getElementById('detail-tbody')!;
+    tbody.innerHTML = '';
+
+    proc.evenements.forEach((ev, i) => {
+      const tr = document.createElement('tr');
+
+      // Colonne date
+      const tdDate = document.createElement('td');
+      tdDate.className = 'td-date';
+      tdDate.innerHTML = `<strong>${ev.date}</strong>${ev.heure}`;
+
+      // Colonne événement
+      const tdEv = document.createElement('td');
+      tdEv.className = 'td-event';
+      const badge = ev.encours ? `<span class="badge-encours">En cours</span>` : '';
+      tdEv.innerHTML = `<span class="event-lieu">${ev.lieu}</span><span class="event-detail">${ev.evenement}${badge}</span>`;
+
+      // Colonne complément
+      const tdComp = document.createElement('td');
+      tdComp.className = 'td-complement';
+      if (ev.complement) {
+        tdComp.innerHTML = ev.complement.map(c =>
+          `<div class="comp-ligne"><span class="comp-key">${c.cle}</span> ${c.valeur}</div>`
+        ).join('');
+      }
+
+      tr.appendChild(tdDate);
+      tr.appendChild(tdEv);
+      tr.appendChild(tdComp);
+      tbody.appendChild(tr);
+    });
   }
 
   const tabs = document.querySelectorAll<HTMLButtonElement>('.proc-tab');
