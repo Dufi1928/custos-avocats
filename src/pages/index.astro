@@ -11,6 +11,14 @@ const sorted = expertises.sort(
 const droitPenal = sorted.find((e: CollectionEntry<'expertises'>) => e.data.slug === 'droit-penal');
 const complementaires = sorted.filter((e: CollectionEntry<'expertises'>) => e.data.slug !== 'droit-penal');
 
+const domainIcons: Record<string, string> = {
+  'droit-des-mineurs': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>`,
+  'droit-des-etrangers': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  'droit-de-la-famille': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  'droit-penal-des-affaires': `<svg viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M496,120H384c0-8.844-7.164-16-16-16v-16c0-26.469-21.531-48-48-48H192c-26.469,0-48,21.531-48,48v16c-8.836,0-16,7.156-16,16H16C7.164,120,0,127.156,0,136v304c0,8.844,7.164,16,16,16h48c0,8.836,7.163,16,16,16h32c8.837,0,16-7.164,16-16h256c0,8.836,7.163,16,16,16h32c8.837,0,16-7.164,16-16h48c8.836,0,16-7.156,16-16V136C512,127.156,504.836,120,496,120zM176,88c0-8.828,7.18-16,16-16h128c8.82,0,16,7.172,16,16v16c-8.836,0-16,7.156-16,16H192c0-8.844-7.164-16-16-16V88zM480,424H32V152h448V424z"/><path d="M128,376c8.836,0,16-7.156,16-16V216c0-8.844-7.164-16-16-16s-16,7.156-16,16v144C112,368.844,119.164,376,128,376z"/><path d="M384,376c8.836,0,16-7.156,16-16V216c0-8.844-7.164-16-16-16s-16,7.156-16,16v144C368,368.844,375.164,376,384,376z"/></svg>`,
+  'dommages-corporels': `<svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M22,7H10C9.692,7,9.401,6.858,9.212,6.615C9.023,6.373,8.955,6.056,9.03,5.757l1-4C10.141,1.313,10.541,1,11,1h10c0.459,0,0.859,0.313,0.97,0.757l1,4c0.075,0.299,0.007,0.615-0.182,0.858C22.599,6.858,22.308,7,22,7z M11.281,5h9.438l-0.5-2h-8.438L11.281,5z"/><path d="M19,23h-6c-0.552,0-1-0.448-1-1v-2h-2c-0.552,0-1-0.448-1-1v-6c0-0.552,0.448-1,1-1h2v-2c0-0.552,0.448-1,1-1h6c0.552,0,1,0.448,1,1v2h2c0.552,0,1,0.448,1,1v6c0,0.552-0.448,1-1,1h-2v2C20,22.552,19.552,23,19,23z M14,21h4v-2c0-0.552,0.448-1,1-1h2v-4h-2c-0.552,0-1-0.448-1-1v-2h-4v2c0,0.552-0.448,1-1,1h-2v4h2c0.552,0,1,0.448,1,1V21z"/><path d="M30,27H2c-0.283,0-0.552-0.12-0.741-0.329c-0.19-0.21-0.282-0.489-0.254-0.771l2-20C3.056,5.389,3.486,5,4,5h24c0.514,0,0.944,0.389,0.995,0.9l2,20c0.028,0.281-0.064,0.561-0.254,0.771C30.552,26.88,30.283,27,30,27z M3.105,25h25.79l-1.8-18H4.905L3.105,25z"/></svg>`,
+};
+
 const piliers = [
   {
     titre: 'Secret professionnel',
@@ -86,6 +94,9 @@ const piliers = [
           <h3>{droitPenal.data.title}</h3>
         </div>
         <span class="expertise-arrow" aria-hidden="true">→</span>
+        <span class="expertise-principal-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M 16 4 C 13.75 4 12.234375 4.886719 10.875 5.625 C 9.515625 6.363281 8.28125 7 6 7 L 5 7 L 5 8 C 5 15.71875 7.609375 20.742188 10.25 23.78125 C 12.890625 26.820313 15.625 27.9375 15.625 27.9375 L 16 28.0625 L 16.375 27.9375 C 16.375 27.9375 19.109375 26.84375 21.75 23.8125 C 24.390625 20.78125 27 15.746094 27 8 L 27 7 L 26 7 C 23.730469 7 22.484375 6.363281 21.125 5.625 C 19.765625 4.886719 18.25 4 16 4 Z M 16 6 C 17.75 6 18.753906 6.613281 20.15625 7.375 C 21.339844 8.019531 22.910156 8.636719 24.9375 8.84375 C 24.746094 15.609375 22.507813 19.910156 20.25 22.5 C 18.203125 24.847656 16.484375 25.628906 16 25.84375 C 15.511719 25.625 13.796875 24.824219 11.75 22.46875 C 9.492188 19.871094 7.253906 15.578125 7.0625 8.84375 C 9.097656 8.636719 10.660156 8.019531 11.84375 7.375 C 13.246094 6.613281 14.25 6 16 6 Z"/></svg>
+        </span>
       </a>
     )}
 
@@ -98,7 +109,7 @@ const piliers = [
             class="expertise-card"
           >
             <h3>{e.data.title}</h3>
-            <span class="expertise-arrow" aria-hidden="true">→</span>
+            <span class="expertise-card-icon" aria-hidden="true" set:html={domainIcons[e.data.slug] ?? ''} />
           </a>
         </li>
       ))}
@@ -394,6 +405,8 @@ const piliers = [
   text-decoration: none;
   margin-bottom: 0.75rem;
   transition: background 0.25s;
+  position: relative;
+  overflow: hidden;
 }
 .expertise-card-principal:hover { background: #3a4a3e; opacity: 1; }
 .expertise-card-principal h3 {
@@ -406,6 +419,22 @@ const piliers = [
 .expertise-socle { color: rgba(244,245,242,0.65) !important; margin-bottom: 0.3rem !important; }
 .expertise-card-principal .expertise-arrow { color: rgba(244,245,242,0.7); font-size: 1.1rem; }
 .expertise-card-principal:hover .expertise-arrow { transform: translateX(5px); }
+
+.expertise-principal-icon {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 72px;
+  height: 72px;
+  color: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  transition: color 0.25s, transform 0.25s;
+}
+.expertise-principal-icon svg { width: 100%; height: 100%; }
+.expertise-card-principal:hover .expertise-principal-icon {
+  color: rgba(255, 255, 255, 0.26);
+  transform: scale(1.08) rotate(-4deg);
+}
 
 .expertise-complementaires-label {
   font-size: 0.68rem;
@@ -440,9 +469,10 @@ const piliers = [
   margin-top: 0;
 }
 
-.expertise-grid > li { grid-column: span 2; }
-.expertise-grid > li:nth-child(4) { grid-column: 2 / 4; }
-.expertise-grid > li:nth-child(5) { grid-column: 4 / 6; }
+/* 3 cards ligne 1 (33% chacune) + 2 cards ligne 2 (50% chacune) */
+.expertise-grid > li             { grid-column: span 2; }
+.expertise-grid > li:nth-child(4) { grid-column: span 3; }
+.expertise-grid > li:nth-child(5) { grid-column: span 3; }
 
 .expertise-card {
   display: flex;
@@ -457,6 +487,30 @@ const piliers = [
   color: var(--texte);
   height: 100%;
   animation: bubbleIn 0.5s ease both;
+  position: relative;
+  overflow: hidden;
+}
+
+.expertise-card-icon {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 68px;
+  height: 68px;
+  color: var(--vert);
+  opacity: 0.13;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.expertise-card-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.expertise-card:hover .expertise-card-icon {
+  opacity: 0.22;
+  transform: scale(1.08) rotate(-4deg);
 }
 .expertise-card:hover {
   background: rgba(74, 93, 78, 0.14);
@@ -487,26 +541,18 @@ const piliers = [
   font-size: 1.05rem;
   color: var(--texte);
   font-weight: 700;
-  margin-bottom: 0.2rem;
-}
-
-.expertise-card p {
-  font-size: 0.78rem;
-  color: var(--gris);
-  max-width: none;
   margin: 0;
-  line-height: 1.5;
 }
 
 .expertise-arrow {
-  display: block;
-  margin-top: auto;
-  padding-top: 1.5rem;
-  font-size: 0.9rem;
-  color: var(--vert);
-  transition: transform 0.25s;
+  font-size: 1rem;
+  color: rgba(244,245,242,0.7);
+  opacity: 0.7;
+  flex-shrink: 0;
+  transition: transform 0.25s, opacity 0.25s;
+  line-height: 1.4;
 }
-.expertise-card:hover .expertise-arrow { transform: translateX(5px); }
+.expertise-card-principal:hover .expertise-arrow { transform: translateX(5px); opacity: 1; }
 
 /* ======================================
    MISSION
