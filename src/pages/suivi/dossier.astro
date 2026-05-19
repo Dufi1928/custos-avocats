@@ -33,10 +33,10 @@ import Base from '../../layouts/Base.astro';
       </div>
     </div>
 
-    <!-- Frise Domino's style -->
-    <div class="frise-outer">
+    <!-- Frise style Chronopost -->
+    <div class="frise-card">
       <div class="frise-scroll">
-        <div class="frise-band" id="frise-band" role="list"></div>
+        <div class="frise" id="frise" role="list"></div>
       </div>
     </div>
 
@@ -67,7 +67,7 @@ import Base from '../../layouts/Base.astro';
 
 <style>
   .dossier-page {
-    max-width: 920px;
+    max-width: 940px;
     margin: 0 auto;
     padding-top: 2.5rem;
     padding-bottom: 4rem;
@@ -86,227 +86,223 @@ import Base from '../../layouts/Base.astro';
     overflow: hidden;
   }
 
-  .plant-deco {
-    position: absolute;
-    pointer-events: none;
-    user-select: none;
-    opacity: 0.17;
-  }
-
+  .plant-deco { position: absolute; pointer-events: none; user-select: none; opacity: 0.17; }
   .plant-right { top: -10px; right: -15px; width: 175px; }
   .plant-left  { bottom: -10px; left: -10px; width: 120px; transform: scaleX(-1); }
-
   .header-content { position: relative; z-index: 1; }
 
   .header-eyebrow {
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--vert);
-    margin: 0 0 0.6rem;
-    max-width: none;
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.16em; color: var(--vert); margin: 0 0 0.6rem; max-width: none;
   }
 
-  .dossier-meta {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.4rem;
-  }
+  .dossier-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
 
-  .dossier-ref {
-    font-family: var(--font-serif);
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--texte);
-  }
+  .dossier-ref { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--texte); }
 
   .dossier-badge {
-    background: #dde8de;
-    color: var(--vert);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.85rem;
-    border-radius: 999px;
-    border: 1px solid #b8cebb;
+    background: #dde8de; color: var(--vert); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; padding: 0.3rem 0.85rem;
+    border-radius: 999px; border: 1px solid #b8cebb;
   }
 
   .dossier-cabinet { font-size: 0.82rem; color: var(--gris); margin: 0; max-width: none; }
 
   /* ── Onglets ── */
   .proc-select-wrap {
-    background: var(--fond);
-    border: 1px dashed var(--gris-clair);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
+    background: var(--fond); border: 1px dashed var(--gris-clair);
+    border-radius: var(--radius); padding: 1rem 1.25rem;
   }
 
   .proc-select-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--gris);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin: 0 0 0.75rem;
-    max-width: none;
+    font-size: 0.72rem; font-weight: 700; color: var(--gris);
+    text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.75rem; max-width: none;
   }
 
   .proc-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
   .proc-tab {
-    background: var(--blanc);
-    border: 1.5px solid var(--gris-clair);
-    color: var(--texte);
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
+    background: var(--blanc); border: 1.5px solid var(--gris-clair); color: var(--texte);
+    padding: 0.4rem 0.9rem; border-radius: 999px; font-family: var(--font-sans);
+    font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap;
   }
-
   .proc-tab:hover  { border-color: var(--vert); color: var(--vert); }
   .proc-tab.active { background: var(--vert); border-color: var(--vert); color: #F4F5F2; }
 
-  /* ── Frise Domino's ── */
-  .frise-outer {
-    background: #2b3a2e;
+  /* ════════════════════════════════════
+     FRISE CHRONOPOST
+  ════════════════════════════════════ */
+  .frise-card {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
     border-radius: var(--radius);
-    padding: 1.25rem;
+    padding: 2.5rem 2rem 2rem;
   }
 
   .frise-scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gris-clair) transparent;
+    padding-bottom: 0.5rem;
   }
-  .frise-scroll::-webkit-scrollbar { display: none; }
 
-  .frise-band {
-    display: flex;
-    align-items: stretch;
+  /* Grille d'étapes */
+  .frise {
+    display: grid;
+    position: relative;
     min-width: max-content;
     width: 100%;
+    /* grid-template-columns set by JS */
   }
 
-  /* ── Étapes (style chevron Domino's) ── */
-  .frise-step {
-    flex: 1;
-    min-width: 110px;
-    height: 96px;
-    position: relative;
+  /* Ligne de fond (gris clair, toute la longueur) */
+  .frise-line-bg {
+    position: absolute;
+    top: 26px; /* moitié des cercles (52px / 2) */
+    height: 3px;
+    background: #d8d8d8;
+    border-radius: 2px;
+    z-index: 0;
+  }
+
+  /* Ligne des étapes faites (gris-vert) */
+  .frise-line-done {
+    position: absolute;
+    top: 26px;
+    height: 3px;
+    background: #a8b8ab;
+    border-radius: 2px;
+    z-index: 1;
+    transition: width 0.9s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* Ligne jusqu'à l'étape active (vert vif) */
+  .frise-line-active {
+    position: absolute;
+    top: 26px;
+    height: 3px;
+    background: var(--vert);
+    border-radius: 2px;
+    z-index: 2;
+    transition: width 0.9s cubic-bezier(.4,0,.2,1) 0.2s;
+  }
+
+  /* Étape */
+  .frise-etape {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.85rem;
+    position: relative;
+    z-index: 3;
+    min-width: 110px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Cercle — taille fixe identique pour tous */
+  .frise-cercle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 0.35rem;
-    padding: 0 0.5rem 0 1.6rem;
-    cursor: default;
-    transition: filter 0.2s;
-  }
-
-  /* Première étape : bord gauche arrondi, pas d'encoche gauche */
-  .frise-step:first-child {
-    border-radius: 6px 0 0 6px;
-    padding-left: 1rem;
-  }
-
-  /* Dernière étape : bord droit arrondi, pas de flèche droite */
-  .frise-step:last-child {
-    border-radius: 0 6px 6px 0;
-  }
-
-  /* Flèche droite via ::after (border trick) */
-  .frise-step:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: -22px;
-    top: 0;
-    width: 0;
-    height: 0;
-    border-top: 48px solid transparent;
-    border-bottom: 48px solid transparent;
-    border-left: 22px solid var(--step-color, #4A5D4E);
+    flex-shrink: 0;
+    position: relative;
     z-index: 4;
   }
 
-  /* Z-index pour que chaque flèche passe devant la suivante — défini via JS */
-  .frise-step { z-index: var(--step-z, 1); }
+  .frise-cercle svg { width: 22px; height: 22px; display: block; }
 
-  /* ── États ── */
-  .frise-step--done {
-    --step-color: #4A5D4E;
-    background: #4A5D4E;
-    color: rgba(255,255,255,0.9);
-  }
-
-  .frise-step--active {
-    --step-color: #3a6b42;
-    background: #3a6b42;
+  /* ── Fait : cercle gris-vert + coche ── */
+  .frise-etape--done .frise-cercle {
+    background: #a8b8ab;
+    border: 3px solid #a8b8ab;
     color: #fff;
   }
 
-  .frise-step--todo {
-    --step-color: #4a4a4a;
-    background: #4a4a4a;
-    color: rgba(255,255,255,0.4);
+  /* ── En cours : cercle VERT mis en avant ── */
+  .frise-etape--active .frise-cercle {
+    background: var(--vert);
+    border: 3px solid var(--vert);
+    color: #fff;
+    box-shadow: 0 0 0 6px rgba(74,93,78,0.18), 0 0 0 11px rgba(74,93,78,0.07);
+    animation: ringPulse 2.4s ease-in-out infinite;
   }
 
-  /* Icône */
-  .step-icon { flex-shrink: 0; }
-  .step-icon svg { width: 26px; height: 26px; display: block; }
+  @keyframes ringPulse {
+    0%, 100% { box-shadow: 0 0 0 6px rgba(74,93,78,0.18), 0 0 0 11px rgba(74,93,78,0.07); }
+    50%       { box-shadow: 0 0 0 9px rgba(74,93,78,0.12), 0 0 0 16px rgba(74,93,78,0.04); }
+  }
 
-  /* Label */
-  .step-label {
-    font-size: 0.65rem;
+  /* ── À faire : cercle blanc + bordure gris clair ── */
+  .frise-etape--todo .frise-cercle {
+    background: #fff;
+    border: 3px solid #d0d0d0;
+    color: #c8c8c8;
+  }
+
+  /* Labels */
+  .frise-label { text-align: center; padding: 0 0.25rem; }
+
+  .frise-titre {
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .frise-etape--done  .frise-titre { color: #999; }
+  .frise-etape--todo  .frise-titre { color: #ccc; }
+  .frise-etape--active .frise-titre {
+    color: var(--vert);
+    font-size: 0.82rem;
     font-weight: 800;
+  }
+
+  .frise-date {
+    display: block;
+    font-size: 0.68rem;
+    margin-top: 0.25rem;
+  }
+  .frise-etape--done  .frise-date { color: #bbb; }
+  .frise-etape--todo  .frise-date { color: #c0c0c0; }
+  .frise-etape--active .frise-date { color: var(--vert); font-weight: 600; }
+
+  .frise-encours {
+    display: block;
+    font-size: 0.64rem;
+    font-weight: 800;
+    color: var(--vert);
     text-transform: uppercase;
-    letter-spacing: 0.07em;
-    text-align: center;
-    line-height: 1.25;
-    max-width: 90px;
+    letter-spacing: 0.08em;
+    margin-top: 0.2rem;
+    animation: blink 1.9s ease-in-out infinite;
   }
 
-  /* Date */
-  .step-date {
-    font-size: 0.6rem;
-    opacity: 0.75;
-    text-align: center;
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
   }
 
-  /* Pulsation sur l'étape active */
-  .frise-step--active {
-    animation: stepPulse 2.5s ease-in-out infinite;
-  }
-
-  @keyframes stepPulse {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.15); }
-  }
-
-  /* ── Tableau Chronopost ── */
+  /* ════════════════════════════════════
+     TABLEAU CHRONOPOST
+  ════════════════════════════════════ */
   .chrono-wrap {
     border: 1px solid #ddd;
     border-radius: var(--radius);
     overflow: hidden;
   }
 
-  .chrono-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.875rem;
-  }
+  .chrono-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
 
-  .chrono-table thead tr {
-    background: #3a4a3e;
-    color: #F4F5F2;
-  }
+  .chrono-table thead tr { background: #3a4a3e; color: #F4F5F2; }
 
   .chrono-table th {
     padding: 0.95rem 1.4rem;
@@ -319,157 +315,72 @@ import Base from '../../layouts/Base.astro';
   }
 
   .col-date  { width: 170px; }
-  .col-event { width: 45%; }
-  .col-comp  { }
+  .col-event { width: 44%; }
 
-  /* Corps du tableau */
   .chrono-table tbody tr {
     border-bottom: 1px solid #e8e8e8;
     transition: background 0.15s;
   }
-
   .chrono-table tbody tr:last-child { border-bottom: none; }
   .chrono-table tbody tr:nth-child(odd)  { background: #fff; }
   .chrono-table tbody tr:nth-child(even) { background: #f6f7f5; }
   .chrono-table tbody tr:hover { background: #edf2ee; }
 
-  .chrono-table td {
-    padding: 1.1rem 1.4rem;
-    vertical-align: top;
-    line-height: 1.5;
-  }
+  .chrono-table td { padding: 1.1rem 1.4rem; vertical-align: top; line-height: 1.5; }
 
-  /* Colonne date */
-  .td-jour {
-    display: block;
-    font-weight: 700;
-    font-size: 0.85rem;
-    color: #222;
-    margin-bottom: 0.15rem;
-  }
+  .td-jour  { display: block; font-weight: 700; font-size: 0.85rem; color: #222; margin-bottom: 0.15rem; }
+  .td-heure { font-size: 0.8rem; color: #888; }
 
-  .td-heure {
-    font-size: 0.8rem;
-    color: #888;
-  }
-
-  /* Colonne événement */
   .td-lieu {
-    display: block;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--vert);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    margin-bottom: 0.25rem;
+    display: block; font-size: 0.72rem; font-weight: 800;
+    color: var(--vert); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.25rem;
   }
-
-  .td-titre {
-    display: block;
-    font-size: 0.875rem;
-    color: #222;
-    line-height: 1.4;
-  }
+  .td-titre  { display: block; font-size: 0.875rem; color: #222; line-height: 1.4; }
 
   .td-badge-encours {
-    display: inline-block;
-    margin-top: 0.35rem;
-    background: #dde8de;
-    color: var(--vert);
-    font-size: 0.65rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    padding: 0.15rem 0.6rem;
-    border-radius: 999px;
-    border: 1px solid #b8cebb;
+    display: inline-block; margin-top: 0.35rem;
+    background: #dde8de; color: var(--vert); font-size: 0.65rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em; padding: 0.15rem 0.6rem;
+    border-radius: 999px; border: 1px solid #b8cebb;
   }
 
-  /* Colonne complément */
-  .td-comp-ligne {
-    display: flex;
-    gap: 0.4rem;
-    font-size: 0.82rem;
-    color: #555;
-    margin-bottom: 0.2rem;
-    line-height: 1.4;
-  }
-
-  .td-comp-cle {
-    font-weight: 700;
-    color: #333;
-    white-space: nowrap;
-  }
+  .td-comp-ligne { display: flex; gap: 0.4rem; font-size: 0.82rem; color: #555; margin-bottom: 0.2rem; line-height: 1.4; }
+  .td-comp-cle   { font-weight: 700; color: #333; white-space: nowrap; }
 
   /* ── Contact ── */
   .dossier-contact {
-    position: relative;
-    text-align: center;
-    padding: 2rem 1rem;
-    border-top: 1px solid var(--gris-clair);
-    overflow: hidden;
+    position: relative; text-align: center;
+    padding: 2rem 1rem; border-top: 1px solid var(--gris-clair); overflow: hidden;
   }
 
   .plant-contact {
-    position: absolute;
-    right: -20px;
-    bottom: -10px;
-    width: 130px;
-    opacity: 0.13;
-    pointer-events: none;
-    user-select: none;
-    transform: scaleX(-1);
+    position: absolute; right: -20px; bottom: -10px; width: 130px;
+    opacity: 0.13; pointer-events: none; user-select: none; transform: scaleX(-1);
   }
 
-  .dossier-contact p {
-    font-size: 0.9rem;
-    color: var(--gris);
-    margin-bottom: 1rem;
-    max-width: none;
-    position: relative;
-    z-index: 1;
-  }
+  .dossier-contact p { font-size: 0.9rem; color: var(--gris); margin-bottom: 1rem; max-width: none; position: relative; z-index: 1; }
 
   .contact-btn {
-    display: inline-block;
-    padding: 0.75rem 2rem;
-    border: 1.5px solid var(--vert);
-    color: var(--vert);
-    border-radius: var(--radius);
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-    position: relative;
-    z-index: 1;
+    display: inline-block; padding: 0.75rem 2rem;
+    border: 1.5px solid var(--vert); color: var(--vert); border-radius: var(--radius);
+    font-size: 0.875rem; font-weight: 600; text-decoration: none;
+    transition: background 0.2s, color 0.2s; position: relative; z-index: 1;
   }
-
   .contact-btn:hover { background: var(--vert); color: #F4F5F2; }
 
   @media (max-width: 640px) {
     .plant-right, .plant-left { display: none; }
-    .chrono-table th:last-child,
-    .chrono-table td:last-child { display: none; }
-    .frise-step { min-width: 90px; }
+    .chrono-table th:last-child, .chrono-table td:last-child { display: none; }
+    .frise-etape { min-width: 90px; }
+    .dossier-header { padding: 1.5rem 1.25rem; }
   }
 </style>
 
 <script>
-  /* ── Icônes SVG par index d'étape ── */
-  const ICONS = [
-    /* 0 — entretien / consultation */
-    `<svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-    /* 1 — analyse / document */
-    `<svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-    /* 2 — rédaction / préparation */
-    `<svg viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-    /* 3 — audience / balance */
-    `<svg viewBox="0 0 24 24" fill="none"><line x1="12" y1="3" x2="12" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 6l9-3 9 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 8l-2 5c0 1.66 1.34 3 3 3s3-1.34 3-3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 8l-2 5c0 1.66 1.34 3 3 3s3-1.34 3-3L19 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="5" y1="21" x2="19" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-    /* 4 — décision / jugement */
-    `<svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="22 4 12 14.01 9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-    /* 5 — étape finale / indemnisation */
-    `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-  ];
+  /* ── Icônes par état ── */
+  const ICON_DONE = `<svg viewBox="0 0 24 24" fill="none"><polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const ICON_CLOCK = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><polyline points="12,7 12,12 15,15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+  const ICON_TODO  = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/></svg>`;
 
   type Etape = { titre: string; done?: boolean; active?: boolean; date?: string };
   type Evenement = {
@@ -483,71 +394,75 @@ import Base from '../../layouts/Base.astro';
     penal: {
       label: 'Procédure pénale',
       etapes: [
-        { titre: '1er entretien',       done: true,  date: '03 mars 2025' },
-        { titre: 'Analyse des pièces',   done: true,  date: '14 mars 2025' },
-        { titre: 'Préparation défense',  done: false, active: true },
-        { titre: 'Audience',             done: false },
-        { titre: 'Décision',             done: false },
+        { titre: '1er rendez-vous',             done: true,  date: '03 mars 2025' },
+        { titre: 'Jet de conclusions',           done: true,  date: '28 mars 2025' },
+        { titre: 'Conclusions finalisées',       done: true,  date: '15 avr. 2025' },
+        { titre: 'Mise en état',                 done: true,  date: '02 mai 2025' },
+        { titre: 'Transmission des pièces',      done: true,  date: '19 mai 2025' },
+        { titre: 'En attente d\'audience',        done: false, active: true },
+        { titre: 'Audience',                     done: false, date: '18 août 2026' },
+        { titre: 'Décision',                     done: false },
       ],
       evenements: [
-        { date: 'Lundi 17 mars 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Préparation de la défense', encours: true, complement: [{ cle: 'Statut :', valeur: 'Rédaction des conclusions en cours' }] },
-        { date: 'Vendredi 14 mars 2025', heure: '11h30', lieu: 'Cabinet Custos Avocats', titre: 'Note d\'analyse transmise au client', complement: [{ cle: 'Commentaire :', valeur: 'Synthèse des actes de procédure communiquée' }] },
-        { date: 'Vendredi 14 mars 2025', heure: '09h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse des actes de procédure', complement: [{ cle: 'Pièces examinées :', valeur: 'Procès-verbal, réquisitions du parquet' }] },
-        { date: 'Lundi 03 mars 2025', heure: '15h15', lieu: 'Cabinet Custos Avocats', titre: 'Dossier constitué', complement: [{ cle: 'Commentaire :', valeur: 'Pièces d\'identité et documents reçus' }] },
-        { date: 'Lundi 03 mars 2025', heure: '14h30', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }, { cle: 'Commentaire :', valeur: 'Analyse de la situation, remise des identifiants' }] },
+        { date: 'Mardi 19 mai 2025',    heure: '11h00', lieu: 'Cabinet Custos Avocats', titre: 'En attente de l\'audience fixée au 18 août 2026', encours: true, complement: [{ cle: 'Statut :', valeur: 'Dossier complet — audience fixée au 18 août 2026' }] },
+        { date: 'Lundi 19 mai 2025',    heure: '09h30', lieu: 'Greffe du tribunal', titre: 'Transmission des pièces au greffe', complement: [{ cle: 'Commentaire :', valeur: 'Dossier complet transmis à la juridiction' }] },
+        { date: 'Jeudi 02 mai 2025',    heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Mise en état du dossier', complement: [{ cle: 'Commentaire :', valeur: 'Vérification de la complétude des pièces' }] },
+        { date: 'Mardi 15 avril 2025',  heure: '14h30', lieu: 'Cabinet Custos Avocats', titre: 'Conclusions finalisées et signées', complement: [{ cle: 'Commentaire :', valeur: 'Version définitive des conclusions de défense' }] },
+        { date: 'Vendredi 28 mars 2025', heure: '16h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier jet de conclusions', complement: [{ cle: 'Commentaire :', valeur: 'Rédaction des premières conclusions de défense' }] },
+        { date: 'Lundi 03 mars 2025',   heure: '14h30', lieu: 'Cabinet Custos Avocats', titre: 'Premier rendez-vous', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }, { cle: 'Commentaire :', valeur: 'Analyse de la situation, remise des identifiants de suivi' }] },
       ],
     },
     mineurs: {
       label: 'Droit des mineurs',
       etapes: [
-        { titre: '1er entretien',    done: true,  date: '10 avr. 2025' },
-        { titre: 'Analyse dossier',  done: true,  date: '18 avr. 2025' },
-        { titre: 'Saisine du juge',  done: false, active: true },
-        { titre: 'Audience',         done: false },
+        { titre: '1er rendez-vous',   done: true,  date: '10 avr. 2025' },
+        { titre: 'Analyse dossier',   done: true,  date: '18 avr. 2025' },
+        { titre: 'Saisine du juge',   done: false, active: true },
+        { titre: 'Audience',          done: false },
         { titre: 'Mesure / Décision', done: false },
       ],
       evenements: [
-        { date: 'Lundi 22 avril 2025', heure: '09h00', lieu: 'Cabinet Custos Avocats', titre: 'Préparation de la requête au juge des enfants', encours: true, complement: [{ cle: 'Statut :', valeur: 'Rédaction en cours' }] },
+        { date: 'Lundi 22 avril 2025',  heure: '09h00', lieu: 'Cabinet Custos Avocats', titre: 'Préparation de la requête au juge des enfants', encours: true, complement: [{ cle: 'Statut :', valeur: 'Rédaction en cours' }] },
         { date: 'Vendredi 18 avril 2025', heure: '14h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse du dossier éducatif et pénal', complement: [{ cle: 'Pièces :', valeur: 'Rapports éducatifs et actes de procédure' }] },
-        { date: 'Jeudi 10 avril 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien — mineur et représentants légaux', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }, { cle: 'Commentaire :', valeur: 'Droits expliqués, situation évaluée' }] },
+        { date: 'Jeudi 10 avril 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien — mineur et représentants légaux', complement: [{ cle: 'Avocat :', valeur: 'Maître Rachel ROETYNCK' }] },
       ],
     },
     famille: {
       label: 'Droit de la famille',
       etapes: [
-        { titre: 'Consultation',         done: true,  date: '20 fév. 2025' },
-        { titre: 'Assignation',          done: true,  date: '05 mars 2025' },
-        { titre: 'Échange de pièces',    done: false, active: true },
-        { titre: 'Conciliation',         done: false },
-        { titre: 'Audience au fond',     done: false },
-        { titre: 'Jugement',             done: false },
+        { titre: 'Consultation',       done: true,  date: '20 fév. 2025' },
+        { titre: 'Assignation',        done: true,  date: '05 mars 2025' },
+        { titre: 'Échange de pièces',  done: false, active: true },
+        { titre: 'Conciliation',       done: false },
+        { titre: 'Audience au fond',   done: false },
+        { titre: 'Jugement',           done: false },
       ],
       evenements: [
         { date: 'Mardi 18 mars 2025', heure: '11h00', lieu: 'Cabinet Custos Avocats', titre: 'Échange de pièces en cours', encours: true, complement: [{ cle: 'Statut :', valeur: 'Attente de communication des pièces adverses' }] },
         { date: 'Mercredi 05 mars 2025', heure: '10h30', lieu: 'Tribunal judiciaire de Lille', titre: 'Assignation déposée au greffe', complement: [{ cle: 'Commentaire :', valeur: 'Introduction de l\'instance devant le JAF' }] },
-        { date: 'Jeudi 20 février 2025', heure: '14h00', lieu: 'Cabinet Custos Avocats', titre: 'Consultation initiale', complement: [{ cle: 'Avocat :', valeur: 'Maître Lauriana DAVRILLON' }, { cle: 'Commentaire :', valeur: 'Enjeux identifiés, stratégie définie' }] },
+        { date: 'Jeudi 20 février 2025', heure: '14h00', lieu: 'Cabinet Custos Avocats', titre: 'Consultation initiale', complement: [{ cle: 'Avocat :', valeur: 'Maître Lauriana DAVRILLON' }] },
       ],
     },
     affaires: {
       label: 'Pénal des affaires',
       etapes: [
-        { titre: '1er entretien',  done: true,  date: '01 avr. 2025' },
-        { titre: 'Analyse actes',  done: true,  date: '12 avr. 2025' },
-        { titre: 'Enquête',        done: false, active: true },
-        { titre: 'Renvoi',         done: false },
-        { titre: 'Audience',       done: false },
-        { titre: 'Décision',       done: false },
+        { titre: '1er entretien', done: true,  date: '01 avr. 2025' },
+        { titre: 'Analyse actes', done: true,  date: '12 avr. 2025' },
+        { titre: 'Enquête',       done: false, active: true },
+        { titre: 'Renvoi',        done: false },
+        { titre: 'Audience',      done: false },
+        { titre: 'Décision',      done: false },
       ],
       evenements: [
         { date: 'Lundi 14 avril 2025', heure: '09h00', lieu: 'Cabinet Custos Avocats', titre: 'Suivi de l\'enquête préliminaire', encours: true, complement: [{ cle: 'Statut :', valeur: 'Contact en cours avec le parquet financier' }] },
         { date: 'Samedi 12 avril 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse des actes d\'enquête', complement: [{ cle: 'Pièces :', valeur: 'Convocation et PV d\'audition libre examinés' }] },
-        { date: 'Mardi 01 avril 2025', heure: '16h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien', complement: [{ cle: 'Avocat :', valeur: 'Maître Alexis HAROUNE' }, { cle: 'Commentaire :', valeur: 'Analyse des risques pénaux, stratégie établie' }] },
+        { date: 'Mardi 01 avril 2025', heure: '16h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien', complement: [{ cle: 'Avocat :', valeur: 'Maître Alexis HAROUNE' }] },
       ],
     },
     corporel: {
       label: 'Dommages corporels',
       etapes: [
-        { titre: '1er entretien',     done: true,  date: '15 mars 2025' },
+        { titre: '1er entretien',      done: true,  date: '15 mars 2025' },
         { titre: 'Expertise médicale', done: true,  date: '02 avr. 2025' },
         { titre: 'Consolidation',      done: false, active: true },
         { titre: 'Négociation',        done: false },
@@ -556,23 +471,23 @@ import Base from '../../layouts/Base.astro';
       ],
       evenements: [
         { date: 'Jeudi 10 avril 2025', heure: '09h30', lieu: 'Cabinet Custos Avocats', titre: 'Attente de consolidation médicale', encours: true, complement: [{ cle: 'Statut :', valeur: 'Évaluation du préjudice définitif en attente' }] },
-        { date: 'Mercredi 02 avril 2025', heure: '14h00', lieu: 'Service de médecine légale', titre: 'Expertise médicale contradictoire', complement: [{ cle: 'Commentaire :', valeur: 'Assistance lors de l\'expertise, observations formulées' }] },
-        { date: 'Samedi 15 mars 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien', complement: [{ cle: 'Avocat :', valeur: 'Maître Lola DAVID' }, { cle: 'Commentaire :', valeur: 'Évaluation du préjudice, recueil des pièces médicales' }] },
+        { date: 'Mercredi 02 avril 2025', heure: '14h00', lieu: 'Service de médecine légale', titre: 'Expertise médicale contradictoire', complement: [{ cle: 'Commentaire :', valeur: 'Assistance lors de l\'expertise' }] },
+        { date: 'Samedi 15 mars 2025', heure: '10h00', lieu: 'Cabinet Custos Avocats', titre: 'Premier entretien', complement: [{ cle: 'Avocat :', valeur: 'Maître Lola DAVID' }] },
       ],
     },
     etranger: {
       label: 'Droit des étrangers',
       etapes: [
-        { titre: 'Analyse dossier',  done: true,  date: '01 avr. 2025' },
-        { titre: 'Recours déposé',   done: true,  date: '11 avr. 2025' },
-        { titre: 'Instruction',      done: false, active: true },
-        { titre: 'Audience',         done: false },
-        { titre: 'Décision',         done: false },
+        { titre: 'Analyse dossier', done: true,  date: '01 avr. 2025' },
+        { titre: 'Recours déposé',  done: true,  date: '11 avr. 2025' },
+        { titre: 'Instruction',     done: false, active: true },
+        { titre: 'Audience',        done: false },
+        { titre: 'Décision',        done: false },
       ],
       evenements: [
         { date: 'Lundi 14 avril 2025', heure: '11h00', lieu: 'Tribunal administratif de Lille', titre: 'Instruction en cours', encours: true, complement: [{ cle: 'Statut :', valeur: 'Échange de mémoires avec le tribunal' }] },
         { date: 'Vendredi 11 avril 2025', heure: '09h30', lieu: 'Tribunal administratif de Lille', titre: 'Recours enregistré au greffe', complement: [{ cle: 'Commentaire :', valeur: 'Recours contre OQTF déposé' }] },
-        { date: 'Mardi 01 avril 2025', heure: '15h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse du dossier administratif', complement: [{ cle: 'Avocat :', valeur: 'Maître Chloé JAULIN-DENISSELLE' }, { cle: 'Commentaire :', valeur: 'Voies de recours identifiées, stratégie définie' }] },
+        { date: 'Mardi 01 avril 2025', heure: '15h00', lieu: 'Cabinet Custos Avocats', titre: 'Analyse du dossier administratif', complement: [{ cle: 'Avocat :', valeur: 'Maître Chloé JAULIN-DENISSELLE' }] },
       ],
     },
   };
@@ -588,28 +503,68 @@ import Base from '../../layouts/Base.astro';
 
     document.getElementById('dossier-proc-label')!.textContent = proc.label;
 
-    /* ── Frise ── */
-    const band = document.getElementById('frise-band')!;
-    band.innerHTML = '';
-    const n = proc.etapes.length;
+    /* ══ FRISE ══ */
+    const friseEl = document.getElementById('frise')!;
+    friseEl.innerHTML = '';
 
+    const n = proc.etapes.length;
+    const doneCount  = proc.etapes.filter(e => e.done).length;
+    const activeIdx  = proc.etapes.findIndex(e => e.active);
+
+    /* Grid */
+    friseEl.style.gridTemplateColumns = `repeat(${n}, minmax(110px, 1fr))`;
+
+    /* Ligne de fond : de centre col 0 à centre col n-1 */
+    const bgLine = document.createElement('div');
+    bgLine.className = 'frise-line-bg';
+    bgLine.style.left  = `calc(${50 / n}%)`;
+    bgLine.style.width = `calc(${(n - 1) / n * 100}%)`;
+    friseEl.appendChild(bgLine);
+
+    /* Ligne des étapes faites (gris-vert) */
+    if (doneCount > 0) {
+      const doneLine = document.createElement('div');
+      doneLine.className = 'frise-line-done';
+      doneLine.style.left  = `calc(${50 / n}%)`;
+      /* Va du centre step 0 au centre step (doneCount-1) */
+      doneLine.style.width = `calc(${(doneCount - 1) / n * 100}%)`;
+      friseEl.appendChild(doneLine);
+    }
+
+    /* Ligne verte : du centre du dernier done au centre de l'active */
+    if (activeIdx > 0 && doneCount > 0) {
+      const activeLine = document.createElement('div');
+      activeLine.className = 'frise-line-active';
+      /* Commence au centre du dernier step done */
+      const startPct = (doneCount - 0.5) / n * 100;
+      /* Finit au centre du step active */
+      const endPct   = (activeIdx + 0.5) / n * 100;
+      activeLine.style.left  = `calc(${startPct}%)`;
+      activeLine.style.width = `calc(${endPct - startPct}%)`;
+      friseEl.appendChild(activeLine);
+    }
+
+    /* Étapes */
     proc.etapes.forEach((etape, i) => {
       const state = etape.done ? 'done' : etape.active ? 'active' : 'todo';
       const div = document.createElement('div');
-      div.className = `frise-step frise-step--${state}`;
+      div.className = `frise-etape frise-etape--${state}`;
       div.setAttribute('role', 'listitem');
-      /* Z-index décroissant : chaque flèche passe devant la suivante */
-      div.style.setProperty('--step-z', String(n - i));
+      div.style.animationDelay = `${i * 0.07}s`;
+
+      const icon = etape.done ? ICON_DONE : etape.active ? ICON_CLOCK : ICON_TODO;
 
       div.innerHTML = `
-        <div class="step-icon">${ICONS[Math.min(i, ICONS.length - 1)]}</div>
-        <div class="step-label">${etape.titre}</div>
-        ${etape.date ? `<div class="step-date">${etape.date}</div>` : ''}
-      `;
-      band.appendChild(div);
+        <div class="frise-cercle">${icon}</div>
+        <div class="frise-label">
+          <p class="frise-titre">${etape.titre}</p>
+          ${etape.date   ? `<span class="frise-date">${etape.date}</span>` : ''}
+          ${etape.active ? `<span class="frise-encours">En cours</span>` : ''}
+        </div>`;
+      friseEl.appendChild(div);
     });
 
-    /* ── Tableau ── */
+    /* ══ TABLEAU ══ */
     const tbody = document.getElementById('chrono-tbody')!;
     tbody.innerHTML = '';
 
@@ -629,8 +584,7 @@ import Base from '../../layouts/Base.astro';
           <span class="td-titre">${ev.titre}</span>
           ${ev.encours ? `<span class="td-badge-encours">En cours</span>` : ''}
         </td>
-        <td>${compHTML}</td>
-      `;
+        <td>${compHTML}</td>`;
       tbody.appendChild(tr);
     });
   }
