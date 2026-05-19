@@ -1,0 +1,557 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const procedures = {
+  penal: {
+    label: 'Procédure pénale',
+    etapes: [
+      { titre: 'Premier entretien', desc: 'Analyse de votre situation et constitution du dossier.', done: true, date: '03 mars 2025' },
+      { titre: 'Analyse des pièces', desc: 'Étude approfondie des pièces du dossier et des actes de procédure.', done: true, date: '14 mars 2025' },
+      { titre: 'Préparation de la défense', desc: 'Élaboration de la stratégie de défense et rédaction des conclusions.', done: false, active: true },
+      { titre: 'Audience', desc: 'Plaidoirie devant le tribunal correctionnel.', done: false },
+      { titre: 'Décision', desc: 'Rendu du jugement par le tribunal.', done: false },
+    ],
+  },
+  gav: {
+    label: 'Garde à vue',
+    etapes: [
+      { titre: 'Intervention en garde à vue', desc: 'Assistance immédiate lors de la mesure de privation de liberté.', done: true, date: '10 avr. 2025' },
+      { titre: 'Entretien confidentiel', desc: 'Échanges et conseils avant audition par les enquêteurs.', done: true, date: '10 avr. 2025' },
+      { titre: 'Suivi post-garde à vue', desc: 'Analyse de la suite de la procédure : classement, convocation, mise en examen.', done: true, date: '17 avr. 2025' },
+      { titre: 'Constitution du dossier', desc: 'Rassemblement des pièces et préparation de la défense.', done: false, active: true },
+      { titre: 'Audience', desc: 'Plaidoirie devant la juridiction compétente.', done: false },
+      { titre: 'Jugement', desc: 'Rendu de la décision.', done: false },
+    ],
+  },
+  famille: {
+    label: 'Droit de la famille',
+    etapes: [
+      { titre: 'Consultation initiale', desc: 'Évaluation de la situation familiale et des enjeux juridiques.', done: true, date: '20 fév. 2025' },
+      { titre: 'Mise en demeure / Assignation', desc: 'Démarches préalables ou introduction de la procédure.', done: true, date: '05 mars 2025' },
+      { titre: 'Échange de pièces', desc: 'Communication des pièces entre les parties et le tribunal.', done: false, active: true },
+      { titre: 'Audience de conciliation', desc: 'Tentative de règlement amiable devant le juge.', done: false },
+      { titre: 'Audience au fond', desc: 'Plaidoiries sur le fond du litige.', done: false },
+      { titre: 'Jugement', desc: 'Rendu de la décision définitive.', done: false },
+    ],
+  },
+  etranger: {
+    label: 'Droit des étrangers',
+    etapes: [
+      { titre: 'Analyse du dossier', desc: 'Examen de la situation administrative et des voies de recours.', done: true, date: '01 avr. 2025' },
+      { titre: 'Recours déposé', desc: 'Introduction du recours devant la juridiction compétente (TA, CNDA…).', done: true, date: '11 avr. 2025' },
+      { titre: 'Instruction', desc: 'Échange de mémoires et pièces avec la juridiction.', done: false, active: true },
+      { titre: 'Audience', desc: 'Plaidoirie devant le tribunal ou la cour.', done: false },
+      { titre: 'Décision', desc: 'Rendu de la décision sur votre situation.', done: false },
+    ],
+  },
+};
+
+type ProcKey = keyof typeof procedures;
+const defaultProc: ProcKey = 'penal';
+---
+
+<Base title="Mon dossier" description="Suivi confidentiel de votre dossier — Custos Avocats.">
+
+  <section class="dossier-page" aria-label="Suivi de dossier" id="dossier-root">
+
+    <!-- En-tête dossier -->
+    <div class="dossier-header">
+      <div class="dossier-meta">
+        <span class="dossier-ref" id="dossier-ref">— Chargement…</span>
+        <span class="dossier-badge" id="dossier-proc">Procédure pénale</span>
+      </div>
+      <p class="dossier-cabinet">Cabinet Custos Avocats — Barreau de Lille</p>
+    </div>
+
+    <!-- Sélecteur de procédure (demo) -->
+    <div class="proc-select-wrap" aria-label="Choisir un type de procédure (démo)">
+      <p class="proc-select-label">Aperçu des types de procédure :</p>
+      <div class="proc-tabs" role="tablist" id="proc-tabs">
+        <button role="tab" aria-selected="true"  data-proc="penal"   class="proc-tab active">Pénal</button>
+        <button role="tab" aria-selected="false" data-proc="gav"     class="proc-tab">Garde à vue</button>
+        <button role="tab" aria-selected="false" data-proc="famille" class="proc-tab">Famille</button>
+        <button role="tab" aria-selected="false" data-proc="etranger" class="proc-tab">Étranger</button>
+      </div>
+    </div>
+
+    <!-- Tracker de progression -->
+    <div class="tracker" id="tracker" aria-label="Étapes de la procédure">
+      <!-- Injecté par JS -->
+    </div>
+
+    <!-- Prochaine étape -->
+    <div class="next-step" id="next-step">
+      <div class="next-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/>
+          <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <p class="next-label">Prochaine étape</p>
+        <p class="next-titre" id="next-titre">—</p>
+        <p class="next-desc" id="next-desc"></p>
+      </div>
+    </div>
+
+    <!-- Barre de progression globale -->
+    <div class="progress-wrap" aria-label="Avancement global du dossier">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <span class="progress-pct" id="progress-pct">0 %</span>
+    </div>
+
+    <!-- Contact -->
+    <div class="dossier-contact">
+      <p>Une question sur votre dossier ?</p>
+      <a href="/contact" class="contact-btn">Contacter le cabinet</a>
+    </div>
+
+  </section>
+
+</Base>
+
+<style>
+  .dossier-page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* ── En-tête ── */
+  .dossier-header {
+    border-bottom: 1px solid var(--gris-clair);
+    padding-bottom: 1.5rem;
+  }
+
+  .dossier-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+
+  .dossier-ref {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+
+  .dossier-badge {
+    display: inline-block;
+    background: #dde8de;
+    color: var(--vert);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid #b8cebb;
+  }
+
+  .dossier-cabinet {
+    font-size: 0.8rem;
+    color: var(--gris);
+    margin: 0;
+    max-width: none;
+  }
+
+  /* ── Sélecteur de procédure (démo) ── */
+  .proc-select-wrap {
+    background: var(--fond);
+    border: 1px dashed var(--gris-clair);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+  }
+
+  .proc-select-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gris);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.75rem;
+    max-width: none;
+  }
+
+  .proc-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .proc-tab {
+    background: var(--blanc);
+    border: 1.5px solid var(--gris-clair);
+    color: var(--texte);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .proc-tab:hover { border-color: var(--vert); color: var(--vert); }
+  .proc-tab.active { background: var(--vert); border-color: var(--vert); color: #F4F5F2; }
+
+  /* ── Tracker ── */
+  .tracker {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .tracker::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: var(--gris-clair);
+    z-index: 0;
+  }
+
+  .etape {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 0.75rem 0;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.35s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .etape-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s;
+  }
+
+  .etape-dot svg { width: 18px; height: 18px; }
+
+  .etape--done .etape-dot {
+    background: var(--vert);
+    border: 2px solid var(--vert);
+    color: #F4F5F2;
+  }
+
+  .etape--active .etape-dot {
+    background: #dde8de;
+    border: 2.5px solid var(--vert);
+    color: var(--vert);
+  }
+
+  .etape--todo .etape-dot {
+    background: var(--blanc);
+    border: 2px solid var(--gris-clair);
+    color: var(--gris-clair);
+  }
+
+  .etape-body {
+    flex: 1;
+    padding-top: 0.5rem;
+    min-width: 0;
+  }
+
+  .etape-titre {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--texte);
+    margin: 0 0 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .etape--todo .etape-titre { color: var(--gris); }
+
+  .etape-date {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--vert);
+    background: #dde8de;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+  }
+
+  .etape-en-cours {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--vert);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .etape-desc {
+    font-size: 0.845rem;
+    color: var(--anthracite);
+    margin: 0;
+    max-width: none;
+    line-height: 1.6;
+  }
+
+  .etape--todo .etape-desc { color: var(--gris); }
+
+  /* ── Prochaine étape ── */
+  .next-step {
+    display: flex;
+    gap: 1rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-left: 4px solid var(--vert);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1.25rem 1.5rem;
+    align-items: flex-start;
+  }
+
+  .next-icon {
+    color: var(--vert);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .next-icon svg { width: 22px; height: 22px; }
+
+  .next-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--vert);
+    margin: 0 0 0.25rem;
+    max-width: none;
+  }
+
+  .next-titre {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--texte);
+    margin: 0 0 0.2rem;
+    max-width: none;
+  }
+
+  .next-desc {
+    font-size: 0.845rem;
+    color: var(--anthracite);
+    margin: 0;
+    max-width: none;
+  }
+
+  /* ── Barre de progression ── */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .progress-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: var(--gris-clair);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--vert);
+    border-radius: 999px;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+
+  .progress-pct {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--vert);
+    min-width: 3.5ch;
+    text-align: right;
+  }
+
+  /* ── Contact ── */
+  .dossier-contact {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gris-clair);
+  }
+
+  .dossier-contact p {
+    font-size: 0.875rem;
+    color: var(--gris);
+    margin-bottom: 0.75rem;
+    max-width: none;
+  }
+
+  .contact-btn {
+    display: inline-block;
+    padding: 0.7rem 1.75rem;
+    border: 1.5px solid var(--vert);
+    color: var(--vert);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .contact-btn:hover {
+    background: var(--vert);
+    color: #F4F5F2;
+  }
+</style>
+
+<script>
+  const procedures: Record<string, {
+    label: string;
+    etapes: { titre: string; desc: string; done?: boolean; active?: boolean; date?: string }[]
+  }> = {
+    penal: {
+      label: 'Procédure pénale',
+      etapes: [
+        { titre: 'Premier entretien', desc: 'Analyse de votre situation et constitution du dossier.', done: true, date: '03 mars 2025' },
+        { titre: 'Analyse des pièces', desc: 'Étude approfondie des pièces du dossier et des actes de procédure.', done: true, date: '14 mars 2025' },
+        { titre: 'Préparation de la défense', desc: 'Élaboration de la stratégie de défense et rédaction des conclusions.', done: false, active: true },
+        { titre: 'Audience', desc: 'Plaidoirie devant le tribunal correctionnel.', done: false },
+        { titre: 'Décision', desc: 'Rendu du jugement par le tribunal.', done: false },
+      ],
+    },
+    gav: {
+      label: 'Garde à vue',
+      etapes: [
+        { titre: 'Intervention en garde à vue', desc: 'Assistance immédiate lors de la mesure de privation de liberté.', done: true, date: '10 avr. 2025' },
+        { titre: 'Entretien confidentiel', desc: 'Échanges et conseils avant audition par les enquêteurs.', done: true, date: '10 avr. 2025' },
+        { titre: 'Suivi post-garde à vue', desc: 'Analyse de la suite de la procédure : classement, convocation, mise en examen.', done: true, date: '17 avr. 2025' },
+        { titre: 'Constitution du dossier', desc: 'Rassemblement des pièces et préparation de la défense.', done: false, active: true },
+        { titre: 'Audience', desc: 'Plaidoirie devant la juridiction compétente.', done: false },
+        { titre: 'Jugement', desc: 'Rendu de la décision.', done: false },
+      ],
+    },
+    famille: {
+      label: 'Droit de la famille',
+      etapes: [
+        { titre: 'Consultation initiale', desc: 'Évaluation de la situation familiale et des enjeux juridiques.', done: true, date: '20 fév. 2025' },
+        { titre: 'Mise en demeure / Assignation', desc: 'Démarches préalables ou introduction de la procédure.', done: true, date: '05 mars 2025' },
+        { titre: 'Échange de pièces', desc: 'Communication des pièces entre les parties et le tribunal.', done: false, active: true },
+        { titre: 'Audience de conciliation', desc: 'Tentative de règlement amiable devant le juge.', done: false },
+        { titre: 'Audience au fond', desc: 'Plaidoiries sur le fond du litige.', done: false },
+        { titre: 'Jugement', desc: 'Rendu de la décision définitive.', done: false },
+      ],
+    },
+    etranger: {
+      label: 'Droit des étrangers',
+      etapes: [
+        { titre: 'Analyse du dossier', desc: 'Examen de la situation administrative et des voies de recours.', done: true, date: '01 avr. 2025' },
+        { titre: 'Recours déposé', desc: 'Introduction du recours devant la juridiction compétente (TA, CNDA…).', done: true, date: '11 avr. 2025' },
+        { titre: 'Instruction', desc: 'Échange de mémoires et pièces avec la juridiction.', done: false, active: true },
+        { titre: 'Audience', desc: 'Plaidoirie devant le tribunal ou la cour.', done: false },
+        { titre: 'Décision', desc: 'Rendu de la décision sur votre situation.', done: false },
+      ],
+    },
+  };
+
+  const dossierId = sessionStorage.getItem('suivi-id') || 'C-2025-0042';
+  document.getElementById('dossier-ref')!.textContent = 'Dossier ' + dossierId;
+
+  function renderProc(key: string) {
+    const proc = procedures[key];
+    if (!proc) return;
+
+    (document.getElementById('dossier-proc') as HTMLElement).textContent = proc.label;
+
+    const tracker = document.getElementById('tracker')!;
+    tracker.innerHTML = '';
+
+    const etapes = proc.etapes;
+    const doneCount = etapes.filter(e => e.done).length;
+    const pct = Math.round((doneCount / etapes.length) * 100);
+
+    const nextEtape = etapes.find(e => !e.done);
+
+    etapes.forEach((etape, i) => {
+      const div = document.createElement('div');
+      const state = etape.done ? 'done' : etape.active ? 'active' : 'todo';
+      div.className = `etape etape--${state}`;
+      div.style.animationDelay = `${i * 0.07}s`;
+
+      let dotIcon = '';
+      if (etape.done) {
+        dotIcon = `<svg viewBox="0 0 24 24" fill="none"><polyline points="20,6 9,17 4,12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      } else if (etape.active) {
+        dotIcon = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg>`;
+      } else {
+        dotIcon = `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/></svg>`;
+      }
+
+      const dateTag   = etape.date   ? `<span class="etape-date">${etape.date}</span>` : '';
+      const activeTag = etape.active ? `<span class="etape-en-cours">En cours</span>` : '';
+
+      div.innerHTML = `
+        <div class="etape-dot">${dotIcon}</div>
+        <div class="etape-body">
+          <p class="etape-titre">${etape.titre}${dateTag}${activeTag}</p>
+          <p class="etape-desc">${etape.desc}</p>
+        </div>
+      `;
+      tracker.appendChild(div);
+    });
+
+    const fill = document.getElementById('progress-fill')!;
+    const pctEl = document.getElementById('progress-pct')!;
+    requestAnimationFrame(() => {
+      fill.style.width = pct + '%';
+      pctEl.textContent = pct + ' %';
+    });
+
+    if (nextEtape) {
+      (document.getElementById('next-titre') as HTMLElement).textContent = nextEtape.titre;
+      (document.getElementById('next-desc') as HTMLElement).textContent  = nextEtape.desc;
+    }
+  }
+
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.proc-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      renderProc(tab.dataset.proc!);
+    });
+  });
+
+  renderProc('penal');
+
+  if (!sessionStorage.getItem('suivi-id')) {
+    const ref = document.getElementById('dossier-ref');
+    if (ref) ref.textContent = 'Dossier C-2025-0042 (démo)';
+  }
+</script>
