@@ -286,9 +286,14 @@ import Base from '../../layouts/Base.astro';
     togglePw.setAttribute('aria-label', isHidden ? 'Masquer le code' : 'Afficher le code');
   });
 
+  const dossiers: Record<string, { code: string; proc: string }> = {
+    'C1234': { code: '0501', proc: 'penal' },
+  };
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const id   = (document.getElementById('identifiant') as HTMLInputElement).value.trim();
+    const idInput = document.getElementById('identifiant') as HTMLInputElement;
+    const id   = idInput.value.trim().toUpperCase();
     const code = codeInput.value.trim();
 
     errorMsg.classList.remove('visible');
@@ -300,12 +305,25 @@ import Base from '../../layouts/Base.astro';
       return;
     }
 
+    const dossier = dossiers[id];
+    if (!dossier || dossier.code !== code) {
+      errorMsg.textContent = 'Identifiant ou code incorrect. Vérifiez vos informations.';
+      errorMsg.classList.add('visible');
+      idInput.classList.add('invalid');
+      codeInput.classList.add('invalid');
+      return;
+    }
+
+    idInput.classList.remove('invalid');
+    codeInput.classList.remove('invalid');
+
     const submitBtn = form.querySelector('.submit-btn') as HTMLButtonElement;
     submitBtn.textContent = 'Connexion…';
     submitBtn.disabled = true;
 
     setTimeout(() => {
       sessionStorage.setItem('suivi-id', id);
+      sessionStorage.setItem('suivi-proc', dossier.proc);
       window.location.href = '/suivi/dossier';
     }, 700);
   });

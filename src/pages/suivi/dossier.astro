@@ -479,8 +479,14 @@ const defaultProc: ProcKey = 'penal';
     },
   };
 
-  const dossierId = sessionStorage.getItem('suivi-id') || 'C-2025-0042';
-  document.getElementById('dossier-ref')!.textContent = 'Dossier ' + dossierId;
+  const dossierId  = sessionStorage.getItem('suivi-id');
+  const procFromSession = sessionStorage.getItem('suivi-proc');
+
+  if (!dossierId) {
+    window.location.href = '/suivi';
+  }
+
+  document.getElementById('dossier-ref')!.textContent = 'Dossier ' + (dossierId || '—');
 
   function renderProc(key: string) {
     const proc = procedures[key];
@@ -548,10 +554,5 @@ const defaultProc: ProcKey = 'penal';
     });
   });
 
-  renderProc('penal');
-
-  if (!sessionStorage.getItem('suivi-id')) {
-    const ref = document.getElementById('dossier-ref');
-    if (ref) ref.textContent = 'Dossier C-2025-0042 (démo)';
-  }
+  renderProc(procFromSession || 'penal');
 </script>
