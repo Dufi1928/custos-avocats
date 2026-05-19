@@ -156,133 +156,110 @@ import Base from '../../layouts/Base.astro';
     /* grid-template-columns set by JS */
   }
 
-  /* Ligne de fond (gris clair, toute la longueur) */
-  .frise-line-bg {
+  /* ── Ligne continue (fine, traverse les bulles) ── */
+  /* top = moitié des cercles = 18px (36px / 2) */
+  .frise-line-bg,
+  .frise-line-done,
+  .frise-line-active {
     position: absolute;
-    top: 26px; /* moitié des cercles (52px / 2) */
-    height: 3px;
-    background: #d8d8d8;
-    border-radius: 2px;
+    top: 18px;
+    height: 2px;
+    border-radius: 1px;
     z-index: 0;
   }
 
-  /* Ligne des étapes faites (gris-vert) */
-  .frise-line-done {
-    position: absolute;
-    top: 26px;
-    height: 3px;
-    background: #a8b8ab;
-    border-radius: 2px;
-    z-index: 1;
-    transition: width 0.9s cubic-bezier(.4,0,.2,1);
-  }
-
-  /* Ligne jusqu'à l'étape active (vert vif) */
-  .frise-line-active {
-    position: absolute;
-    top: 26px;
-    height: 3px;
-    background: var(--vert);
-    border-radius: 2px;
-    z-index: 2;
-    transition: width 0.9s cubic-bezier(.4,0,.2,1) 0.2s;
-  }
+  .frise-line-bg     { background: #d8d8d8; }
+  .frise-line-done   { background: #a8b8ab; transition: width 0.9s cubic-bezier(.4,0,.2,1); }
+  .frise-line-active { background: var(--vert); transition: width 0.9s cubic-bezier(.4,0,.2,1) 0.15s; }
 
   /* Étape */
   .frise-etape {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.7rem;
     position: relative;
-    z-index: 3;
-    min-width: 110px;
+    z-index: 2;
+    min-width: 100px;
     animation: fadeUp 0.4s ease both;
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(5px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Cercle — taille fixe identique pour tous */
+  /* ── Cercle : même taille pour tous, ligne passe dedans ── */
   .frise-cercle {
-    width: 52px;
-    height: 52px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     position: relative;
-    z-index: 4;
+    z-index: 3; /* au-dessus de la ligne */
   }
 
-  .frise-cercle svg { width: 22px; height: 22px; display: block; }
+  /* Icônes très petites */
+  .frise-cercle svg { width: 14px; height: 14px; display: block; }
 
-  /* ── Fait : cercle gris-vert + coche ── */
+  /* ── Fait : gris-vert rempli ── */
   .frise-etape--done .frise-cercle {
     background: #a8b8ab;
-    border: 3px solid #a8b8ab;
+    border: 2.5px solid #a8b8ab;
     color: #fff;
   }
 
-  /* ── En cours : cercle VERT mis en avant ── */
+  /* ── En cours : vert vif, légèrement plus grand, mis en avant ── */
   .frise-etape--active .frise-cercle {
+    width: 44px;
+    height: 44px;
+    margin-top: -4px; /* reste centré sur la ligne */
     background: var(--vert);
     border: 3px solid var(--vert);
     color: #fff;
-    box-shadow: 0 0 0 6px rgba(74,93,78,0.18), 0 0 0 11px rgba(74,93,78,0.07);
+    box-shadow: 0 0 0 5px rgba(74,93,78,0.2);
     animation: ringPulse 2.4s ease-in-out infinite;
   }
 
+  .frise-etape--active .frise-cercle svg { width: 16px; height: 16px; }
+
   @keyframes ringPulse {
-    0%, 100% { box-shadow: 0 0 0 6px rgba(74,93,78,0.18), 0 0 0 11px rgba(74,93,78,0.07); }
-    50%       { box-shadow: 0 0 0 9px rgba(74,93,78,0.12), 0 0 0 16px rgba(74,93,78,0.04); }
+    0%, 100% { box-shadow: 0 0 0 5px rgba(74,93,78,0.20); }
+    50%       { box-shadow: 0 0 0 9px rgba(74,93,78,0.08); }
   }
 
-  /* ── À faire : cercle blanc + bordure gris clair ── */
+  /* ── À faire : blanc, bordure gris clair ── */
   .frise-etape--todo .frise-cercle {
     background: #fff;
-    border: 3px solid #d0d0d0;
-    color: #c8c8c8;
+    border: 2px solid #d0d0d0;
+    color: #d0d0d0;
   }
 
   /* Labels */
-  .frise-label { text-align: center; padding: 0 0.25rem; }
+  .frise-label { text-align: center; padding: 0 0.2rem; }
 
-  .frise-titre {
-    font-size: 0.78rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin: 0;
-  }
+  .frise-titre { font-size: 0.74rem; font-weight: 700; line-height: 1.3; margin: 0; }
 
-  .frise-etape--done  .frise-titre { color: #999; }
-  .frise-etape--todo  .frise-titre { color: #ccc; }
-  .frise-etape--active .frise-titre {
-    color: var(--vert);
-    font-size: 0.82rem;
-    font-weight: 800;
-  }
+  .frise-etape--done   .frise-titre { color: #aaa; }
+  .frise-etape--todo   .frise-titre { color: #ccc; }
+  .frise-etape--active .frise-titre { color: var(--vert); font-size: 0.78rem; font-weight: 800; }
 
-  .frise-date {
-    display: block;
-    font-size: 0.68rem;
-    margin-top: 0.25rem;
-  }
-  .frise-etape--done  .frise-date { color: #bbb; }
-  .frise-etape--todo  .frise-date { color: #c0c0c0; }
-  .frise-etape--active .frise-date { color: var(--vert); font-weight: 600; }
+  .frise-date { display: block; font-size: 0.66rem; margin-top: 0.2rem; }
+  .frise-etape--done   .frise-date { color: #bbb; }
+  .frise-etape--todo   .frise-date { color: #ccc; font-weight: 600; }
+  .frise-etape--active .frise-date { color: var(--vert); font-weight: 700; }
 
   .frise-encours {
     display: block;
-    font-size: 0.64rem;
+    font-size: 0.62rem;
     font-weight: 800;
     color: var(--vert);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin-top: 0.2rem;
+    margin-top: 0.15rem;
     animation: blink 1.9s ease-in-out infinite;
   }
 
@@ -514,30 +491,27 @@ import Base from '../../layouts/Base.astro';
     /* Grid */
     friseEl.style.gridTemplateColumns = `repeat(${n}, minmax(110px, 1fr))`;
 
-    /* Ligne de fond : de centre col 0 à centre col n-1 */
+    /* Ligne fond : de centre col 0 à centre col n-1 */
     const bgLine = document.createElement('div');
     bgLine.className = 'frise-line-bg';
     bgLine.style.left  = `calc(${50 / n}%)`;
     bgLine.style.width = `calc(${(n - 1) / n * 100}%)`;
     friseEl.appendChild(bgLine);
 
-    /* Ligne des étapes faites (gris-vert) */
+    /* Ligne gris-vert : étapes faites */
     if (doneCount > 0) {
       const doneLine = document.createElement('div');
       doneLine.className = 'frise-line-done';
       doneLine.style.left  = `calc(${50 / n}%)`;
-      /* Va du centre step 0 au centre step (doneCount-1) */
       doneLine.style.width = `calc(${(doneCount - 1) / n * 100}%)`;
       friseEl.appendChild(doneLine);
     }
 
-    /* Ligne verte : du centre du dernier done au centre de l'active */
+    /* Ligne verte : du dernier done vers l'étape active */
     if (activeIdx > 0 && doneCount > 0) {
       const activeLine = document.createElement('div');
       activeLine.className = 'frise-line-active';
-      /* Commence au centre du dernier step done */
       const startPct = (doneCount - 0.5) / n * 100;
-      /* Finit au centre du step active */
       const endPct   = (activeIdx + 0.5) / n * 100;
       activeLine.style.left  = `calc(${startPct}%)`;
       activeLine.style.width = `calc(${endPct - startPct}%)`;
