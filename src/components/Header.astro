@@ -1,6 +1,5 @@
 ---
 const nav = [
-  { label: 'Accueil', href: '/' },
   { label: 'Valeurs du cabinet', href: '/les-valeurs-du-cabinet' },
   { label: 'Équipe', href: '/equipe' },
   { label: "Domaines & Honoraires", href: '/honoraires' },
@@ -8,31 +7,51 @@ const nav = [
 ];
 ---
 
-<header>
-  <a href="/" class="logo-link" aria-label="Custos Avocats — Accueil">
-    <img
-      src="/logo-header.svg"
-      alt="Custos Avocats"
-      class="logo"
-      width="113"
-      height="64"
-    />
-  </a>
+<div id="header-wrap">
+  <header>
+    <a href="/" class="logo-link" aria-label="Custos Avocats — Accueil">
+      <img
+        src="/logo-header.svg"
+        alt="Custos Avocats"
+        class="logo"
+        width="113"
+        height="64"
+      />
+    </a>
 
-  <nav aria-label="Navigation principale">
-    <ul>
-      {nav.map(({ label, href }) => (
-        <li>
-          <a href={href}>{label}</a>
-        </li>
-      ))}
-    </ul>
-  </nav>
+    <nav aria-label="Navigation principale">
+      <ul>
+        {nav.map(({ label, href }) => (
+          <li>
+            <a href={href}>{label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-  <a href="/contact" class="cta" aria-label="Prendre rendez-vous">
-    Nous contacter
-  </a>
-</header>
+    <a href="/contact" class="cta" aria-label="Prendre rendez-vous">
+      Nous contacter
+    </a>
+  </header>
+</div>
+
+<style is:global>
+  #header-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: var(--fond);
+    transition: transform 0.32s ease, box-shadow 0.32s ease;
+  }
+
+  #header-wrap.header-hidden {
+    transform: translateY(-100%);
+  }
+
+  #header-wrap.header-scrolled {
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+  }
+</style>
 
 <style>
   .logo-link {
@@ -51,3 +70,25 @@ const nav = [
     .logo { height: 48px; }
   }
 </style>
+
+<script>
+  const wrap = document.getElementById('header-wrap');
+  let lastY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+
+    if (currentY <= 10) {
+      wrap.classList.remove('header-hidden', 'header-scrolled');
+    } else if (currentY > lastY) {
+      // Scroll vers le bas → cacher
+      wrap.classList.add('header-hidden', 'header-scrolled');
+    } else {
+      // Scroll vers le haut → montrer
+      wrap.classList.remove('header-hidden');
+      wrap.classList.add('header-scrolled');
+    }
+
+    lastY = currentY;
+  }, { passive: true });
+</script>

@@ -88,6 +88,11 @@ header {
   border-bottom: 1px solid var(--gris-clair);
 }
 
+/* La bordure basse du header-wrap remplace celle du header quand on scrolle */
+#header-wrap.header-scrolled header {
+  border-bottom-color: transparent;
+}
+
 header strong {
   font-family: var(--font-serif);
   font-size: 1.25rem;
@@ -175,6 +180,7 @@ main a[href]:hover {
   flex-direction: column;
   gap: 0.75rem;
   transition: border-color 0.25s;
+  height: 100%;
 }
 
 .card:hover { border-color: var(--vert); }
@@ -188,8 +194,16 @@ main a[href]:hover {
   gap: 0.25rem;
 }
 
-.card header p  { color: var(--gris); font-size: 0.875rem; margin: 0; }
-.card header strong { color: var(--vert); }
+.card header p  { color: var(--vert); font-size: 0.875rem; font-weight: 600; margin: 0; }
+
+/* Description occupe l'espace disponible → bouton toujours en bas */
+.card > p { flex: 1; }
+
+/* Bouton centré pleine largeur */
+.card > a[href] {
+  display: block;
+  text-align: center;
+}
 
 /* --- Page Équipe : grille --- */
 section[aria-label="Les avocats du cabinet"] {
