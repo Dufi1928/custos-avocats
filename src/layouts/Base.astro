@@ -512,12 +512,12 @@ const schemaOrg = {
   let opened  = false;
   let loading = false;
 
-  const LAWYERS: { name: string; short: string }[] = [
-    { name: 'ROETYNCK',          short: 'Maître Roetynck' },
-    { name: 'DAVRILLON',         short: 'Maître Davrillon' },
-    { name: 'HAROUNE',           short: 'Maître Haroune' },
-    { name: 'DAVID',             short: 'Maître David' },
-    { name: 'JAULIN-DENISSELLE', short: 'Maître Jaulin-Denisselle' },
+  const LAWYERS: { name: string; short: string; slug: string }[] = [
+    { name: 'ROETYNCK',          short: 'Maître Roetynck',          slug: 'roetynck' },
+    { name: 'DAVRILLON',         short: 'Maître Davrillon',         slug: 'davrillon' },
+    { name: 'HAROUNE',           short: 'Maître Haroune',           slug: 'haroune' },
+    { name: 'DAVID',             short: 'Maître David',             slug: 'david' },
+    { name: 'JAULIN-DENISSELLE', short: 'Maître Jaulin-Denisselle', slug: 'jaulin-denisselle' },
   ];
 
   function extractLawyer(text: string) {
@@ -532,7 +532,7 @@ const schemaOrg = {
     if (role === 'bot') {
       const lawyer = extractLawyer(text);
       const btn = document.createElement('a');
-      btn.href = '/contact';
+      btn.href = lawyer ? `/rdv/${lawyer.slug}` : '/contact';
       btn.className = 'msg-rdv-btn';
       btn.textContent = lawyer ? 'Prendre RDV avec ' + lawyer.short : 'Prendre un rendez-vous';
       div.appendChild(btn);
