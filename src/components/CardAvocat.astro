@@ -5,25 +5,41 @@ interface Props {
   description: string;
   expertiseHref: string;
   photo?: string;
+  photoPosition?: string;
+  photoSize?: string;
 }
 
-const { nom, specialite, description, expertiseHref, photo } = Astro.props;
+const {
+  nom,
+  specialite,
+  description,
+  expertiseHref,
+  photo,
+  photoPosition = 'center top',
+  photoSize = 'cover',
+} = Astro.props;
+
+const photoStyle = photo
+  ? `background-image: url('${photo}'); background-position: ${photoPosition}; background-size: ${photoSize}; background-repeat: no-repeat;`
+  : '';
 ---
 
 <article class="card" aria-label={`Profil de ${nom}`}>
-  <div class="card-photo">
-    {photo
-      ? <img src={photo} alt={`Photo de ${nom}`} width="400" height="533" loading="lazy" />
-      : (
-        <>
-          <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
-            <circle cx="40" cy="30" r="16" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-            <path d="M 10,72 C 10,52 70,52 70,72" stroke="currentColor" stroke-width="1.5" opacity="0.4" fill="none" stroke-linecap="round"/>
-          </svg>
-          <span>Photo à venir</span>
-        </>
-      )
-    }
+  <div
+    class="card-photo"
+    style={photoStyle}
+    role={photo ? 'img' : undefined}
+    aria-label={photo ? `Photo de ${nom}` : undefined}
+  >
+    {!photo && (
+      <>
+        <svg viewBox="0 0 80 80" fill="none" aria-hidden="true">
+          <circle cx="40" cy="30" r="16" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <path d="M 10,72 C 10,52 70,52 70,72" stroke="currentColor" stroke-width="1.5" opacity="0.4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span>Photo à venir</span>
+      </>
+    )}
   </div>
   <header>
     <h3>{nom}</h3>
@@ -37,7 +53,7 @@ const { nom, specialite, description, expertiseHref, photo } = Astro.props;
   .card-photo {
     width: 100%;
     aspect-ratio: 3 / 4;
-    background: var(--fond);
+    background-color: var(--fond);
     border-radius: var(--radius);
     overflow: hidden;
     margin-bottom: 1rem;
@@ -47,14 +63,6 @@ const { nom, specialite, description, expertiseHref, photo } = Astro.props;
     justify-content: center;
     gap: 0.5rem;
     color: var(--gris);
-  }
-
-  .card-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
   }
 
   .card-photo svg {

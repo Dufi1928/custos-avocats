@@ -9,6 +9,8 @@ const avocats = [
     description: 'Intervient dans la défense des mineurs en conflit avec la loi, l\'assistance éducative et les procédures devant le juge des enfants.',
     expertiseHref: '/expertises/droit-des-mineurs',
     photo: '/avocat-rachel.jpg',
+    photoPosition: 'center top',
+    photoSize: 'cover',
   },
   {
     nom: 'Maître Lauriana DAVRILLON',
@@ -16,6 +18,8 @@ const avocats = [
     description: 'Défend les clients dans les procédures de divorce conflictuel, les violences intrafamiliales et les litiges relatifs à l\'autorité parentale.',
     expertiseHref: '/expertises/droit-de-la-famille',
     photo: '/avocat-lauriana.jpg',
+    photoPosition: 'center 15%',
+    photoSize: '85%',
   },
   {
     nom: 'Maître Alexis HAROUNE',
@@ -23,6 +27,8 @@ const avocats = [
     description: 'Assiste dirigeants et entreprises face aux enquêtes financières, poursuites pour abus de biens sociaux, fraude fiscale et compliance.',
     expertiseHref: '/expertises/droit-penal-des-affaires',
     photo: '/avocat-alexis.jpg',
+    photoPosition: 'center 10%',
+    photoSize: '80%',
   },
   {
     nom: 'Maître Lola DAVID',
@@ -30,6 +36,8 @@ const avocats = [
     description: 'Défend les victimes d\'accidents corporels et les accompagne de l\'expertise médicale jusqu\'à l\'obtention d\'une indemnisation juste.',
     expertiseHref: '/expertises/dommages-corporels',
     photo: '/avocat-lola.jpg',
+    photoPosition: 'center top',
+    photoSize: '85%',
   },
   {
     nom: 'Maître Chloé JAULIN-DENISSELLE',
@@ -37,6 +45,8 @@ const avocats = [
     description: 'Accompagne les personnes étrangères face aux procédures d\'éloignement, recours OQTF, titres de séjour et régularisation.',
     expertiseHref: '/expertises/droit-des-etrangers',
     photo: '/avocat-chloe.jpg',
+    photoPosition: 'center top',
+    photoSize: 'cover',
   },
 ];
 
@@ -83,6 +93,8 @@ const secretaires = [
         description={avocat.description}
         expertiseHref={avocat.expertiseHref}
         photo={avocat.photo}
+        photoPosition={avocat.photoPosition}
+        photoSize={avocat.photoSize}
       />
     ))}
   </section>
