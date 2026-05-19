@@ -245,7 +245,7 @@ import Base from '../../layouts/Base.astro';
     background: var(--blanc);
     border: 1px solid var(--gris-clair);
     border-radius: var(--radius);
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem 2rem;
   }
 
   .frise-scroll {
@@ -253,18 +253,19 @@ import Base from '../../layouts/Base.astro';
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--gris-clair) transparent;
+    padding-bottom: 0.25rem;
   }
 
+  /* Wrapper : flex row, jamais cassé */
   .frise-wrapper {
     position: relative;
-    display: grid;
-    min-width: max-content;
-    width: 100%;
-    /* grid-template-columns set by JS */
-    padding-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    /* min-width set by JS so all steps fit */
   }
 
-  /* Ligne continue (derrière tout) */
+  /* ── Lignes ── */
   .frise-line-bg,
   .frise-line-done,
   .frise-line-active,
@@ -272,7 +273,7 @@ import Base from '../../layouts/Base.astro';
     position: absolute;
     height: 2px;
     z-index: 1;
-    /* top set by JS based on bubble height */
+    /* top + left + width set by JS */
   }
 
   .frise-line-bg     { background: #e0e0e0; }
@@ -280,116 +281,93 @@ import Base from '../../layouts/Base.astro';
   .frise-line-active { background: var(--col-active); }
   .frise-line-dashed {
     background: repeating-linear-gradient(
-      to right, var(--col-todo) 0, var(--col-todo) 6px, transparent 6px, transparent 12px
+      to right,
+      var(--col-todo) 0, var(--col-todo) 6px,
+      transparent 6px, transparent 13px
     );
   }
 
-  /* Étape */
+  /* ── Étape ── */
   .frise-step {
+    flex: 1 0 0;
+    min-width: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 120px;
     position: relative;
     z-index: 3;
-    animation: fadeUp 0.4s ease both;
+    animation: fadeUp 0.35s ease both;
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(5px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Grande bulle avec icône */
+  /* Bulle icône — plus petite, centrée sur la ligne */
   .step-bubble {
-    width: 72px;
-    height: 72px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     border: 2px solid currentColor;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 12px;
-    background: #fff;
     position: relative;
     z-index: 4;
-  }
-
-  .step-bubble svg { width: 32px; height: 32px; display: block; }
-
-  .frise-step--done   .step-bubble { color: var(--col-done);   border-color: var(--col-done); }
-  .frise-step--active .step-bubble { color: var(--col-active); border-color: var(--col-active); border-width: 2.5px; }
-  .frise-step--todo   .step-bubble { color: var(--col-todo);   border-color: var(--col-todo); }
-
-  /* Petit cercle numéroté sur la ligne */
-  .step-num-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 28px;
-    position: relative;
-    z-index: 5;
-  }
-
-  .step-num {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: #fff;
     flex-shrink: 0;
   }
 
-  .frise-step--done   .step-num { background: var(--col-done); }
-  .frise-step--active .step-num {
-    background: var(--col-active);
-    box-shadow: 0 0 0 4px rgba(90,138,92,0.22);
-    animation: numPulse 2.2s ease-in-out infinite;
-  }
-  .frise-step--todo   .step-num { background: var(--col-todo); }
+  .step-bubble svg { width: 22px; height: 22px; display: block; }
 
-  @keyframes numPulse {
-    0%, 100% { box-shadow: 0 0 0 4px rgba(90,138,92,0.22); }
-    50%       { box-shadow: 0 0 0 8px rgba(90,138,92,0.08); }
+  .frise-step--done   .step-bubble { color: var(--col-done);   border-color: var(--col-done); background: var(--col-done-bg); }
+  .frise-step--active .step-bubble { color: var(--col-active); border-color: var(--col-active); border-width: 2.5px;
+    box-shadow: 0 0 0 5px rgba(90,138,92,0.15);
+    animation: bubblePulse 2.2s ease-in-out infinite;
+  }
+  .frise-step--todo   .step-bubble { color: var(--col-todo);   border-color: #ddd; background: #fafafa; }
+
+  @keyframes bubblePulse {
+    0%, 100% { box-shadow: 0 0 0 5px rgba(90,138,92,0.15); }
+    50%       { box-shadow: 0 0 0 9px rgba(90,138,92,0.06); }
   }
 
-  /* Connecteur (petit cercle coche entre étapes faites) */
-  .frise-connector {
-    position: absolute;
-    width: 16px;
-    height: 16px;
+  /* Numéro sous la bulle */
+  .step-num {
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    background: var(--col-done);
+    margin-top: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 800;
     color: #fff;
+    flex-shrink: 0;
+    position: relative;
     z-index: 4;
   }
 
-  .frise-connector svg { width: 8px; height: 8px; }
-
-  .frise-connector--active { background: var(--col-active); }
-  .frise-connector--todo   { background: #fff; border: 2px solid var(--col-todo); }
+  .frise-step--done   .step-num { background: var(--col-done); }
+  .frise-step--active .step-num { background: var(--col-active); }
+  .frise-step--todo   .step-num { background: var(--col-todo); }
 
   /* Corps de l'étape */
   .step-body {
     text-align: center;
-    padding: 0.75rem 0.4rem 0;
+    padding: 0.6rem 0.3rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.3rem;
   }
 
   .step-label {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 800;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     line-height: 1.3;
     margin: 0;
@@ -397,47 +375,37 @@ import Base from '../../layouts/Base.astro';
 
   .frise-step--done   .step-label { color: var(--col-done); }
   .frise-step--active .step-label { color: var(--col-active); }
-  .frise-step--todo   .step-label { color: #aaa; }
+  .frise-step--todo   .step-label { color: #bbb; }
 
-  /* Badge de statut */
+  /* Badge statut */
   .step-badge {
     display: inline-block;
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 0.2rem 0.65rem;
+    padding: 0.18rem 0.55rem;
     border-radius: 999px;
   }
 
-  .step-badge--done   { background: var(--col-done-bg); color: var(--col-done); }
+  .step-badge--done   { background: var(--col-done-bg);   color: var(--col-done); }
   .step-badge--active { background: var(--col-active-bg); color: var(--col-active); }
-  .step-badge--todo   { background: #f0f0f0; color: #aaa; }
+  .step-badge--todo   { background: #f0f0f0; color: #bbb; }
 
-  /* Description + date */
-  .step-desc {
-    font-size: 0.72rem;
-    color: #888;
-    line-height: 1.4;
-    margin: 0;
-    max-width: 110px;
-  }
-
-  .frise-step--active .step-desc { color: #666; }
-  .frise-step--todo   .step-desc { color: #ccc; }
-
-  .step-meta {
+  /* Date */
+  .step-date {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
-    font-size: 0.68rem;
+    gap: 0.25rem;
+    font-size: 0.65rem;
     color: #aaa;
     margin: 0;
     max-width: none;
   }
 
-  .step-meta svg { flex-shrink: 0; }
-  .frise-step--todo .step-meta { color: #ccc; }
+  .step-date svg { flex-shrink: 0; }
+  .frise-step--active .step-date { color: #888; }
+  .frise-step--todo   .step-date { color: #ccc; }
 
   /* ══ Cartes info ══ */
   .info-bar {
@@ -703,18 +671,15 @@ import Base from '../../layouts/Base.astro';
   if (!dossierId) { window.location.href = '/suivi'; }
   document.getElementById('header-dossier-num')!.textContent = 'DOSSIER N° ' + (dossierId || '—');
 
-  const CHECK_ICON = `<svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-
-  const BUBBLE_H = 72;   // hauteur bulle
-  const GAP_H    = 12;   // espace entre bulle et ligne
-  const NUM_H    = 28;   // hauteur du cercle numéroté
-  const LINE_TOP = BUBBLE_H + GAP_H + NUM_H / 2; // = 98px
+  // Ligne passe par le centre des bulles (52px de hauteur → top = 26px)
+  const BUBBLE_H = 52;
+  const LINE_TOP = BUBBLE_H / 2; // 26px — milieu de la bulle
+  const STEP_MIN_W = 110; // px minimum par étape
 
   function renderProc(key: string) {
     const proc = procedures[key];
     if (!proc) return;
 
-    // En-tête
     const procLabel = { penal: 'PÉNAL', mineurs: 'MINEURS', famille: 'FAMILLE', affaires: 'AFFAIRES', corporel: 'CORPOREL', etranger: 'ÉTRANGERS' }[key] || 'PÉNAL';
     document.getElementById('page-title')!.textContent = 'SUIVI DU DOSSIER — ' + procLabel;
     document.getElementById('statut-text')!.textContent = proc.statut;
@@ -729,11 +694,12 @@ import Base from '../../layouts/Base.astro';
     const doneCount = proc.etapes.filter(e => e.done).length;
     const activeIdx = proc.etapes.findIndex(e => e.active);
 
-    wrapper.style.gridTemplateColumns = `repeat(${n}, minmax(120px, 1fr))`;
+    // Largeur minimale pour que tout tienne en une ligne
+    wrapper.style.minWidth = `${n * STEP_MIN_W}px`;
 
-    /* ── Lignes ── */
-    // Ligne gris de fond (toute la longueur)
+    /* ── Lignes (% du wrapper, passant par le centre de chaque bulle) ── */
     const makeLine = (cls: string, leftPct: number, widthPct: number) => {
+      if (widthPct <= 0) return;
       const d = document.createElement('div');
       d.className = cls;
       d.style.top   = `${LINE_TOP}px`;
@@ -742,69 +708,47 @@ import Base from '../../layouts/Base.astro';
       wrapper.appendChild(d);
     };
 
-    const startPct = 50 / n;
-    const totalPct = (n - 1) / n * 100;
+    // Centre de l'étape i : (i + 0.5) / n * 100%
+    const cx = (i: number) => (i + 0.5) / n * 100;
 
-    makeLine('frise-line-bg', startPct, totalPct);
+    // Fond gris (du centre step 0 au centre step n-1)
+    makeLine('frise-line-bg', cx(0), cx(n - 1) - cx(0));
 
-    if (doneCount > 0) {
-      // Ligne verte (étapes faites) : du centre step 0 au centre step doneCount-1
-      makeLine('frise-line-done', startPct, (doneCount - 1) / n * 100);
+    // Vert plein : entre les étapes "done"
+    if (doneCount >= 2) {
+      makeLine('frise-line-done', cx(0), cx(doneCount - 1) - cx(0));
     }
 
-    if (activeIdx >= 0 && doneCount > 0) {
-      // Ligne verte plus claire (vers l'étape active)
-      const fromPct = (doneCount - 0.5) / n * 100;
-      const toPct   = (activeIdx + 0.5) / n * 100;
-      makeLine('frise-line-active', fromPct, toPct - fromPct);
+    // Vert clair : dernier done → active
+    if (activeIdx >= 0 && doneCount >= 1) {
+      makeLine('frise-line-active', cx(doneCount - 1), cx(activeIdx) - cx(doneCount - 1));
     }
 
+    // Pointillé : active → fin
     if (activeIdx >= 0 && activeIdx < n - 1) {
-      // Ligne pointillée (étapes à venir)
-      const fromPct = (activeIdx + 0.5) / n * 100;
-      makeLine('frise-line-dashed', fromPct, totalPct - fromPct);
-    }
-
-    /* ── Connecteurs entre étapes ── */
-    for (let i = 0; i < n - 1; i++) {
-      const midPct = (i + 1) / n * 100;
-      const conn = document.createElement('div');
-      conn.className = 'frise-connector';
-      if (i < doneCount - 1) conn.className += ' frise-connector--done';
-      else if (i === doneCount - 1 && activeIdx >= 0) conn.className += ' frise-connector--active';
-      else conn.className += ' frise-connector--todo';
-
-      conn.style.top  = `${LINE_TOP - 8}px`;
-      conn.style.left = `calc(${midPct}% - 8px)`;
-
-      if (i < doneCount - 1 || (i === doneCount - 1 && activeIdx >= 0)) {
-        conn.innerHTML = CHECK_ICON;
-      }
-      wrapper.appendChild(conn);
+      makeLine('frise-line-dashed', cx(activeIdx), cx(n - 1) - cx(activeIdx));
     }
 
     /* ── Étapes ── */
     proc.etapes.forEach((etape, i) => {
       const state = etape.done ? 'done' : etape.active ? 'active' : 'todo';
-      const badgeCls = etape.done ? 'step-badge--done' : etape.active ? 'step-badge--active' : 'step-badge--todo';
+      const badgeCls = `step-badge--${state}`;
 
       const div = document.createElement('div');
       div.className = `frise-step frise-step--${state}`;
-      div.style.animationDelay = `${i * 0.07}s`;
+      div.style.animationDelay = `${i * 0.06}s`;
 
-      const metaLoc  = etape.location ? `<p class="step-meta"><svg viewBox="0 0 16 16" fill="none" width="11" height="11"><path d="M8 1.5A4.5 4.5 0 0 1 12.5 6c0 3.5-4.5 8.5-4.5 8.5S3.5 9.5 3.5 6A4.5 4.5 0 0 1 8 1.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.3"/></svg>${etape.location}</p>` : '';
-      const metaDate = etape.date ? `<p class="step-meta"><svg viewBox="0 0 16 16" fill="none" width="11" height="11"><rect x="1.5" y="2.5" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 6.5h13M5 1v3M11 1v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>${etape.date}</p>` : '';
+      const metaDate = etape.date
+        ? `<p class="step-date"><svg viewBox="0 0 14 14" fill="none" width="10" height="10"><rect x="1" y="2" width="12" height="11" rx="1.8" stroke="currentColor" stroke-width="1.4"/><path d="M1 5.5h12M4.5 1v2M9.5 1v2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>${etape.date}</p>`
+        : '';
 
       div.innerHTML = `
         <div class="step-bubble">${ICONS[etape.icon] || ''}</div>
-        <div class="step-num-row">
-          <div class="step-num">${i + 1}</div>
-        </div>
+        <div class="step-num">${i + 1}</div>
         <div class="step-body">
           <strong class="step-label">${etape.titre.replace(/\n/g, '<br>')}</strong>
           <span class="step-badge ${badgeCls}">${etape.badge}</span>
-          <p class="step-desc">${etape.desc}</p>
-          ${metaLoc}${metaDate}
+          ${metaDate}
         </div>`;
       wrapper.appendChild(div);
     });
