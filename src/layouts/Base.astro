@@ -140,7 +140,7 @@ const schemaOrg = {
     border: none;
     padding: 0;
     cursor: pointer;
-    pointer-events: auto; /* restaure les clics sur la bulle */
+    pointer-events: none; /* la zone entière ne bloque plus les clics */
   }
 
   .chatbot-label {
@@ -177,6 +177,7 @@ const schemaOrg = {
     box-shadow: 0 4px 20px rgba(74, 93, 78, 0.45);
     transition: background 0.25s, transform 0.2s;
     color: #F4F5F2;
+    pointer-events: auto; /* seul le cercle visible intercepte les clics */
   }
 
   .chatbot-bubble:hover .chatbot-btn { background: #3a4a3e; transform: scale(1.06); }
