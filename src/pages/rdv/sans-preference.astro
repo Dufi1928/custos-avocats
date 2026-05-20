@@ -1,0 +1,467 @@
+---
+import Base from '../../layouts/Base.astro';
+import { avocatsRdv } from '../../data/avocats-rdv';
+
+const avocatsData = avocatsRdv.map(a => ({
+  slug:     a.slug,
+  titre:    a.titre,
+  prenom:   a.prenom,
+  schedule: a.schedule,
+}));
+---
+
+<Base
+  title="Sans préférence — Prendre rendez-vous — Custos Avocats"
+  description="Consultez toutes les disponibilités du cabinet Custos Avocats et réservez le créneau qui vous convient."
+>
+  <div id="rdv-page">
+
+    <!-- ── Hero ── -->
+    <section class="rdv-hero-index" aria-label="Toutes les disponibilités">
+      <a href="/rdv" class="rdv-back">← Choisir un avocat</a>
+      <h1>Toutes les disponibilités</h1>
+      <p class="rdv-hero-sub">Votre dossier sera attribué à l'avocat disponible le plus adapté à votre situation.</p>
+    </section>
+
+    <!-- ── Booking ── -->
+    <section class="rdv-booking-section" aria-label="Calendrier">
+      <div class="rdv-booking-inner">
+        <div class="rdv-col">
+          <p class="rdv-step">1 — Choisissez une date</p>
+          <div id="cal-container"></div>
+        </div>
+        <div class="rdv-col">
+          <p class="rdv-step">2 — Choisissez un créneau</p>
+          <div id="slots-container">
+            <p class="rdv-hint">Sélectionnez d'abord une date disponible.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Formulaire ── -->
+    <section id="form-section" class="rdv-form-section rdv-hidden" aria-label="Vos coordonnées">
+      <div class="rdv-form-wrap">
+        <p class="rdv-step">3 — Vos coordonnées</p>
+        <div id="rdv-recap" class="rdv-recap" role="status"></div>
+        <form id="rdv-form" novalidate autocomplete="off">
+          <div class="rdv-two-cols">
+            <div>
+              <label for="rdv-prenom">Prénom</label>
+              <input type="text" id="rdv-prenom" name="prenom" required autocomplete="given-name" />
+            </div>
+            <div>
+              <label for="rdv-nom">Nom</label>
+              <input type="text" id="rdv-nom" name="nom" required autocomplete="family-name" />
+            </div>
+          </div>
+          <div>
+            <label for="rdv-email">Email</label>
+            <input type="email" id="rdv-email" name="email" required autocomplete="email" />
+          </div>
+          <div>
+            <label for="rdv-tel">Téléphone</label>
+            <input type="tel" id="rdv-tel" name="tel" autocomplete="tel" />
+          </div>
+          <div>
+            <label for="rdv-motif">Motif (facultatif)</label>
+            <textarea id="rdv-motif" name="motif" rows="3" placeholder="Décrivez brièvement votre situation…"></textarea>
+          </div>
+          <button type="submit">Confirmer le rendez-vous</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ── Succès ── -->
+    <section id="success-section" class="rdv-success rdv-hidden" aria-live="polite">
+      <div class="rdv-success-wrap">
+        <div class="rdv-check-icon" aria-hidden="true">
+          <svg viewBox="0 0 52 52" fill="none">
+            <circle cx="26" cy="26" r="25" stroke="currentColor" stroke-width="2"/>
+            <path d="M15 26l8 9 14-16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>Rendez-vous confirmé</h2>
+        <div id="success-details" class="rdv-success-details"></div>
+        <p class="rdv-success-note">Un email de confirmation vous sera envoyé dans les prochaines minutes.</p>
+        <a href="/" class="rdv-retour">Retour à l'accueil</a>
+      </div>
+    </section>
+
+  </div>
+</Base>
+
+<style is:global>
+  #rdv-page > section {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding: 4rem var(--gap);
+    border-bottom: 1px solid var(--gris-clair);
+  }
+
+  .rdv-hidden { display: none !important; }
+
+  .rdv-back {
+    display: inline-block !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gris) !important;
+    text-decoration: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .rdv-back:hover { color: var(--vert) !important; background: transparent !important; }
+
+  .rdv-hero-index h1 { margin-bottom: 0.75rem; }
+  .rdv-hero-sub {
+    font-size: 1rem;
+    color: var(--anthracite);
+    max-width: 52ch;
+    margin: 0 !important;
+  }
+
+  .rdv-booking-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  .rdv-step {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--vert);
+    margin-bottom: 1.25rem !important;
+    max-width: none !important;
+  }
+
+  .rdv-hint {
+    font-size: 0.875rem;
+    color: var(--gris);
+    font-style: italic;
+    margin: 0 !important;
+  }
+
+  .rdv-cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.85rem;
+  }
+
+  .rdv-cal-nav-btn {
+    background: none;
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--radius);
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--texte);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+    padding: 0;
+    line-height: 1;
+  }
+  .rdv-cal-nav-btn:hover:not(:disabled) { border-color: var(--vert); color: var(--vert); }
+  .rdv-cal-nav-btn:disabled { opacity: 0.28; cursor: not-allowed; }
+
+  .rdv-cal-month-label {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--texte);
+  }
+
+  .rdv-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  .rdv-cal-hd {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--gris);
+    text-align: center;
+    padding: 0.25rem 0 0.5rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .rdv-cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.825rem;
+    border-radius: 50%;
+    color: var(--gris-clair);
+    position: relative;
+    transition: background 0.15s, color 0.15s;
+    user-select: none;
+  }
+
+  .rdv-cal-day.rdv-avail { color: var(--texte); font-weight: 600; cursor: pointer; }
+  .rdv-cal-day.rdv-avail:hover { background: var(--vert-pale); color: var(--vert); }
+  .rdv-cal-day.rdv-today::after {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 3px;
+    background: var(--vert);
+    border-radius: 50%;
+  }
+  .rdv-cal-day.rdv-selected { background: var(--vert) !important; color: #F4F5F2 !important; }
+  .rdv-cal-day.rdv-selected::after { background: #F4F5F2; }
+
+  .rdv-slots-date { font-size: 0.9rem; font-weight: 600; color: var(--texte); margin-bottom: 0.85rem; }
+  .rdv-slots-grid { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+  .rdv-slot {
+    background: none;
+    border: 1px solid var(--vert);
+    color: var(--vert);
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    line-height: 1.3;
+    text-align: left;
+  }
+  .rdv-slot:hover { background: var(--vert); color: #F4F5F2; }
+  .rdv-slot-avocat { display: block; font-size: 0.68rem; font-weight: 500; opacity: 0.8; margin-top: 0.1rem; }
+  .rdv-slot.rdv-slot-selected { background: var(--vert); color: #F4F5F2; }
+  .rdv-slot.rdv-slot-selected .rdv-slot-avocat { opacity: 0.9; }
+
+  .rdv-form-wrap { max-width: 600px; }
+  .rdv-recap {
+    background: var(--vert-pale);
+    border: 1px solid var(--vert);
+    border-radius: var(--radius);
+    padding: 0.8rem 1.1rem;
+    font-size: 0.875rem;
+    color: var(--vert);
+    font-weight: 600;
+    margin-bottom: 1.75rem;
+    max-width: none !important;
+  }
+  .rdv-two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  #rdv-form { max-width: 100%; margin-top: 0; }
+
+  .rdv-success { text-align: center; }
+  .rdv-success-wrap {
+    max-width: 460px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .rdv-check-icon { width: 60px; height: 60px; color: var(--vert); }
+  .rdv-check-icon svg { width: 100%; height: 100%; }
+  .rdv-success-details {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-left: 3px solid var(--vert);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    text-align: left;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.9;
+    color: var(--anthracite);
+    max-width: none !important;
+  }
+  .rdv-success-note { font-size: 0.8rem; color: var(--gris); margin: 0 !important; max-width: 38ch !important; }
+  .rdv-retour {
+    display: inline-block !important;
+    background: var(--vert) !important;
+    color: #F4F5F2 !important;
+    border: none !important;
+    padding: 0.65rem 1.5rem !important;
+    border-radius: var(--radius) !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    margin-top: 0.5rem !important;
+    transition: background 0.2s !important;
+  }
+  .rdv-retour:hover { background: var(--vert-vif) !important; color: #F4F5F2 !important; }
+
+  @media (max-width: 720px) {
+    .rdv-booking-inner { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 640px) {
+    #rdv-page > section { padding: 2.5rem 1rem; }
+    .rdv-two-cols { grid-template-columns: 1fr; }
+    .rdv-slots-grid { gap: 0.4rem; }
+    .rdv-slot { flex: 1; min-width: calc(50% - 0.4rem); padding: 0.55rem 0.75rem; min-height: 52px; }
+    .rdv-success-wrap { max-width: 100%; }
+    .rdv-success-note { max-width: 100% !important; }
+  }
+</style>
+
+<script define:vars={{ allAvocats: avocatsData }}>
+  const MONTHS    = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const MONTH_LONG = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  const DAY_ABBR  = ['Lu','Ma','Me','Je','Ve','Sa','Di'];
+  const DAY_LONG  = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  let viewYear  = today.getFullYear();
+  let viewMonth = today.getMonth();
+  let selDate   = null;
+  let selSlot   = null;
+  let selAvocat = null;
+
+  function isBooked(dateStr, slot) {
+    const s = dateStr + '|' + slot;
+    let h = 5381;
+    for (let i = 0; i < s.length; i++) h = ((h << 5) + h) ^ s.charCodeAt(i);
+    return (Math.abs(h) % 10) < 3;
+  }
+
+  function toDateStr(date) {
+    return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+  }
+
+  function formatDateLong(ds) {
+    const [y, m, d] = ds.split('-').map(Number);
+    const date = new Date(y, m-1, d);
+    const dow = (date.getDay() + 6) % 7;
+    return `${DAY_LONG[dow]} ${d} ${MONTH_LONG[m-1]} ${y}`;
+  }
+
+  function getCombinedSlots(date) {
+    const ds  = toDateStr(date);
+    const dow = String(date.getDay());
+    const result = [];
+    allAvocats.forEach(av => {
+      (av.schedule[dow] || []).forEach(slot => {
+        if (!isBooked(ds, slot)) result.push({ slot, titre: av.titre, slug: av.slug, prenom: av.prenom });
+      });
+    });
+    result.sort((a, b) => a.slot.localeCompare(b.slot));
+    return result;
+  }
+
+  function hasAvailOnDay(date) {
+    if (date < today) return false;
+    return getCombinedSlots(date).length > 0;
+  }
+
+  function renderCal() {
+    const firstDay    = new Date(viewYear, viewMonth, 1);
+    const daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+    const offset      = (firstDay.getDay() + 6) % 7;
+    const isPrevDisabled = viewYear === today.getFullYear() && viewMonth === today.getMonth();
+
+    let html = `
+      <div class="rdv-cal-nav">
+        <button class="rdv-cal-nav-btn" id="rdv-prev" ${isPrevDisabled ? 'disabled' : ''} aria-label="Mois précédent">&#8249;</button>
+        <span class="rdv-cal-month-label">${MONTHS[viewMonth]} ${viewYear}</span>
+        <button class="rdv-cal-nav-btn" id="rdv-next" aria-label="Mois suivant">&#8250;</button>
+      </div>
+      <div class="rdv-cal-grid">`;
+
+    DAY_ABBR.forEach(d => { html += `<div class="rdv-cal-hd">${d}</div>`; });
+    for (let i = 0; i < offset; i++) html += '<div></div>';
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date  = new Date(viewYear, viewMonth, d);
+      const ds    = toDateStr(date);
+      const avail = hasAvailOnDay(date);
+      const isToday = date.toDateString() === today.toDateString();
+      const isSel   = ds === selDate;
+      let cls = 'rdv-cal-day';
+      if (avail)   cls += ' rdv-avail';
+      if (isToday) cls += ' rdv-today';
+      if (isSel)   cls += ' rdv-selected';
+      html += `<div class="${cls}" ${avail ? `data-date="${ds}" tabindex="0" role="button" aria-label="${formatDateLong(ds)}"` : ''}>${d}</div>`;
+    }
+    html += '</div>';
+    document.getElementById('cal-container').innerHTML = html;
+  }
+
+  function renderSlots() {
+    const container = document.getElementById('slots-container');
+    if (!selDate) { container.innerHTML = '<p class="rdv-hint">Sélectionnez d\'abord une date disponible.</p>'; return; }
+    const [y, m, d] = selDate.split('-').map(Number);
+    const slots = getCombinedSlots(new Date(y, m-1, d));
+    let html = `<p class="rdv-slots-date">${formatDateLong(selDate)}</p><div class="rdv-slots-grid">`;
+    slots.forEach(s => {
+      const isSel = selSlot === s.slot && selAvocat && selAvocat.slug === s.slug;
+      html += `<button class="rdv-slot${isSel ? ' rdv-slot-selected' : ''}" data-slot="${s.slot}" data-titre="${s.titre}" data-slug="${s.slug}" data-prenom="${s.prenom}">
+        ${s.slot}<span class="rdv-slot-avocat">M<sup>e</sup> ${s.prenom}</span>
+      </button>`;
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  function showForm() {
+    const section = document.getElementById('form-section');
+    section.classList.remove('rdv-hidden');
+    document.getElementById('rdv-recap').textContent = `${selAvocat.titre} — ${formatDateLong(selDate)} à ${selSlot}`;
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showSuccess(prenom, nom, email) {
+    document.getElementById('form-section').classList.add('rdv-hidden');
+    document.querySelector('.rdv-booking-section').classList.add('rdv-hidden');
+    const section = document.getElementById('success-section');
+    section.classList.remove('rdv-hidden');
+    document.getElementById('success-details').innerHTML =
+      `<strong>Avocat :</strong> ${selAvocat.titre}<br>` +
+      `<strong>Date :</strong> ${formatDateLong(selDate)}<br>` +
+      `<strong>Heure :</strong> ${selSlot}<br>` +
+      `<strong>Client :</strong> ${prenom} ${nom.toUpperCase()}<br>` +
+      `<strong>Email :</strong> ${email}`;
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.getElementById('cal-container').addEventListener('click', e => {
+    const prev = e.target.closest('#rdv-prev');
+    const next = e.target.closest('#rdv-next');
+    const day  = e.target.closest('.rdv-avail');
+    if (prev && !prev.disabled) { viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; } renderCal(); return; }
+    if (next) { viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; } renderCal(); return; }
+    if (day) { selDate = day.dataset.date; selSlot = null; selAvocat = null; renderCal(); renderSlots(); document.getElementById('form-section').classList.add('rdv-hidden'); }
+  });
+
+  document.getElementById('cal-container').addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('rdv-avail')) { e.preventDefault(); e.target.click(); }
+  });
+
+  document.getElementById('slots-container').addEventListener('click', e => {
+    const btn = e.target.closest('.rdv-slot');
+    if (btn) { selSlot = btn.dataset.slot; selAvocat = { titre: btn.dataset.titre, slug: btn.dataset.slug }; renderSlots(); showForm(); }
+  });
+
+  document.getElementById('rdv-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const prenom = document.getElementById('rdv-prenom').value.trim();
+    const nom    = document.getElementById('rdv-nom').value.trim();
+    const email  = document.getElementById('rdv-email').value.trim();
+    if (!prenom || !nom || !email) return;
+    showSuccess(prenom, nom, email);
+  });
+
+  renderCal();
+</script>
