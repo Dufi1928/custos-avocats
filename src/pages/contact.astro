@@ -7,6 +7,11 @@ import Base from '../layouts/Base.astro';
     <img src="/justice-audience2.png" alt="" aria-hidden="true" class="justice-audience-deco" />
     <div class="contact-intro-content">
     <h1>Contact</h1>
+
+    <p class="rdv-note">
+      Vous préférez convenir d'un créneau ? <a href="/rdv" class="rdv-link">Prendre rendez-vous en ligne →</a>
+    </p>
+
     <address>
       <p>
         <strong>Téléphone :</strong>
@@ -128,6 +133,23 @@ import Base from '../layouts/Base.astro';
     pointer-events: none;
     user-select: none;
     z-index: 0;
+  }
+
+  .rdv-note {
+    font-size: 0.95rem;
+    color: var(--gris);
+    margin: 0.5rem 0 1.5rem;
+  }
+
+  .rdv-link {
+    color: var(--vert);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .rdv-link:hover {
+    color: var(--vert-vif);
+    text-decoration: underline;
   }
 
   /* ── Section formulaire ── */
