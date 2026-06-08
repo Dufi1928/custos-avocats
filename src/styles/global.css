@@ -307,6 +307,5 @@ footer nav a:hover { color: var(--texte); }
 /* --- Responsive --- */
 @media (max-width: 640px) {
   header { flex-wrap: wrap; border-bottom: 1px solid var(--gris-clair); }
-  header nav { display: none; }
   main section { padding: 3rem var(--gap); }
 }

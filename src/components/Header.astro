@@ -4,6 +4,7 @@ const nav = [
   { label: 'Équipe', href: '/equipe' },
   { label: "Domaines & Honoraires", href: '/honoraires' },
   { label: 'Suivi dossier', href: '/suivi' },
+  { label: 'Prendre rendez-vous', href: '/rdv' },
 ];
 ---
 
@@ -32,7 +33,30 @@ const nav = [
     <a href="/contact" class="cta" aria-label="Prendre rendez-vous">
       Nous contacter
     </a>
+
+    <button
+      id="nav-toggle"
+      class="nav-toggle"
+      aria-label="Ouvrir le menu de navigation"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
   </header>
+
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Navigation mobile">
+    <ul>
+      {nav.map(({ label, href }) => (
+        <li>
+          <a href={href}>{label}</a>
+        </li>
+      ))}
+      <li><a href="/contact" class="mobile-nav-cta">Nous contacter</a></li>
+    </ul>
+  </nav>
 </div>
 
 <style is:global>
@@ -69,10 +93,107 @@ const nav = [
   @media (max-width: 640px) {
     .logo { height: 48px; }
   }
+
+  /* ── Bouton hamburger (mobile uniquement) ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .nav-toggle-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--texte);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  #header-wrap.menu-open .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  #header-wrap.menu-open .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  #header-wrap.menu-open .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ── Panneau de navigation mobile ── */
+  .mobile-nav {
+    display: none;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  .mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem var(--gap) 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .mobile-nav a {
+    display: block;
+    color: var(--gris);
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .mobile-nav a:hover,
+  .mobile-nav a:focus-visible {
+    color: var(--texte);
+  }
+
+  .mobile-nav-cta {
+    color: var(--vert) !important;
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    header nav[aria-label="Navigation principale"] { display: none; }
+
+    .nav-toggle { display: flex; }
+
+    .mobile-nav { display: block; }
+
+    #header-wrap.menu-open .mobile-nav {
+      max-height: 480px;
+    }
+  }
 </style>
 
 <script>
   const wrap = document.getElementById('header-wrap');
+  const navToggle = document.getElementById('nav-toggle');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  navToggle?.addEventListener('click', () => {
+    const isOpen = wrap.classList.toggle('menu-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  mobileNav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      wrap.classList.remove('menu-open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
   let lastY = window.scrollY;
 
   window.addEventListener('scroll', () => {
