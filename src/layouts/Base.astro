@@ -475,14 +475,25 @@ const schemaOrg = {
   /* ── Mobile ── */
   @media (max-width: 640px) {
     .chatbot-wrap {
-      bottom: 1.25rem;
-      right: 1.25rem;
-      left: 1.25rem;
+      bottom: 1rem;
+      right: 1rem;
+      left: 1rem;
       align-items: flex-end;
     }
 
     .chatbot-bubble {
       align-self: flex-end;
+    }
+
+    /* Bulle plus compacte sur mobile pour ne pas recouvrir les champs/boutons en bas de page */
+    .chatbot-btn {
+      width: 46px;
+      height: 46px;
+    }
+
+    .chatbot-btn svg {
+      width: 19px;
+      height: 19px;
     }
 
     .chatbot-panel {
