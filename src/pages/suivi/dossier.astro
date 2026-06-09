@@ -713,7 +713,7 @@ import Base from '../../layouts/Base.astro';
     if (!proc) return;
 
     const procLabel = { penal: 'PÉNAL', mineurs: 'MINEURS', famille: 'FAMILLE', affaires: 'AFFAIRES', corporel: 'CORPOREL', etranger: 'ÉTRANGERS' }[key] || 'PÉNAL';
-    document.getElementById('page-title')!.textContent = 'SUIVI DU DOSSIER — ' + procLabel;
+    document.getElementById('page-title')!.textContent = 'SUIVI DU DOSSIER · ' + procLabel;
     document.getElementById('statut-text')!.textContent = proc.statut;
     document.getElementById('info-derniere-action')!.textContent = proc.derniereAction;
     document.getElementById('info-prochaine-etape')!.textContent = proc.prochaineEtape;

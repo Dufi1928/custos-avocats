@@ -418,7 +418,7 @@ const avocatsData = avocatsRdv.map(a => ({
   function showForm() {
     const section = document.getElementById('form-section');
     section.classList.remove('rdv-hidden');
-    document.getElementById('rdv-recap').textContent = `${selAvocat.titre} — ${formatDateLong(selDate)} à ${selSlot}`;
+    document.getElementById('rdv-recap').textContent = `${selAvocat.titre}, ${formatDateLong(selDate)} à ${selSlot}`;
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 

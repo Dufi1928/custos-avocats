@@ -622,7 +622,7 @@ const joursDispo = Object.keys(avocat.schedule).sort().map(k => joursNoms[k]).jo
   function showForm() {
     const section = document.getElementById('form-section');
     section.classList.remove('rdv-hidden');
-    document.getElementById('rdv-recap').textContent = `${avocatTitre} — ${formatDateLong(selDate)} à ${selSlot}`;
+    document.getElementById('rdv-recap').textContent = `${avocatTitre}, ${formatDateLong(selDate)} à ${selSlot}`;
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
