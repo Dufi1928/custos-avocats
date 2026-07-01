@@ -1,0 +1,155 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('articles')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+function formatDate(date: Date) {
+  return new Date(date).toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+---
+
+<Base
+  title="Blog juridique"
+  description="Articles et décryptages en droit pénal rédigés par les avocats du cabinet Custos Avocats, Barreau de Lille."
+>
+  <section class="blog-hero">
+    <p class="eyebrow">Ressources juridiques</p>
+    <h1>Blog du cabinet</h1>
+    <p class="blog-intro">
+      Nos avocats partagent leur expertise à travers des articles pratiques sur le droit pénal, la procédure et vos droits fondamentaux.
+    </p>
+  </section>
+
+  <section class="blog-list" aria-label="Liste des articles">
+    {articles.map((article) => (
+      <article class="blog-card">
+        <div class="blog-card-meta">
+          <span class="blog-categorie">{article.data.categorie}</span>
+          <time datetime={article.data.date.toISOString()}>
+            {formatDate(article.data.date)}
+          </time>
+        </div>
+        <h2 class="blog-card-title">
+          <a href={`/blog/${article.id}`}>{article.data.title}</a>
+        </h2>
+        <p class="blog-card-desc">{article.data.description}</p>
+        <a href={`/blog/${article.id}`} class="blog-card-lien" aria-label={`Lire : ${article.data.title}`}>
+          Lire l'article →
+        </a>
+      </article>
+    ))}
+  </section>
+</Base>
+
+<style>
+  .blog-hero {
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .blog-intro {
+    color: var(--gris);
+    font-size: 1.05rem;
+    margin-top: 1rem;
+  }
+
+  .blog-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+  }
+
+  .blog-card {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .blog-card:hover {
+    box-shadow: 0 6px 28px rgba(74, 93, 78, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .blog-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .blog-categorie {
+    background: var(--vert-pale, #edf2ee);
+    color: var(--vert);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+  }
+
+  .blog-card-meta time {
+    font-size: 0.8rem;
+    color: var(--gris);
+  }
+
+  .blog-card-title {
+    font-size: 1.15rem;
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  .blog-card-title a {
+    color: var(--texte);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .blog-card-title a:hover {
+    color: var(--vert);
+  }
+
+  .blog-card-desc {
+    color: var(--gris);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+  }
+
+  .blog-card-lien {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--vert);
+    text-decoration: none;
+    margin-top: 0.25rem;
+    transition: color 0.2s;
+  }
+
+  .blog-card-lien:hover {
+    color: var(--vert-vif);
+  }
+
+  @media (max-width: 640px) {
+    .blog-list {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-card {
+      padding: 1.25rem 1.5rem;
+    }
+  }
+</style>

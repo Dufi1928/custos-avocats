@@ -1,0 +1,237 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+function formatDate(date: Date) {
+  return new Date(date).toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+---
+
+<Base title={article.data.title} description={article.data.description}>
+  <div class="article-wrap">
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <a href="/blog">Blog</a>
+      <span aria-hidden="true">›</span>
+      <span>{article.data.title}</span>
+    </nav>
+
+    <article class="article-content">
+      <header class="article-header">
+        <div class="article-meta">
+          <span class="blog-categorie">{article.data.categorie}</span>
+          <time datetime={article.data.date.toISOString()}>
+            {formatDate(article.data.date)}
+          </time>
+        </div>
+        <h1>{article.data.title}</h1>
+        <p class="article-desc">{article.data.description}</p>
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+
+    <aside class="article-cta">
+      <p class="article-cta-label">Vous avez une question ?</p>
+      <h2>Nos avocats sont disponibles 24h/24</h2>
+      <p>Une garde à vue, une comparution, une mise en examen : ne restez pas seul face à la procédure pénale.</p>
+      <div class="article-cta-actions">
+        <a href="/contact" class="cta-btn cta-btn--primaire">Nous contacter</a>
+        <a href="/blog" class="cta-btn cta-btn--secondaire">← Retour au blog</a>
+      </div>
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .article-wrap {
+    max-width: 780px;
+    margin-inline: auto;
+    padding: 2rem var(--gap) 4rem;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--gris);
+    margin-bottom: 2.5rem;
+  }
+
+  .breadcrumb a {
+    color: var(--vert);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .article-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--gris-clair);
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .blog-categorie {
+    background: var(--vert-pale, #edf2ee);
+    color: var(--vert);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+  }
+
+  .article-meta time {
+    font-size: 0.82rem;
+    color: var(--gris);
+  }
+
+  .article-header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .article-desc {
+    font-size: 1.05rem;
+    color: var(--gris);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Contenu Markdown */
+  .prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--texte);
+  }
+
+  .prose h2 {
+    font-size: 1.35rem;
+    margin: 2.25rem 0 0.75rem;
+    color: var(--texte);
+  }
+
+  .prose h3 {
+    font-size: 1.1rem;
+    margin: 1.75rem 0 0.5rem;
+    color: var(--vert);
+  }
+
+  .prose p { margin-bottom: 1.2rem; }
+
+  .prose ul, .prose ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .prose li { margin-bottom: 0.4rem; }
+
+  .prose strong { color: var(--texte); font-weight: 700; }
+
+  .prose a {
+    color: var(--vert);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--gris-clair);
+    margin: 2rem 0;
+  }
+
+  /* CTA bas d'article */
+  .article-cta {
+    margin-top: 3.5rem;
+    background: var(--fond-alt, #f8f8f6);
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--radius);
+    padding: 2rem 2.5rem;
+  }
+
+  .article-cta-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--vert);
+    margin-bottom: 0.5rem;
+  }
+
+  .article-cta h2 {
+    font-size: 1.3rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .article-cta p {
+    color: var(--gris);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-btn {
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .cta-btn--primaire {
+    background: var(--vert);
+    color: var(--blanc);
+  }
+
+  .cta-btn--primaire:hover { background: var(--vert-vif); }
+
+  .cta-btn--secondaire {
+    background: transparent;
+    color: var(--vert);
+    border: 1px solid var(--vert);
+  }
+
+  .cta-btn--secondaire:hover {
+    background: var(--vert);
+    color: var(--blanc);
+  }
+
+  @media (max-width: 640px) {
+    .article-wrap { padding: 1.5rem var(--gap) 3rem; }
+    .article-cta { padding: 1.5rem; }
+  }
+</style>

@@ -13,4 +13,15 @@ const expertises = defineCollection({
   }),
 });
 
-export const collections = { expertises };
+const articles = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/articles' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.date(),
+    categorie: z.string(),
+    auteur: z.string().optional(),
+  }),
+});
+
+export const collections = { expertises, articles };
